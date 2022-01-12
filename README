@@ -1,0 +1,9 @@
+Peppr 
+	Tests and score different mutations for peptides. Generates docked positions and output the top complex per peptide
+
+Dependencies
+	Biopython
+	Matplotlib
+
+To run 
+	python ../Peppr/Peppr_main.py -c 3 -i PLDXPAL -t done.trg -p 50 -N 4 -n 500000
