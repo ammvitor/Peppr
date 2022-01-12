@@ -1,2 +1,2 @@
 # Peppr
-Peppr - Automated pipeline for peptide geneartion, docking and scoring
+Peppr - Automated pipeline for peptide generation, docking and scoring
