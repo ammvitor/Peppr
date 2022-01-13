@@ -10,7 +10,7 @@ import os
 import getopt
 import numpy as np
 from Bio.PDB import PDBParser, PDBIO, Chain, Residue
-#you need to have biopython, matplotlib and autodock vina crankpep - export ADCPHOME where you installed it
+#you need to have biopython and autodock vina crankpep - export ADCPHOME where you installed it
 
 
 #declaring the input variables
@@ -55,11 +55,7 @@ adcphome = os.environ['ADCPHOME']+"/bin/adcp"
 res = 0                                # Prepare this variable for a global using purpose
 
 Peppr_functions.set_sequence()
-Peppr_functions.adcp_run()
-Peppr_functions.sort_list()
-Peppr_functions.cross_rmsdmatrix()
-
-
+Peppr_functions.adcp_run()             # updated
 
 print("Congratulations! It's finished!")
 

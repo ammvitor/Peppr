@@ -71,23 +71,23 @@ def set_sequence():
     global residues                    # Define residues as global variable, originally named sequences
     residues = sequences               # Give sequences content to the variable-"residues"
 
-def structure_correct():
+def structure_correct(outputname):
     #calls biopdb to fix the broken pdb results for the top1 poses per sequence
     io = PDBIO()
     #fix it by loading to biopdb and printing 
     total_number_of_output=["1","2","3","4","5","6","7","8","9","10"]
     for rank in total_number_of_output:
         try:
-            pdb = PDBParser(QUIET=True).get_structure("UGLY", outputname_ADCP+"_ranked_"+rank+".pdb")
+            pdb = PDBParser(QUIET=True).get_structure("UGLY", outputname+"_ranked_"+rank+".pdb")
             io.set_structure(pdb)        
-            io.save(outputname_ADCP+"_ranked_"+rank+"_corrected.pdb")
+            io.save(outputname+"_ranked_"+rank+"_corrected.pdb")
             #reads the output files with the energy to rank poses
         except:
             pass
 
     
-def extract_score():
-    file = open(path_to_output_file,'r')                                        # open the file.txt in a read mode
+def extract_score(pathtooutput,listofsequences,sequences):
+    file = open(pathtooutput,'r')                                        # open the file.txt in a read mode
     Lines = file.readlines()                                                    # output the content in file.txt line by line into "Lines"
     count =0
     #skips the header of the file 
@@ -99,26 +99,24 @@ def extract_score():
     #takes the first line - lowest energy and rank per residue
     stripped_line = Lines[count+1].strip()                                      # count+1 means to locate to the line with best scores; .strip() means only extract this line
     line_list = stripped_line.split()                                           # split() means to treat the extracted line into pices and save as elements in "line_list"
-    list_of_lists.append([])                                                    # vector <vector>
-    list_of_lists[len(list_of_lists)-1].append(aminoacids[residues.index(seq)]) # append the point changed residue name into the first element in list_of_lists
-    list_of_lists[len(list_of_lists)-1].append(seq)                             # append the changed peptide sequence into the second element in list_of_lists
-    list_of_lists[len(list_of_lists)-1].append(line_list[1])                    # append the best scores into the third element in list_of_lists
+    listofsequences.append([])                                                    # vector <vector>
+    listofsequences[len(listofsequences)-1].append(aminoacids[residues.index(sequences)]) # append the point changed residue name into the first element in list_of_lists
+    listofsequences[len(listofsequences)-1].append(sequences)                             # append the changed peptide sequence into the second element in list_of_lists
+    listofsequences[len(listofsequences)-1].append(line_list[1])                    # append the best scores into the third element in list_of_lists
         
 
-def adcp_run():
-    global list_of_lists 
+def adcp_run():   
     list_of_lists=[]
-    #run crankpep for all 20 sequences
-    global seq                                                                  # for global Structure Correct
+    #run crankpep for all 20 sequences                                                                 # for global Structure Correct
     for seq in residues:
 
         print("Sequence tested now is: " + seq)
         #creates a varaible to output the files inside different folders
-        global outputname_ADCP                                                  # for global Structure Correct
+        # global outputname_ADCP                                                  # for global Structure Correct
         outputname_ADCP=seq+"/"+seq
         #creates a folder for each of the sequences
         subprocess.Popen(["mkdir",seq]).communicate()
-        global path_to_output_file                                              # for global Structure Correct
+                                                      # for global Structure Correct
         path_to_output_file =outputname_ADCP+".txt"
         myoutput = open(path_to_output_file,'w+') # equal to open seq.txt then write down
         # the path to adcp should be fixed and sorted with a enviromental variable such as ADCPHOME
@@ -136,16 +134,16 @@ def adcp_run():
                               "-c",
                               cores,
                               "-O"],stdout=myoutput).communicate()
-        structure_correct()
-        extract_score()
-            
+        structure_correct(outputname_ADCP)
+        extract_score(path_to_output_file,list_of_lists,seq)
+        sort_list(list_of_lists)
         
 
 
 
-def sort_list(): # positive numbers should be fixed
+def sort_list(listofsequences): # positive numbers should be fixed
     #sort the list of 20 residues
-    sorted_multi_list = sorted(list_of_lists, reverse=True,key=lambda x: x[2])
+    sorted_multi_list = sorted(listofsequences, reverse=True,key=lambda x: x[2])
     sorted_multi_array = np.array(sorted_multi_list)
     # print(sorted_multi_array)
     print("Results:")
