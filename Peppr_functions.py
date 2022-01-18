@@ -54,22 +54,19 @@ for opt, arg in opts:
 adcphome = os.environ['ADCPHOME']+"/bin/adcp"
 res = 0                                # Prepare this variable for a global using purpose
 
-def set_sequence():   
+def set_sequence(aminoacids_list):   
     ##set up the sequences 
     sequences = []
     #finds the index of the X in the inpout sequence
     result = input_seq.find("X")       # Should be used to find the index number of "X", so here result is a number.
-    global aminoacids                  # # Call aminoacids as a global variable for the using in next function
-    aminoacids =["A","C","D","E","F","G","H","I","K","L","M","N","P","Q","R","S","T","V","W","Y"]
 
     #runs crankpep for each of the different aminoacids - first , it craets the 20 sequences to be tested
-    for res in aminoacids:
-        global new                     # Call new as a global variable for the using in next function
+    for res in aminoacids_list:
+       # Call new as a global variable for the using in next function
         new = list(input_seq)
         new[result]=res                # Point change the X into one residue in "aminoacids"
         sequences.append(''.join(new)) # Add the mutated "new" sequence into the "sequences" list as a single element
-    global residues                    # Define residues as global variable, originally named sequences
-    residues = sequences               # Give sequences content to the variable-"residues"
+    return sequences                    # Define residues as global variable, originally named sequences
 
 def structure_correct(outputname):
     #calls biopdb to fix the broken pdb results for the top1 poses per sequence
@@ -87,6 +84,8 @@ def structure_correct(outputname):
 
     
 def extract_score(pathtooutput,listofsequences,sequences):
+    aminoacids =["A","C","D","E","F","G","H","I","K","L","M","N","P","Q","R","S","T","V","W","Y"] #irts preferable to have a variable within a smaller scope or as an argument
+    residues = set_sequence(aminoacids)
     file = open(pathtooutput,'r')                                        # open the file.txt in a read mode
     Lines = file.readlines()                                                    # output the content in file.txt line by line into "Lines"
     count =0
@@ -106,14 +105,17 @@ def extract_score(pathtooutput,listofsequences,sequences):
         
 
 def adcp_run():   
+    aminoacids =["A","C","D","E","F","G","H","I","K","L","M","N","P","Q","R","S","T","V","W","Y"]
     list_of_lists=[]
-    #run crankpep for all 20 sequences                                                                 # for global Structure Correct
+    #run crankpep for all 20 sequences                
+    residues = set_sequence(aminoacids)
     for seq in residues:
 
         print("Sequence tested now is: " + seq)
         #creates a varaible to output the files inside different folders
         # global outputname_ADCP                                                  # for global Structure Correct
         outputname_ADCP=seq+"/"+seq
+        print(seq)
         #creates a folder for each of the sequences
         subprocess.Popen(["mkdir",seq]).communicate()
                                                       # for global Structure Correct
@@ -122,7 +124,7 @@ def adcp_run():
         # the path to adcp should be fixed and sorted with a enviromental variable such as ADCPHOME
         p = subprocess.Popen([adcphome,
                               "-t",input_receptor,"-s",
-                              ''.join(new),  # Question: is this "new" = to the previous function's "new"?
+                              seq,  # Question: is this "new" = to the previous function's "new"?
                               "-N",
                               input_Replicas,
                               "-n",
@@ -137,6 +139,8 @@ def adcp_run():
         structure_correct(outputname_ADCP)
         extract_score(path_to_output_file,list_of_lists,seq)
         sort_list(list_of_lists)
+        subprocess.Popen(["rm","-r","tmp_"+seq]).communicate()
+
         
 
 

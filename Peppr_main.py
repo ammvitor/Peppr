@@ -54,7 +54,7 @@ for opt, arg in opts:
 adcphome = os.environ['ADCPHOME']+"/bin/adcp"
 res = 0                                # Prepare this variable for a global using purpose
 
-Peppr_functions.set_sequence()
+#Peppr_functions.set_sequence()
 Peppr_functions.adcp_run()             # updated
 
 print("Congratulations! It's finished!")
