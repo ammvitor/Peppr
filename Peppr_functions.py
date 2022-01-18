@@ -105,17 +105,18 @@ def extract_score(pathtooutput,listofsequences,sequences):
         
 
 def adcp_run():   
+    number = 0
     aminoacids =["A","C","D","E","F","G","H","I","K","L","M","N","P","Q","R","S","T","V","W","Y"]
     list_of_lists=[]
     #run crankpep for all 20 sequences                
     residues = set_sequence(aminoacids)
     for seq in residues:
-
+        number+=1
         print("Sequence tested now is: " + seq)
         #creates a varaible to output the files inside different folders
         # global outputname_ADCP                                                  # for global Structure Correct
         outputname_ADCP=seq+"/"+seq
-        print(seq)
+        # print(seq)
         #creates a folder for each of the sequences
         subprocess.Popen(["mkdir",seq]).communicate()
                                                       # for global Structure Correct
@@ -138,22 +139,23 @@ def adcp_run():
                               "-O"],stdout=myoutput).communicate()
         structure_correct(outputname_ADCP)
         extract_score(path_to_output_file,list_of_lists,seq)
-        sort_list(list_of_lists)
+        sort_list(list_of_lists,number)
         subprocess.Popen(["rm","-r","tmp_"+seq]).communicate()
 
         
 
 
 
-def sort_list(listofsequences): # positive numbers should be fixed
-    #sort the list of 20 residues
-    sorted_multi_list = sorted(listofsequences, reverse=True,key=lambda x: x[2])
-    sorted_multi_array = np.array(sorted_multi_list)
-    # print(sorted_multi_array)
-    print("Results:")
-    #prints in the screen the sorted list of 20 residues 
-    for peptide in sorted_multi_list:
-        print("Score ", peptide[0]," ", peptide[1], " ", peptide[2] + " kcal/mol")
+def sort_list(listofsequences,loops): # positive numbers should be fixed
+    if(loops >= 20):
+        #sort the list of 20 residues
+        sorted_multi_list = sorted(listofsequences, reverse=True,key=lambda x: x[2])
+        sorted_multi_array = np.array(sorted_multi_list)
+        # print(sorted_multi_array)
+        print("Results:")
+        #prints in the screen the sorted list of 20 residues 
+        for peptide in sorted_multi_list:
+            print("Score ", peptide[0]," ", peptide[1], " ", peptide[2] + " kcal/mol")
 # print("Congratulations! It's finished!")
 
 # peppr_sup() This is for testing whether def is working.
