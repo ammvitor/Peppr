@@ -25,8 +25,9 @@ class PDBfile:
         # self.addSO3_toTYR()
         self.addPO3_toTYR()
         # self.addO_toCYS()
-        # self.PDBwriter("/home/dozeduck/test/scrip_test/github/Peppr_Stage2/test/lol_so3TYR.pdb")
-        self.PDBwriter("/home/dozeduck/test/scrip_test/github/Peppr_Stage2/test/lol_po3TYR.pdb")
+        # self.PDBwriter("/home/dozeduck/test/scrip_test/github/ammvitor-Peppr/Peppr_Stage2/test/lol_so3TYR.pdb")
+        self.PDBwriter("/home/dozeduck/test/scrip_test/github/ammvitor-Peppr/Peppr_Stage2/test/lol_po3TYR.pdb")
+        # self.obabel_mol2_em("lol_so3TYR.pdb")
         self.obabel_mol2_em("lol_po3TYR.pdb")
     
     def DistanceCalculator(self,a,b):                                            # Calculate the distance between point_a and point_b, here a and b are two list include the 3D coordinations
