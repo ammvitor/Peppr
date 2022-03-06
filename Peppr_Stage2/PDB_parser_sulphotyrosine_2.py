@@ -20,16 +20,8 @@ class PDBfile:
     charge_per_factor = []
     Atomtype_per_atom = []
     
-    def __init__(self,filename):
-        self.PDBreader(filename)
-        # self.addSO3_toTYR()
-        self.addPO3_toTYR()
-        # self.addO_toCYS()
-        # self.PDBwriter("/home/dozeduck/test/scrip_test/github/ammvitor-Peppr/Peppr_Stage2/test/lol_so3TYR.pdb")
-        self.PDBwriter("/home/dozeduck/test/scrip_test/github/ammvitor-Peppr/Peppr_Stage2/test/lol_po3TYR.pdb")
-        # self.obabel_mol2_em("lol_so3TYR.pdb")
-        self.obabel_mol2_em("lol_po3TYR.pdb")
-    
+    #def __init__(self,filename,tyrosynetobemod):
+       
     def DistanceCalculator(self,a,b):                                            # Calculate the distance between point_a and point_b, here a and b are two list include the 3D coordinations
         dist =math.sqrt(numpy.square(a[0]-b[0]) + numpy.square(a[1]-b[1])+numpy.square(a[2]-b[2])) 
         return dist 
@@ -79,9 +71,14 @@ class PDBfile:
         n_terminal_atomIndex = min(find_n_atom_index)
         return n_terminal_atomIndex, s_terminal_atomIndex
     
-    def obabel_mol2_em(self, filename):
+    def obabel_mol2_em(self, filename,outputname):
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
-        os.system('obabel pep.mol2 -O pep_em.mol2 --minimize --steps 1500 --sd')
+        cyclic=false
+        if(cyclic):
+            os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+        else:
+            os.system('obabel pep.mol2 -O '+outputname+' ')
+
         os.system('rm pep.mol2')
             
 
@@ -224,12 +221,12 @@ class PDBfile:
                              (x-CZ[0])**2+(y-CZ[1])**2+(z-CZ[2])**2-distO2_CZ**2,
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO2_CE1**2],
                             [x,y,z],[solvedS[0],solvedS[1],solvedS[2]])
-        print(solvedO2)
+        #print(solvedO2)
         for i in range (0, len(self.X_peratom)):                                # add O2 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+3, "O2")
-                self.residue_name.insert(i+3,"TYR")
+                self.residue_name.insert(i+3,"TYR")                
                 self.chain_name.insert(i+3,"A")
                 self.residue_index.insert(i+3,self.residue_index[i])
                 self.X_peratom.insert(i+3,float(solvedO2[0]))
@@ -248,7 +245,7 @@ class PDBfile:
                              (x-CZ[0])**2+(y-CZ[1])**2+(z-CZ[2])**2-distO3_CZ**2,
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO3_CE1**2],
                             [x,y,z],[solvedS[0],solvedS[1],solvedS[2]])
-        print(solvedO3)
+        #print(solvedO3)
         for i in range (0, len(self.X_peratom)):                                # add O3 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+4, 3+float(len(self.X_peratom)))
@@ -364,7 +361,7 @@ class PDBfile:
                              (x-CZ[0])**2+(y-CZ[1])**2+(z-CZ[2])**2-distP_CZ**2,
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distP_CE1**2],
                             [x,y,z],[OH[0],OH[1],OH[2]])
-        print(solvedP)
+        #print(solvedP)
         for i in range (0, len(self.X_peratom)):                                # add S to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+1, 1+float(len(self.X_peratom)))
@@ -389,7 +386,7 @@ class PDBfile:
                              (x-CZ[0])**2+(y-CZ[1])**2+(z-CZ[2])**2-distO1_CZ**2,
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO1_CE1**2],
                             [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
-        print(solvedO1)
+        #print(solvedO1)
         for i in range (0, len(self.X_peratom)):                                # add O1 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+2, 2+float(len(self.X_peratom)))
@@ -414,7 +411,7 @@ class PDBfile:
                              (x-CZ[0])**2+(y-CZ[1])**2+(z-CZ[2])**2-distO2_CZ**2,
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO2_CE1**2],
                             [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
-        print(solvedO2)
+        #print(solvedO2)
         for i in range (0, len(self.X_peratom)):                                # add O2 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
@@ -439,7 +436,7 @@ class PDBfile:
                              (x-CZ[0])**2+(y-CZ[1])**2+(z-CZ[2])**2-distO3_CZ**2,
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO3_CE1**2],
                             [x,y,z],[solvedO2[0],solvedO2[1],solvedO2[2]])
-        print(solvedO3)
+        #print(solvedO3)
         for i in range (0, len(self.X_peratom)):                                # add O3 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+4, 4+float(len(self.X_peratom)))
@@ -500,8 +497,20 @@ class PDBfile:
 
     
     def PDBreader(self,filename):
-            f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
-            for line in f:                                                      # 创建循环，line = filename中每一行                     
+        self.atomic_index.clear()
+        self.atomic_index.clear()
+        self.atomic_name.clear()
+        self.residue_name.clear()
+        self.chain_name.clear()
+        self.residue_index.clear()
+        self.X_peratom.clear()
+        self.Y_peratom.clear()
+        self.Z_peratom.clear()
+        self.bfactor_per_factor.clear()
+        self.charge_per_factor.clear()
+        self.Atomtype_per_atom.clear()
+        f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
+        for line in f:                                                      # 创建循环，line = filename中每一行                     
                 
                 if(line.split()[0] == "ATOM" or line.split()[0] == "HETATM"):   # 判断句，用于将每一行split然后判断该行第一列是否==ATOM或HETATM
                     self.atomic_index.append(float(line.split()[1]))            # 第2列为原子序数
@@ -515,7 +524,7 @@ class PDBfile:
                     self.bfactor_per_factor.append(float(line.split()[9]))      # 第10列为该原子的B因子，用于判断活跃程度
                     self.charge_per_factor.append(float(line.split()[10]))      # 第11列为该残基的电荷
                     self.Atomtype_per_atom.append(line.split()[11])             # 第12列为该原子的原子类型C，H，O，N，S，CL，等等
-                    print(line)
+                    #print(line)
 
     
     def PDBwriter(self,filename):
@@ -543,4 +552,4 @@ class PDBfile:
         print("END", file = f)
         
         f.close()
-            
+        
