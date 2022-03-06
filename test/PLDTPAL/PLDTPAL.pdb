@@ -1,11 +1,11 @@
 ==============SIMULATION=PARAMETERS================
 --GENERAL--
-infile_name pldepal
+infile_name pldtpal
 outfile_name PLDTPAL/PLDTPAL_1.pdb
 pace 1
-stretch 5000
+stretch 800
 test mask 8802
-random seed 242765
+random seed 66105
 parameters Bias=NULL,external=5,constrains,1.0,1.0,Opt=1,0.25,0.75,0.0
 acceptance ratio 0.5
 amplitude -0.1
@@ -17,7 +17,7 @@ acceptance_rate_tolerance 0.03
 amplitude_changing_factor 0.9
 --PEPTIDE--
 number of chains: 0
-amino acid sequence pldepal
+amino acid sequence pldtpal
 amino acid sequence (null)
 number of amino acids 0
 --TEMPERATURE--
@@ -195,2239 +195,586 @@ external_r0[0](2): 0
 ================FLEX=PARAMETERS===================
 Number of processors: 0
 ==========END=SIMULATION=PARAMETERS================
--+- TEST BLOCK   493 -+-
-MODEL        1
-REMARK ENERGY 23.417832
-ATOM      1  N   PRO A   1      -6.319  95.107  15.554
-ATOM      2  CA  PRO A   1      -4.941  95.373  15.951
-ATOM      3  C   PRO A   1      -3.769  94.516  16.421
-ATOM      4  O   PRO A   1      -3.800  93.296  16.274
-ATOM      5  CB  PRO A   1      -5.145  96.136  17.053
-ATOM      6  CG  PRO A   1      -7.261  95.534  16.517
-ATOM      7  N   LEU A   2      -2.738  95.149  16.986
-ATOM      8  CA  LEU A   2      -1.567  94.427  17.471
-ATOM      9  C   LEU A   2      -1.165  94.660  18.924
-ATOM     10  O   LEU A   2      -1.104  95.804  19.370
-ATOM     11  CB  LEU A   2      -0.386  94.827  16.597
-ATOM     12  CG  LEU A   2       0.324  96.657  16.399
-ATOM     13  H   LEU A   2      -2.770  96.142  17.079
-ATOM     14  N   ASP A   3      -0.889  93.582  19.662
-ATOM     15  CA  ASP A   3      -0.494  93.691  21.062
-ATOM     16  C   ASP A   3       0.721  92.823  21.376
-ATOM     17  O   ASP A   3       0.759  91.656  20.992
-ATOM     18  CB  ASP A   3      -1.665  93.310  21.973
-ATOM     19  CG  ASP A   3      -1.272  93.620  23.825
-ATOM     20  H   ASP A   3      -0.955  92.678  19.244
-ATOM     21  N   GLU A   4       1.711  93.388  22.070
-ATOM     22  CA  GLU A   4       2.918  92.649  22.425
-ATOM     23  C   GLU A   4       3.014  92.657  23.947
-ATOM     24  O   GLU A   4       2.613  93.629  24.584
-ATOM     25  CB  GLU A   4       4.173  93.199  21.746
-ATOM     26  CG  GLU A   4       3.308  95.589  20.877
-ATOM     27  H   GLU A   4       1.623  94.340  22.355
-ATOM     28  N   PRO A   5       3.543  91.579  24.531
-ATOM     29  CA  PRO A   5       3.682  91.483  25.980
-ATOM     30  C   PRO A   5       4.744  92.390  26.593
-ATOM     31  O   PRO A   5       5.838  92.513  26.046
-ATOM     32  CB  PRO A   5       4.020  90.036  26.337
-ATOM     33  CG  PRO A   5       3.946  90.403  23.860
-ATOM     34  N   ALA A   6       4.427  93.024  27.724
-ATOM     35  CA  ALA A   6       5.368  93.915  28.394
-ATOM     36  C   ALA A   6       4.962  94.148  29.846
-ATOM     37  O   ALA A   6       3.893  94.695  30.106
-ATOM     38  CB  ALA A   6       5.475  95.247  27.644
-ATOM     39  H   ALA A   6       3.523  92.885  28.121
-ATOM     40  N   LEU A   7       5.811  93.736  30.791
-ATOM     41  CA  LEU A   7       5.522  93.910  32.210
-ATOM     42  C   LEU A   7       6.575  94.857  32.777
-ATOM     43  O   LEU A   7       7.747  94.759  32.420
-ATOM     44  CB  LEU A   7       5.458  92.581  32.964
-ATOM     45  CG  LEU A   7       7.008  91.311  33.067
-ATOM     46  H   LEU A   7       6.665  93.299  30.518
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 23.417832 ( diagnolE 26.308619 extE -8.578700 firstlastE 0.000000) Rotamers: 0 0 3 6 0 0 0
--+- TEST BLOCK   588 -+-
-MODEL        2
-REMARK ENERGY 12.951057
-ATOM      1  N   PRO A   1      -6.570  96.364  14.828
-ATOM      2  CA  PRO A   1      -5.223  96.717  15.260
-ATOM      3  C   PRO A   1      -4.208  95.713  15.797
-ATOM      4  O   PRO A   1      -4.481  94.515  15.819
-ATOM      5  CB  PRO A   1      -5.430  97.670  16.381
-ATOM      6  CG  PRO A   1      -7.572  96.848  15.701
-ATOM      7  N   LEU A   2      -3.041  96.196  16.229
-ATOM      8  CA  LEU A   2      -2.000  95.324  16.762
-ATOM      9  C   LEU A   2      -1.305  95.773  18.044
-ATOM     10  O   LEU A   2      -0.909  96.931  18.155
-ATOM     11  CB  LEU A   2      -0.930  95.179  15.688
-ATOM     12  CG  LEU A   2      -1.183  94.194  14.023
-ATOM     13  H   LEU A   2      -2.876  97.179  16.186
-ATOM     14  N   ASP A   3      -1.157  94.863  19.009
-ATOM     15  CA  ASP A   3      -0.508  95.186  20.275
-ATOM     16  C   ASP A   3       0.683  94.295  20.613
-ATOM     17  O   ASP A   3       0.662  93.102  20.317
-ATOM     18  CB  ASP A   3      -1.538  95.085  21.401
-ATOM     19  CG  ASP A   3      -2.047  93.306  21.804
-ATOM     20  H   ASP A   3      -1.500  93.938  18.861
-ATOM     21  N   GLU A   4       1.719  94.868  21.230
-ATOM     22  CA  GLU A   4       2.908  94.108  21.599
-ATOM     23  C   GLU A   4       2.927  94.013  23.121
-ATOM     24  O   GLU A   4       2.309  94.834  23.797
-ATOM     25  CB  GLU A   4       4.194  94.705  21.026
-ATOM     26  CG  GLU A   4       3.421  97.131  20.263
-ATOM     27  H   GLU A   4       1.678  95.841  21.445
-ATOM     28  N   PRO A   5       3.631  93.017  23.663
-ATOM     29  CA  PRO A   5       3.716  92.834  25.107
-ATOM     30  C   PRO A   5       4.500  93.973  25.752
-ATOM     31  O   PRO A   5       5.424  94.508  25.142
-ATOM     32  CB  PRO A   5       4.350  91.481  25.446
-ATOM     33  CG  PRO A   5       4.322  92.018  22.940
-ATOM     34  N   ALA A   6       4.136  94.345  26.982
-ATOM     35  CA  ALA A   6       4.818  95.423  27.691
-ATOM     36  C   ALA A   6       4.495  95.358  29.180
-ATOM     37  O   ALA A   6       3.349  95.568  29.571
-ATOM     38  CB  ALA A   6       4.447  96.788  27.105
-ATOM     39  H   ALA A   6       3.378  93.874  27.427
-ATOM     40  N   LEU A   7       5.500  95.071  30.011
-ATOM     41  CA  LEU A   7       5.301  94.984  31.453
-ATOM     42  C   LEU A   7       6.223  95.989  32.137
-ATOM     43  O   LEU A   7       7.354  96.185  31.697
-ATOM     44  CB  LEU A   7       5.522  93.562  31.975
-ATOM     45  CG  LEU A   7       7.278  92.595  31.432
-ATOM     46  H   LEU A   7       6.410  94.911  29.635
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 12.951057 ( diagnolE 14.374370 extE -6.758136 firstlastE 0.000000) Rotamers: 0 7 2 6 0 0 1
--+- TEST BLOCK   589 -+-
-MODEL        3
-REMARK ENERGY 12.589829
-ATOM      1  N   PRO A   1      -6.570  96.364  14.828
-ATOM      2  CA  PRO A   1      -5.223  96.717  15.260
-ATOM      3  C   PRO A   1      -4.208  95.713  15.797
-ATOM      4  O   PRO A   1      -4.481  94.515  15.819
-ATOM      5  CB  PRO A   1      -5.430  97.670  16.381
-ATOM      6  CG  PRO A   1      -7.572  96.848  15.701
-ATOM      7  N   LEU A   2      -3.041  96.196  16.229
-ATOM      8  CA  LEU A   2      -2.000  95.324  16.762
-ATOM      9  C   LEU A   2      -1.305  95.773  18.044
-ATOM     10  O   LEU A   2      -0.909  96.931  18.155
-ATOM     11  CB  LEU A   2      -0.930  95.179  15.688
-ATOM     12  CG  LEU A   2      -1.183  94.194  14.023
-ATOM     13  H   LEU A   2      -2.876  97.179  16.186
-ATOM     14  N   ASP A   3      -1.157  94.863  19.009
-ATOM     15  CA  ASP A   3      -0.508  95.186  20.275
-ATOM     16  C   ASP A   3       0.683  94.295  20.613
-ATOM     17  O   ASP A   3       0.662  93.102  20.317
-ATOM     18  CB  ASP A   3      -1.538  95.085  21.401
-ATOM     19  CG  ASP A   3      -2.047  93.306  21.804
-ATOM     20  H   ASP A   3      -1.500  93.938  18.861
-ATOM     21  N   GLU A   4       1.719  94.868  21.230
-ATOM     22  CA  GLU A   4       2.908  94.108  21.599
-ATOM     23  C   GLU A   4       2.927  94.013  23.121
-ATOM     24  O   GLU A   4       2.309  94.834  23.797
-ATOM     25  CB  GLU A   4       4.194  94.705  21.026
-ATOM     26  CG  GLU A   4       3.421  97.131  20.263
-ATOM     27  H   GLU A   4       1.678  95.841  21.445
-ATOM     28  N   PRO A   5       3.631  93.017  23.663
-ATOM     29  CA  PRO A   5       3.716  92.834  25.107
-ATOM     30  C   PRO A   5       4.480  93.986  25.753
-ATOM     31  O   PRO A   5       5.387  94.544  25.139
-ATOM     32  CB  PRO A   5       4.370  91.491  25.447
-ATOM     33  CG  PRO A   5       4.340  92.030  22.941
-ATOM     34  N   ALA A   6       4.117  94.344  26.987
-ATOM     35  CA  ALA A   6       4.781  95.432  27.697
-ATOM     36  C   ALA A   6       4.470  95.353  29.188
-ATOM     37  O   ALA A   6       3.323  95.535  29.588
-ATOM     38  CB  ALA A   6       4.376  96.793  27.121
-ATOM     39  H   ALA A   6       3.373  93.854  27.435
-ATOM     40  N   LEU A   7       5.487  95.083  30.010
-ATOM     41  CA  LEU A   7       5.301  94.984  31.453
-ATOM     42  C   LEU A   7       6.223  95.989  32.137
-ATOM     43  O   LEU A   7       7.354  96.185  31.697
-ATOM     44  CB  LEU A   7       5.535  93.559  31.962
-ATOM     45  CG  LEU A   7       7.195  92.543  31.721
-ATOM     46  H   LEU A   7       6.398  94.944  29.627
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 12.589829 ( diagnolE 14.139488 extE -6.816585 firstlastE 0.000000) Rotamers: 0 7 2 6 0 0 1
--+- TEST BLOCK   594 -+-
-MODEL        4
-REMARK ENERGY 12.140902
-ATOM      1  N   PRO A   1      -6.539  96.505  14.997
-ATOM      2  CA  PRO A   1      -5.192  96.859  15.428
-ATOM      3  C   PRO A   1      -4.203  95.839  15.985
-ATOM      4  O   PRO A   1      -4.512  94.651  16.045
-ATOM      5  CB  PRO A   1      -5.389  97.843  16.533
-ATOM      6  CG  PRO A   1      -7.542  97.015  15.852
-ATOM      7  N   LEU A   2      -3.017  96.298  16.393
-ATOM      8  CA  LEU A   2      -1.998  95.410  16.942
-ATOM      9  C   LEU A   2      -1.278  95.874  18.203
-ATOM     10  O   LEU A   2      -0.845  97.022  18.278
-ATOM     11  CB  LEU A   2      -0.944  95.202  15.863
-ATOM     12  CG  LEU A   2      -1.339  94.153  14.215
-ATOM     13  H   LEU A   2      -2.823  97.274  16.320
-ATOM     14  N   ASP A   3      -1.148  94.989  19.194
-ATOM     15  CA  ASP A   3      -0.477  95.328  20.443
-ATOM     16  C   ASP A   3       0.749  94.478  20.764
-ATOM     17  O   ASP A   3       0.776  93.292  20.444
-ATOM     18  CB  ASP A   3      -1.479  95.188  21.589
-ATOM     19  CG  ASP A   3      -2.087  93.417  21.859
-ATOM     20  H   ASP A   3      -1.520  94.071  19.076
-ATOM     21  N   GLU A   4       1.761  95.079  21.395
-ATOM     22  CA  GLU A   4       2.979  94.359  21.749
-ATOM     23  C   GLU A   4       3.001  94.234  23.269
-ATOM     24  O   GLU A   4       2.351  95.015  23.960
-ATOM     25  CB  GLU A   4       4.240  95.019  21.190
-ATOM     26  CG  GLU A   4       6.640  95.005  20.829
-ATOM     27  H   GLU A   4       1.681  96.045  21.629
-ATOM     28  N   PRO A   5       3.745  93.256  23.791
-ATOM     29  CA  PRO A   5       3.837  93.047  25.231
-ATOM     30  C   PRO A   5       4.554  94.214  25.901
-ATOM     31  O   PRO A   5       5.438  94.820  25.300
-ATOM     32  CB  PRO A   5       4.544  91.724  25.544
-ATOM     33  CG  PRO A   5       4.492  92.313  23.049
-ATOM     34  N   ALA A   6       4.176  94.532  27.142
-ATOM     35  CA  ALA A   6       4.796  95.630  27.875
-ATOM     36  C   ALA A   6       4.488  95.508  29.364
-ATOM     37  O   ALA A   6       3.334  95.636  29.767
-ATOM     38  CB  ALA A   6       4.337  96.985  27.327
-ATOM     39  H   ALA A   6       3.452  94.003  27.579
-ATOM     40  N   LEU A   7       5.515  95.261  30.182
-ATOM     41  CA  LEU A   7       5.333  95.126  31.622
-ATOM     42  C   LEU A   7       6.118  96.243  32.302
-ATOM     43  O   LEU A   7       7.255  96.515  31.921
-ATOM     44  CB  LEU A   7       5.733  93.740  32.131
-ATOM     45  CG  LEU A   7       7.511  92.934  31.881
-ATOM     46  H   LEU A   7       6.430  95.168  29.796
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 12.140902 ( diagnolE 13.630543 extE -6.718097 firstlastE 0.000000) Rotamers: 0 7 2 13 0 0 1
--+- TEST BLOCK   599 -+-
-MODEL        5
-REMARK ENERGY 11.190660
-ATOM      1  N   PRO A   1      -6.477  96.360  14.938
-ATOM      2  CA  PRO A   1      -5.129  96.714  15.369
-ATOM      3  C   PRO A   1      -4.177  95.675  15.951
-ATOM      4  O   PRO A   1      -4.537  94.505  16.065
-ATOM      5  CB  PRO A   1      -5.313  97.738  16.451
-ATOM      6  CG  PRO A   1      -7.482  96.904  15.770
-ATOM      7  N   LEU A   2      -2.965  96.096  16.320
-ATOM      8  CA  LEU A   2      -1.976  95.186  16.888
-ATOM      9  C   LEU A   2      -1.213  95.669  18.118
-ATOM     10  O   LEU A   2      -0.729  96.798  18.138
-ATOM     11  CB  LEU A   2      -0.952  94.888  15.802
-ATOM     12  CG  LEU A   2      -1.456  94.012  14.135
-ATOM     13  H   LEU A   2      -2.729  97.058  16.204
-ATOM     14  N   ASP A   3      -1.105  94.819  19.142
-ATOM     15  CA  ASP A   3      -0.396  95.178  20.365
-ATOM     16  C   ASP A   3       0.796  94.288  20.701
-ATOM     17  O   ASP A   3       0.765  93.089  20.429
-ATOM     18  CB  ASP A   3      -1.383  95.130  21.531
-ATOM     19  CG  ASP A   3      -2.132  93.407  21.814
-ATOM     20  H   ASP A   3      -1.519  93.914  19.068
-ATOM     21  N   GLU A   4       1.845  94.868  21.289
-ATOM     22  CA  GLU A   4       3.037  94.109  21.653
-ATOM     23  C   GLU A   4       3.081  94.045  23.176
-ATOM     24  O   GLU A   4       2.479  94.882  23.845
-ATOM     25  CB  GLU A   4       4.315  94.688  21.047
-ATOM     26  CG  GLU A   4       5.739  96.707  20.868
-ATOM     27  H   GLU A   4       1.812  95.845  21.485
-ATOM     28  N   PRO A   5       3.790  93.056  23.725
-ATOM     29  CA  PRO A   5       3.899  92.902  25.172
-ATOM     30  C   PRO A   5       4.538  94.067  25.920
-ATOM     31  O   PRO A   5       5.448  94.708  25.399
-ATOM     32  CB  PRO A   5       4.724  91.649  25.453
-ATOM     33  CG  PRO A   5       4.618  92.160  23.012
-ATOM     34  N   ALA A   6       4.066  94.343  27.138
-ATOM     35  CA  ALA A   6       4.605  95.436  27.940
-ATOM     36  C   ALA A   6       4.158  95.284  29.391
-ATOM     37  O   ALA A   6       2.966  95.361  29.679
-ATOM     38  CB  ALA A   6       4.191  96.797  27.372
-ATOM     39  H   ALA A   6       3.325  93.787  27.509
-ATOM     40  N   LEU A   7       5.109  95.070  30.304
-ATOM     41  CA  LEU A   7       4.793  94.911  31.718
-ATOM     42  C   LEU A   7       5.462  96.051  32.480
-ATOM     43  O   LEU A   7       6.618  96.373  32.215
-ATOM     44  CB  LEU A   7       5.199  93.537  32.254
-ATOM     45  CG  LEU A   7       7.013  92.746  31.736
-ATOM     46  H   LEU A   7       6.061  95.018  30.009
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.190660 ( diagnolE 13.524675 extE -7.328699 firstlastE 0.000000) Rotamers: 0 6 0 4 0 0 1
--+- TEST BLOCK   600 -+-
-MODEL        6
-REMARK ENERGY 11.382829
-ATOM      1  N   PRO A   1      -6.705  95.818  15.106
-ATOM      2  CA  PRO A   1      -5.392  96.272  15.551
-ATOM      3  C   PRO A   1      -4.342  95.296  16.072
-ATOM      4  O   PRO A   1      -4.590  94.094  16.124
-ATOM      5  CB  PRO A   1      -5.660  97.216  16.687
-ATOM      6  CG  PRO A   1      -7.748  96.220  15.971
-ATOM      7  N   LEU A   2      -3.171  95.809  16.459
-ATOM      8  CA  LEU A   2      -2.097  94.966  16.973
-ATOM      9  C   LEU A   2      -1.371  95.451  18.224
-ATOM     10  O   LEU A   2      -0.994  96.619  18.303
-ATOM     11  CB  LEU A   2      -1.059  94.823  15.868
-ATOM     12  CG  LEU A   2      -1.446  93.783  14.251
-ATOM     13  H   LEU A   2      -3.027  96.794  16.393
-ATOM     14  N   ASP A   3      -1.175  94.562  19.200
-ATOM     15  CA  ASP A   3      -0.492  94.920  20.438
-ATOM     16  C   ASP A   3       0.781  94.128  20.720
-ATOM     17  O   ASP A   3       0.859  92.948  20.385
-ATOM     18  CB  ASP A   3      -1.460  94.718  21.604
-ATOM     19  CG  ASP A   3      -2.270  92.937  21.512
-ATOM     20  H   ASP A   3      -1.504  93.628  19.079
-ATOM     21  N   GLU A   4       1.777  94.771  21.335
-ATOM     22  CA  GLU A   4       3.037  94.109  21.653
-ATOM     23  C   GLU A   4       3.081  94.045  23.176
-ATOM     24  O   GLU A   4       2.479  94.882  23.845
-ATOM     25  CB  GLU A   4       4.260  94.769  21.024
-ATOM     26  CG  GLU A   4       5.491  96.921  20.799
-ATOM     27  H   GLU A   4       1.655  95.730  21.584
-ATOM     28  N   PRO A   5       3.790  93.056  23.725
-ATOM     29  CA  PRO A   5       3.899  92.902  25.172
-ATOM     30  C   PRO A   5       4.538  94.067  25.920
-ATOM     31  O   PRO A   5       5.448  94.708  25.399
-ATOM     32  CB  PRO A   5       4.724  91.649  25.453
-ATOM     33  CG  PRO A   5       4.618  92.160  23.012
-ATOM     34  N   ALA A   6       4.066  94.343  27.138
-ATOM     35  CA  ALA A   6       4.605  95.436  27.940
-ATOM     36  C   ALA A   6       4.158  95.284  29.391
-ATOM     37  O   ALA A   6       2.966  95.361  29.679
-ATOM     38  CB  ALA A   6       4.191  96.797  27.372
-ATOM     39  H   ALA A   6       3.325  93.787  27.509
-ATOM     40  N   LEU A   7       5.109  95.070  30.304
-ATOM     41  CA  LEU A   7       4.793  94.911  31.718
-ATOM     42  C   LEU A   7       5.462  96.051  32.480
-ATOM     43  O   LEU A   7       6.618  96.373  32.215
-ATOM     44  CB  LEU A   7       5.199  93.537  32.254
-ATOM     45  CG  LEU A   7       7.046  92.783  31.824
-ATOM     46  H   LEU A   7       6.061  95.018  30.009
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.382829 ( diagnolE 14.066276 extE -7.640574 firstlastE 0.000000) Rotamers: 0 6 2 5 0 0 1
--+- TEST BLOCK   601 -+-
-MODEL        7
-REMARK ENERGY 11.235881
-ATOM      1  N   PRO A   1      -6.794  95.763  15.065
-ATOM      2  CA  PRO A   1      -5.481  96.217  15.510
-ATOM      3  C   PRO A   1      -4.431  95.241  16.031
-ATOM      4  O   PRO A   1      -4.679  94.039  16.083
-ATOM      5  CB  PRO A   1      -5.749  97.161  16.646
-ATOM      6  CG  PRO A   1      -7.837  96.165  15.929
-ATOM      7  N   LEU A   2      -3.260  95.754  16.417
-ATOM      8  CA  LEU A   2      -2.186  94.911  16.932
-ATOM      9  C   LEU A   2      -1.460  95.396  18.183
-ATOM     10  O   LEU A   2      -1.082  96.563  18.261
-ATOM     11  CB  LEU A   2      -1.148  94.768  15.827
-ATOM     12  CG  LEU A   2      -1.555  93.855  14.154
-ATOM     13  H   LEU A   2      -3.116  96.739  16.352
-ATOM     14  N   ASP A   3      -1.264  94.507  19.159
-ATOM     15  CA  ASP A   3      -0.581  94.865  20.397
-ATOM     16  C   ASP A   3       0.692  94.073  20.679
-ATOM     17  O   ASP A   3       0.770  92.893  20.344
-ATOM     18  CB  ASP A   3      -1.548  94.663  21.563
-ATOM     19  CG  ASP A   3      -1.830  92.910  22.090
-ATOM     20  H   ASP A   3      -1.593  93.573  19.038
-ATOM     21  N   GLU A   4       1.688  94.716  21.294
-ATOM     22  CA  GLU A   4       2.948  94.054  21.612
-ATOM     23  C   GLU A   4       2.992  93.990  23.135
-ATOM     24  O   GLU A   4       2.390  94.827  23.804
-ATOM     25  CB  GLU A   4       4.171  94.714  20.983
-ATOM     26  CG  GLU A   4       5.287  96.903  20.577
-ATOM     27  H   GLU A   4       1.566  95.675  21.543
-ATOM     28  N   PRO A   5       3.701  93.001  23.684
-ATOM     29  CA  PRO A   5       3.810  92.847  25.131
-ATOM     30  C   PRO A   5       4.449  94.012  25.879
-ATOM     31  O   PRO A   5       5.359  94.653  25.358
-ATOM     32  CB  PRO A   5       4.635  91.594  25.412
-ATOM     33  CG  PRO A   5       4.529  92.104  22.971
-ATOM     34  N   ALA A   6       3.977  94.288  27.097
-ATOM     35  CA  ALA A   6       4.516  95.381  27.899
-ATOM     36  C   ALA A   6       4.069  95.221  29.349
-ATOM     37  O   ALA A   6       2.875  95.279  29.635
-ATOM     38  CB  ALA A   6       4.103  96.743  27.335
-ATOM     39  H   ALA A   6       3.236  93.732  27.468
-ATOM     40  N   LEU A   7       5.021  95.021  30.263
-ATOM     41  CA  LEU A   7       4.704  94.856  31.677
-ATOM     42  C   LEU A   7       5.373  95.996  32.439
-ATOM     43  O   LEU A   7       6.529  96.318  32.174
-ATOM     44  CB  LEU A   7       5.108  93.480  32.211
-ATOM     45  CG  LEU A   7       6.945  92.714  31.592
-ATOM     46  H   LEU A   7       5.974  94.984  29.971
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.235881 ( diagnolE 14.046375 extE -7.764830 firstlastE 0.000000) Rotamers: 0 6 1 5 0 0 1
--+- TEST BLOCK   602 -+-
-MODEL        8
-REMARK ENERGY 11.627373
-ATOM      1  N   PRO A   1      -6.794  95.763  15.065
-ATOM      2  CA  PRO A   1      -5.481  96.217  15.510
-ATOM      3  C   PRO A   1      -4.431  95.241  16.031
-ATOM      4  O   PRO A   1      -4.679  94.039  16.083
-ATOM      5  CB  PRO A   1      -5.749  97.161  16.646
-ATOM      6  CG  PRO A   1      -7.837  96.165  15.929
-ATOM      7  N   LEU A   2      -3.260  95.754  16.417
-ATOM      8  CA  LEU A   2      -2.186  94.911  16.932
-ATOM      9  C   LEU A   2      -1.460  95.396  18.183
-ATOM     10  O   LEU A   2      -1.082  96.563  18.261
-ATOM     11  CB  LEU A   2      -1.148  94.768  15.827
-ATOM     12  CG  LEU A   2      -1.555  93.855  14.154
-ATOM     13  H   LEU A   2      -3.116  96.739  16.352
-ATOM     14  N   ASP A   3      -1.264  94.507  19.159
-ATOM     15  CA  ASP A   3      -0.581  94.865  20.397
-ATOM     16  C   ASP A   3       0.692  94.073  20.679
-ATOM     17  O   ASP A   3       0.770  92.893  20.344
-ATOM     18  CB  ASP A   3      -1.548  94.663  21.563
-ATOM     19  CG  ASP A   3      -1.830  92.910  22.090
-ATOM     20  H   ASP A   3      -1.593  93.573  19.038
-ATOM     21  N   GLU A   4       1.688  94.716  21.294
-ATOM     22  CA  GLU A   4       2.948  94.054  21.612
-ATOM     23  C   GLU A   4       3.020  94.009  23.135
-ATOM     24  O   GLU A   4       2.482  94.889  23.803
-ATOM     25  CB  GLU A   4       4.164  94.709  20.961
-ATOM     26  CG  GLU A   4       5.406  96.846  20.704
-ATOM     27  H   GLU A   4       1.566  95.675  21.543
-ATOM     28  N   PRO A   5       3.681  92.987  23.685
-ATOM     29  CA  PRO A   5       3.810  92.847  25.131
-ATOM     30  C   PRO A   5       4.449  94.012  25.879
-ATOM     31  O   PRO A   5       5.359  94.653  25.358
-ATOM     32  CB  PRO A   5       4.653  91.606  25.401
-ATOM     33  CG  PRO A   5       4.509  92.094  22.968
-ATOM     34  N   ALA A   6       3.977  94.288  27.097
-ATOM     35  CA  ALA A   6       4.516  95.381  27.899
-ATOM     36  C   ALA A   6       4.069  95.221  29.349
-ATOM     37  O   ALA A   6       2.875  95.279  29.635
-ATOM     38  CB  ALA A   6       4.103  96.743  27.335
-ATOM     39  H   ALA A   6       3.236  93.732  27.468
-ATOM     40  N   LEU A   7       5.021  95.021  30.263
-ATOM     41  CA  LEU A   7       4.704  94.856  31.677
-ATOM     42  C   LEU A   7       5.373  95.996  32.439
-ATOM     43  O   LEU A   7       6.529  96.318  32.174
-ATOM     44  CB  LEU A   7       5.108  93.480  32.211
-ATOM     45  CG  LEU A   7       6.945  92.714  31.592
-ATOM     46  H   LEU A   7       5.974  94.984  29.971
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.627373 ( diagnolE 14.385934 extE -8.002970 firstlastE 0.000000) Rotamers: 0 6 1 5 0 0 1
--+- TEST BLOCK   603 -+-
-MODEL        9
-REMARK ENERGY 11.759899
-ATOM      1  N   PRO A   1      -6.794  95.763  15.065
-ATOM      2  CA  PRO A   1      -5.481  96.217  15.510
-ATOM      3  C   PRO A   1      -4.431  95.241  16.031
-ATOM      4  O   PRO A   1      -4.679  94.039  16.083
-ATOM      5  CB  PRO A   1      -5.749  97.161  16.646
-ATOM      6  CG  PRO A   1      -7.837  96.165  15.929
-ATOM      7  N   LEU A   2      -3.260  95.754  16.417
-ATOM      8  CA  LEU A   2      -2.186  94.911  16.932
-ATOM      9  C   LEU A   2      -1.460  95.396  18.183
-ATOM     10  O   LEU A   2      -1.082  96.563  18.261
-ATOM     11  CB  LEU A   2      -1.148  94.768  15.827
-ATOM     12  CG  LEU A   2      -1.508  93.629  14.262
-ATOM     13  H   LEU A   2      -3.116  96.739  16.352
-ATOM     14  N   ASP A   3      -1.264  94.507  19.159
-ATOM     15  CA  ASP A   3      -0.581  94.865  20.397
-ATOM     16  C   ASP A   3       0.748  94.161  20.653
-ATOM     17  O   ASP A   3       0.913  93.003  20.277
-ATOM     18  CB  ASP A   3      -1.516  94.549  21.561
-ATOM     19  CG  ASP A   3      -1.887  92.711  21.776
-ATOM     20  H   ASP A   3      -1.593  93.573  19.038
-ATOM     21  N   GLU A   4       1.694  94.854  21.291
-ATOM     22  CA  GLU A   4       3.000  94.277  21.587
-ATOM     23  C   GLU A   4       3.077  94.184  23.108
-ATOM     24  O   GLU A   4       2.476  94.998  23.806
-ATOM     25  CB  GLU A   4       4.163  95.043  20.962
-ATOM     26  CG  GLU A   4       5.290  97.222  20.723
-ATOM     27  H   GLU A   4       1.501  95.792  21.573
-ATOM     28  N   PRO A   5       3.813  93.196  23.623
-ATOM     29  CA  PRO A   5       3.954  93.015  25.063
-ATOM     30  C   PRO A   5       4.505  94.198  25.853
-ATOM     31  O   PRO A   5       5.365  94.923  25.356
-ATOM     32  CB  PRO A   5       4.887  91.832  25.291
-ATOM     33  CG  PRO A   5       4.705  92.392  22.877
-ATOM     34  N   ALA A   6       4.016  94.396  27.079
-ATOM     35  CA  ALA A   6       4.473  95.497  27.920
-ATOM     36  C   ALA A   6       4.041  95.254  29.362
-ATOM     37  O   ALA A   6       2.846  95.212  29.648
-ATOM     38  CB  ALA A   6       3.959  96.844  27.403
-ATOM     39  H   ALA A   6       3.319  93.774  27.429
-ATOM     40  N   LEU A   7       5.006  95.094  30.270
-ATOM     41  CA  LEU A   7       4.704  94.856  31.677
-ATOM     42  C   LEU A   7       5.373  95.996  32.439
-ATOM     43  O   LEU A   7       6.529  96.318  32.174
-ATOM     44  CB  LEU A   7       5.110  93.469  32.167
-ATOM     45  CG  LEU A   7       7.117  92.908  31.705
-ATOM     46  H   LEU A   7       5.959  95.138  29.978
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.759899 ( diagnolE 15.128409 extE -8.589539 firstlastE 0.000000) Rotamers: 0 6 1 5 0 0 1
--+- TEST BLOCK   604 -+-
-MODEL       10
-REMARK ENERGY 11.257895
-ATOM      1  N   PRO A   1      -6.794  95.763  15.065
-ATOM      2  CA  PRO A   1      -5.481  96.217  15.510
-ATOM      3  C   PRO A   1      -4.431  95.241  16.031
-ATOM      4  O   PRO A   1      -4.679  94.039  16.083
-ATOM      5  CB  PRO A   1      -5.749  97.161  16.646
-ATOM      6  CG  PRO A   1      -7.837  96.165  15.929
-ATOM      7  N   LEU A   2      -3.260  95.754  16.417
-ATOM      8  CA  LEU A   2      -2.186  94.911  16.932
-ATOM      9  C   LEU A   2      -1.460  95.396  18.183
-ATOM     10  O   LEU A   2      -1.082  96.563  18.261
-ATOM     11  CB  LEU A   2      -1.148  94.768  15.827
-ATOM     12  CG  LEU A   2      -1.508  93.629  14.262
-ATOM     13  H   LEU A   2      -3.116  96.739  16.352
-ATOM     14  N   ASP A   3      -1.264  94.507  19.159
-ATOM     15  CA  ASP A   3      -0.581  94.865  20.397
-ATOM     16  C   ASP A   3       0.748  94.161  20.653
-ATOM     17  O   ASP A   3       0.913  93.003  20.277
-ATOM     18  CB  ASP A   3      -1.516  94.549  21.561
-ATOM     19  CG  ASP A   3      -1.887  92.711  21.776
-ATOM     20  H   ASP A   3      -1.593  93.573  19.038
-ATOM     21  N   GLU A   4       1.694  94.854  21.291
-ATOM     22  CA  GLU A   4       3.000  94.277  21.587
-ATOM     23  C   GLU A   4       3.077  94.184  23.108
-ATOM     24  O   GLU A   4       2.476  94.998  23.806
-ATOM     25  CB  GLU A   4       4.163  95.043  20.962
-ATOM     26  CG  GLU A   4       5.290  97.222  20.723
-ATOM     27  H   GLU A   4       1.501  95.792  21.573
-ATOM     28  N   PRO A   5       3.813  93.196  23.623
-ATOM     29  CA  PRO A   5       3.954  93.015  25.063
-ATOM     30  C   PRO A   5       4.521  94.208  25.827
-ATOM     31  O   PRO A   5       5.391  94.909  25.315
-ATOM     32  CB  PRO A   5       4.868  91.817  25.305
-ATOM     33  CG  PRO A   5       4.690  92.376  22.877
-ATOM     34  N   ALA A   6       4.033  94.439  27.048
-ATOM     35  CA  ALA A   6       4.505  95.552  27.864
-ATOM     36  C   ALA A   6       4.068  95.348  29.311
-ATOM     37  O   ALA A   6       2.873  95.329  29.597
-ATOM     38  CB  ALA A   6       4.010  96.894  27.317
-ATOM     39  H   ALA A   6       3.327  93.835  27.411
-ATOM     40  N   LEU A   7       5.031  95.194  30.224
-ATOM     41  CA  LEU A   7       4.725  94.992  31.636
-ATOM     42  C   LEU A   7       5.409  96.140  32.372
-ATOM     43  O   LEU A   7       6.570  96.440  32.101
-ATOM     44  CB  LEU A   7       5.111  93.611  32.156
-ATOM     45  CG  LEU A   7       6.944  92.858  32.006
-ATOM     46  H   LEU A   7       5.985  95.219  29.932
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.257895 ( diagnolE 14.695122 extE -8.577406 firstlastE 0.000000) Rotamers: 0 6 1 5 0 0 1
--+- TEST BLOCK   609 -+-
-MODEL       11
-REMARK ENERGY 10.839156
-ATOM      1  N   PRO A   1      -6.853  95.686  15.353
-ATOM      2  CA  PRO A   1      -5.514  96.124  15.732
-ATOM      3  C   PRO A   1      -4.457  95.138  16.220
-ATOM      4  O   PRO A   1      -4.723  93.941  16.301
-ATOM      5  CB  PRO A   1      -5.715  97.088  16.865
-ATOM      6  CG  PRO A   1      -7.849  96.118  16.258
-ATOM      7  N   LEU A   2      -3.262  95.636  16.545
-ATOM      8  CA  LEU A   2      -2.180  94.782  17.023
-ATOM      9  C   LEU A   2      -1.390  95.273  18.233
-ATOM     10  O   LEU A   2      -0.990  96.434  18.277
-ATOM     11  CB  LEU A   2      -1.195  94.606  15.875
-ATOM     12  CG  LEU A   2      -1.541  93.447  14.370
-ATOM     13  H   LEU A   2      -3.105  96.617  16.459
-ATOM     14  N   ASP A   3      -1.165  94.394  19.212
-ATOM     15  CA  ASP A   3      -0.421  94.757  20.413
-ATOM     16  C   ASP A   3       0.908  94.053  20.669
-ATOM     17  O   ASP A   3       1.073  92.895  20.293
-ATOM     18  CB  ASP A   3      -1.320  94.463  21.603
-ATOM     19  CG  ASP A   3      -1.603  92.571  21.852
-ATOM     20  H   ASP A   3      -1.514  93.464  19.120
-ATOM     21  N   GLU A   4       1.854  94.747  21.308
-ATOM     22  CA  GLU A   4       3.160  94.170  21.603
-ATOM     23  C   GLU A   4       3.435  94.204  23.104
-ATOM     24  O   GLU A   4       2.958  95.101  23.796
-ATOM     25  CB  GLU A   4       4.265  94.898  20.831
-ATOM     26  CG  GLU A   4       3.556  97.234  20.322
-ATOM     27  H   GLU A   4       1.661  95.684  21.589
-ATOM     28  N   PRO A   5       4.200  93.233  23.607
-ATOM     29  CA  PRO A   5       4.525  93.170  25.027
-ATOM     30  C   PRO A   5       5.226  94.398  25.600
-ATOM     31  O   PRO A   5       6.042  95.015  24.918
-ATOM     32  CB  PRO A   5       5.424  91.958  25.257
-ATOM     33  CG  PRO A   5       4.720  92.125  22.865
-ATOM     34  N   ALA A   6       4.911  94.755  26.848
-ATOM     35  CA  ALA A   6       5.522  95.912  27.492
-ATOM     36  C   ALA A   6       5.330  95.957  29.004
-ATOM     37  O   ALA A   6       4.206  96.106  29.478
-ATOM     38  CB  ALA A   6       4.940  97.187  26.879
-ATOM     39  H   ALA A   6       4.241  94.215  27.352
-ATOM     40  N   LEU A   7       6.422  95.829  29.763
-ATOM     41  CA  LEU A   7       6.352  95.857  31.219
-ATOM     42  C   LEU A   7       7.246  97.015  31.650
-ATOM     43  O   LEU A   7       8.362  97.149  31.153
-ATOM     44  CB  LEU A   7       6.708  94.527  31.877
-ATOM     45  CG  LEU A   7       8.370  93.503  31.171
-ATOM     46  H   LEU A   7       7.308  95.710  29.321
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 10.839156 ( diagnolE 14.985501 extE -8.765726 firstlastE 0.000000) Rotamers: 0 6 1 6 1 0 1
--+- TEST BLOCK   610 -+-
-MODEL       12
-REMARK ENERGY 11.344023
-ATOM      1  N   PRO A   1      -6.864  95.573  15.378
-ATOM      2  CA  PRO A   1      -5.526  96.011  15.757
-ATOM      3  C   PRO A   1      -4.469  95.025  16.245
-ATOM      4  O   PRO A   1      -4.734  93.828  16.326
-ATOM      5  CB  PRO A   1      -5.726  96.975  16.890
-ATOM      6  CG  PRO A   1      -7.861  96.005  16.283
-ATOM      7  N   LEU A   2      -3.273  95.523  16.571
-ATOM      8  CA  LEU A   2      -2.192  94.669  17.049
-ATOM      9  C   LEU A   2      -1.402  95.160  18.258
-ATOM     10  O   LEU A   2      -1.002  96.321  18.303
-ATOM     11  CB  LEU A   2      -1.207  94.493  15.901
-ATOM     12  CG  LEU A   2      -1.761  93.611  14.233
-ATOM     13  H   LEU A   2      -3.117  96.504  16.484
-ATOM     14  N   ASP A   3      -1.176  94.281  19.237
-ATOM     15  CA  ASP A   3      -0.432  94.644  20.438
-ATOM     16  C   ASP A   3       0.941  94.019  20.658
-ATOM     17  O   ASP A   3       1.179  92.890  20.233
-ATOM     18  CB  ASP A   3      -1.292  94.248  21.625
-ATOM     19  CG  ASP A   3      -1.761  92.358  21.560
-ATOM     20  H   ASP A   3      -1.526  93.351  19.145
-ATOM     21  N   GLU A   4       1.845  94.746  21.319
-ATOM     22  CA  GLU A   4       3.189  94.244  21.584
-ATOM     23  C   GLU A   4       3.472  94.236  23.083
-ATOM     24  O   GLU A   4       2.944  95.070  23.815
-ATOM     25  CB  GLU A   4       4.237  95.074  20.837
-ATOM     26  CG  GLU A   4       5.341  97.238  20.553
-ATOM     27  H   GLU A   4       1.594  95.657  21.640
-ATOM     28  N   PRO A   5       4.303  93.297  23.542
-ATOM     29  CA  PRO A   5       4.643  93.198  24.957
-ATOM     30  C   PRO A   5       5.267  94.445  25.576
-ATOM     31  O   PRO A   5       6.036  95.141  24.916
-ATOM     32  CB  PRO A   5       5.621  92.039  25.132
-ATOM     33  CG  PRO A   5       4.889  92.256  22.752
-ATOM     34  N   ALA A   6       4.940  94.729  26.839
-ATOM     35  CA  ALA A   6       5.479  95.896  27.527
-ATOM     36  C   ALA A   6       5.297  95.867  29.041
-ATOM     37  O   ALA A   6       4.169  95.923  29.526
-ATOM     38  CB  ALA A   6       4.810  97.154  26.970
-ATOM     39  H   ALA A   6       4.310  94.126  27.324
-ATOM     40  N   LEU A   7       6.400  95.780  29.787
-ATOM     41  CA  LEU A   7       6.340  95.744  31.244
-ATOM     42  C   LEU A   7       7.235  96.902  31.675
-ATOM     43  O   LEU A   7       8.351  97.036  31.179
-ATOM     44  CB  LEU A   7       6.691  94.400  31.866
-ATOM     45  CG  LEU A   7       8.350  94.005  30.643
-ATOM     46  H   LEU A   7       7.289  95.738  29.336
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.344023 ( diagnolE 15.665522 extE -8.941283 firstlastE 0.000000) Rotamers: 0 6 1 5 1 0 2
--+- TEST BLOCK   612 -+-
-MODEL       13
-REMARK ENERGY 11.321078
-ATOM      1  N   PRO A   1      -6.783  95.548  15.404
-ATOM      2  CA  PRO A   1      -5.445  95.986  15.783
-ATOM      3  C   PRO A   1      -4.415  94.984  16.296
-ATOM      4  O   PRO A   1      -4.718  93.800  16.422
-ATOM      5  CB  PRO A   1      -5.637  96.986  16.894
-ATOM      6  CG  PRO A   1      -7.784  96.010  16.289
-ATOM      7  N   LEU A   2      -3.201  95.454  16.592
-ATOM      8  CA  LEU A   2      -2.142  94.583  17.091
-ATOM      9  C   LEU A   2      -1.324  95.090  18.274
-ATOM     10  O   LEU A   2      -0.887  96.239  18.273
-ATOM     11  CB  LEU A   2      -1.176  94.334  15.941
-ATOM     12  CG  LEU A   2      -0.893  96.068  15.177
-ATOM     13  H   LEU A   2      -3.013  96.426  16.469
-ATOM     14  N   ASP A   3      -1.117  94.240  19.283
-ATOM     15  CA  ASP A   3      -0.349  94.622  20.463
-ATOM     16  C   ASP A   3       1.006  93.960  20.692
-ATOM     17  O   ASP A   3       1.203  92.810  20.306
-ATOM     18  CB  ASP A   3      -1.208  94.296  21.671
-ATOM     19  CG  ASP A   3      -1.720  92.453  21.753
-ATOM     20  H   ASP A   3      -1.497  93.319  19.227
-ATOM     21  N   GLU A   4       1.939  94.681  21.318
-ATOM     22  CA  GLU A   4       3.269  94.145  21.589
-ATOM     23  C   GLU A   4       3.568  94.181  23.084
-ATOM     24  O   GLU A   4       3.074  95.057  23.790
-ATOM     25  CB  GLU A   4       4.336  94.914  20.802
-ATOM     26  CG  GLU A   4       5.901  96.752  20.622
-ATOM     27  H   GLU A   4       1.721  95.610  21.609
-ATOM     28  N   PRO A   5       4.373  93.232  23.568
-ATOM     29  CA  PRO A   5       4.724  93.173  24.983
-ATOM     30  C   PRO A   5       5.348  94.420  25.602
-ATOM     31  O   PRO A   5       6.117  95.116  24.942
-ATOM     32  CB  PRO A   5       5.717  92.033  25.158
-ATOM     33  CG  PRO A   5       4.968  92.182  22.800
-ATOM     34  N   ALA A   6       5.021  94.704  26.865
-ATOM     35  CA  ALA A   6       5.560  95.871  27.553
-ATOM     36  C   ALA A   6       5.378  95.842  29.067
-ATOM     37  O   ALA A   6       4.250  95.898  29.552
-ATOM     38  CB  ALA A   6       4.891  97.129  26.996
-ATOM     39  H   ALA A   6       4.391  94.101  27.350
-ATOM     40  N   LEU A   7       6.481  95.755  29.813
-ATOM     41  CA  LEU A   7       6.421  95.719  31.270
-ATOM     42  C   LEU A   7       7.316  96.877  31.701
-ATOM     43  O   LEU A   7       8.432  97.011  31.204
-ATOM     44  CB  LEU A   7       6.772  94.375  31.892
-ATOM     45  CG  LEU A   7       8.482  93.412  31.487
-ATOM     46  H   LEU A   7       7.370  95.712  29.362
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 11.321078 ( diagnolE 15.739237 extE -9.169840 firstlastE 0.000000) Rotamers: 0 2 1 5 1 0 1
--+- TEST BLOCK   621 -+-
-MODEL       14
-REMARK ENERGY 10.621719
-ATOM      1  N   PRO A   1      -6.805  95.588  15.446
-ATOM      2  CA  PRO A   1      -5.459  96.023  15.802
-ATOM      3  C   PRO A   1      -4.423  95.027  16.313
-ATOM      4  O   PRO A   1      -4.719  93.841  16.439
-ATOM      5  CB  PRO A   1      -5.635  97.032  16.906
-ATOM      6  CG  PRO A   1      -7.792  96.063  16.340
-ATOM      7  N   LEU A   2      -3.211  95.504  16.607
-ATOM      8  CA  LEU A   2      -2.146  94.640  17.103
-ATOM      9  C   LEU A   2      -1.305  95.157  18.266
-ATOM     10  O   LEU A   2      -0.838  96.293  18.229
-ATOM     11  CB  LEU A   2      -1.199  94.375  15.941
-ATOM     12  CG  LEU A   2      -1.710  93.144  14.494
-ATOM     13  H   LEU A   2      -3.029  96.477  16.484
-ATOM     14  N   ASP A   3      -1.112  94.330  19.295
-ATOM     15  CA  ASP A   3      -0.325  94.723  20.458
-ATOM     16  C   ASP A   3       1.018  94.036  20.687
-ATOM     17  O   ASP A   3       1.188  92.879  20.310
-ATOM     18  CB  ASP A   3      -1.178  94.448  21.685
-ATOM     19  CG  ASP A   3      -1.525  92.631  22.017
-ATOM     20  H   ASP A   3      -1.517  93.418  19.268
-ATOM     21  N   GLU A   4       1.969  94.743  21.302
-ATOM     22  CA  GLU A   4       3.288  94.182  21.570
-ATOM     23  C   GLU A   4       3.585  94.263  23.064
-ATOM     24  O   GLU A   4       3.184  95.222  23.720
-ATOM     25  CB  GLU A   4       4.372  94.886  20.747
-ATOM     26  CG  GLU A   4       3.632  97.150  20.066
-ATOM     27  H   GLU A   4       1.771  95.679  21.585
-ATOM     28  N   PRO A   5       4.284  93.261  23.603
-ATOM     29  CA  PRO A   5       4.623  93.239  25.022
-ATOM     30  C   PRO A   5       5.395  94.482  25.452
-ATOM     31  O   PRO A   5       6.169  95.027  24.668
-ATOM     32  CB  PRO A   5       5.436  91.981  25.344
-ATOM     33  CG  PRO A   5       4.708  92.085  22.908
-ATOM     34  N   ALA A   6       5.189  94.930  26.693
-ATOM     35  CA  ALA A   6       5.876  96.110  27.206
-ATOM     36  C   ALA A   6       5.805  96.262  28.722
-ATOM     37  O   ALA A   6       4.725  96.475  29.270
-ATOM     38  CB  ALA A   6       5.276  97.357  26.553
-ATOM     39  H   ALA A   6       4.548  94.445  27.284
-ATOM     40  N   LEU A   7       6.950  96.154  29.401
-ATOM     41  CA  LEU A   7       6.996  96.282  30.853
-ATOM     42  C   LEU A   7       7.879  97.500  31.107
-ATOM     43  O   LEU A   7       8.926  97.642  30.479
-ATOM     44  CB  LEU A   7       7.444  95.020  31.580
-ATOM     45  CG  LEU A   7       9.154  94.078  31.168
-ATOM     46  H   LEU A   7       7.795  95.980  28.901
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 10.621719 ( diagnolE 14.822071 extE -9.131234 firstlastE 0.000000) Rotamers: 0 6 1 6 1 0 1
--+- TEST BLOCK   629 -+-
-MODEL       15
-REMARK ENERGY 9.145411
-ATOM      1  N   PRO A   1      -6.747  95.611  15.521
-ATOM      2  CA  PRO A   1      -5.416  96.146  15.786
-ATOM      3  C   PRO A   1      -4.371  95.146  16.271
-ATOM      4  O   PRO A   1      -4.648  93.951  16.339
-ATOM      5  CB  PRO A   1      -5.551  97.235  16.845
-ATOM      6  CG  PRO A   1      -7.721  96.084  16.430
-ATOM      7  N   LEU A   2      -3.174  95.630  16.609
-ATOM      8  CA  LEU A   2      -2.103  94.763  17.086
-ATOM      9  C   LEU A   2      -1.262  95.280  18.249
-ATOM     10  O   LEU A   2      -0.795  96.417  18.213
-ATOM     11  CB  LEU A   2      -1.161  94.507  15.916
-ATOM     12  CG  LEU A   2      -1.596  93.302  14.470
-ATOM     13  H   LEU A   2      -3.007  96.611  16.533
-ATOM     14  N   ASP A   3      -1.069  94.453  19.279
-ATOM     15  CA  ASP A   3      -0.282  94.847  20.442
-ATOM     16  C   ASP A   3       1.118  94.255  20.578
-ATOM     17  O   ASP A   3       1.384  93.177  20.050
-ATOM     18  CB  ASP A   3      -1.068  94.439  21.679
-ATOM     19  CG  ASP A   3      -1.508  92.605  21.753
-ATOM     20  H   ASP A   3      -1.474  93.542  19.252
-ATOM     21  N   GLU A   4       2.010  94.953  21.284
-ATOM     22  CA  GLU A   4       3.376  94.479  21.477
-ATOM     23  C   GLU A   4       3.690  94.490  22.970
-ATOM     24  O   GLU A   4       3.237  95.380  23.688
-ATOM     25  CB  GLU A   4       4.386  95.304  20.675
-ATOM     26  CG  GLU A   4       5.316  97.555  20.278
-ATOM     27  H   GLU A   4       1.735  95.822  21.690
-ATOM     28  N   PRO A   5       4.461  93.506  23.439
-ATOM     29  CA  PRO A   5       4.822  93.421  24.850
-ATOM     30  C   PRO A   5       5.519  94.684  25.346
-ATOM     31  O   PRO A   5       6.243  95.326  24.588
-ATOM     32  CB  PRO A   5       5.720  92.203  25.086
-ATOM     33  CG  PRO A   5       4.950  92.404  22.669
-ATOM     34  N   ALA A   6       5.303  95.043  26.613
-ATOM     35  CA  ALA A   6       5.919  96.233  27.189
-ATOM     36  C   ALA A   6       5.850  96.394  28.704
-ATOM     37  O   ALA A   6       4.773  96.628  29.250
-ATOM     38  CB  ALA A   6       5.233  97.444  26.572
-ATOM     39  H   ALA A   6       4.704  94.483  27.181
-ATOM     40  N   LEU A   7       6.992  96.270  29.385
-ATOM     41  CA  LEU A   7       7.039  96.406  30.836
-ATOM     42  C   LEU A   7       7.922  97.623  31.090
-ATOM     43  O   LEU A   7       8.969  97.765  30.462
-ATOM     44  CB  LEU A   7       7.490  95.145  31.565
-ATOM     45  CG  LEU A   7       9.200  94.206  31.160
-ATOM     46  H   LEU A   7       7.835  96.080  28.887
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 9.145411 ( diagnolE 13.333818 extE -9.123460 firstlastE 0.000000) Rotamers: 0 6 1 5 1 0 1
--+- TEST BLOCK   630 -+-
-MODEL       16
-REMARK ENERGY 8.506047
-ATOM      1  N   PRO A   1      -6.744  95.671  15.518
-ATOM      2  CA  PRO A   1      -5.413  96.206  15.782
-ATOM      3  C   PRO A   1      -4.369  95.207  16.268
-ATOM      4  O   PRO A   1      -4.645  94.011  16.336
-ATOM      5  CB  PRO A   1      -5.548  97.295  16.842
-ATOM      6  CG  PRO A   1      -7.718  96.144  16.427
-ATOM      7  N   LEU A   2      -3.171  95.690  16.606
-ATOM      8  CA  LEU A   2      -2.100  94.823  17.083
-ATOM      9  C   LEU A   2      -1.259  95.340  18.246
-ATOM     10  O   LEU A   2      -0.792  96.477  18.209
-ATOM     11  CB  LEU A   2      -1.159  94.567  15.912
-ATOM     12  CG  LEU A   2      -1.696  93.544  14.356
-ATOM     13  H   LEU A   2      -3.005  96.671  16.530
-ATOM     14  N   ASP A   3      -1.066  94.513  19.276
-ATOM     15  CA  ASP A   3      -0.279  94.907  20.439
-ATOM     16  C   ASP A   3       1.070  94.220  20.625
-ATOM     17  O   ASP A   3       1.260  93.099  20.157
-ATOM     18  CB  ASP A   3      -1.115  94.619  21.679
-ATOM     19  CG  ASP A   3      -1.488  92.750  21.899
-ATOM     20  H   ASP A   3      -1.471  93.602  19.248
-ATOM     21  N   GLU A   4       2.007  94.886  21.305
-ATOM     22  CA  GLU A   4       3.331  94.323  21.540
-ATOM     23  C   GLU A   4       3.631  94.389  23.034
-ATOM     24  O   GLU A   4       3.240  95.347  23.698
-ATOM     25  CB  GLU A   4       4.407  95.026  20.709
-ATOM     26  CG  GLU A   4       5.508  97.176  20.207
-ATOM     27  H   GLU A   4       1.794  95.794  21.661
-ATOM     28  N   PRO A   5       4.321  93.377  23.565
-ATOM     29  CA  PRO A   5       4.662  93.341  24.982
-ATOM     30  C   PRO A   5       5.447  94.573  25.420
-ATOM     31  O   PRO A   5       6.225  95.117  24.640
-ATOM     32  CB  PRO A   5       5.464  92.073  25.294
-ATOM     33  CG  PRO A   5       4.733  92.202  22.860
-ATOM     34  N   ALA A   6       5.247  95.014  26.665
-ATOM     35  CA  ALA A   6       5.946  96.184  27.185
-ATOM     36  C   ALA A   6       5.875  96.430  28.689
-ATOM     37  O   ALA A   6       4.814  96.772  29.207
-ATOM     38  CB  ALA A   6       5.359  97.407  26.496
-ATOM     39  H   ALA A   6       4.602  94.531  27.253
-ATOM     40  N   LEU A   7       6.998  96.257  29.390
-ATOM     41  CA  LEU A   7       7.041  96.466  30.833
-ATOM     42  C   LEU A   7       7.925  97.683  31.087
-ATOM     43  O   LEU A   7       8.972  97.825  30.459
-ATOM     44  CB  LEU A   7       7.509  95.226  31.596
-ATOM     45  CG  LEU A   7       9.288  94.341  31.073
-ATOM     46  H   LEU A   7       7.829  95.978  28.914
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 8.506047 ( diagnolE 12.522351 extE -8.959087 firstlastE 0.000000) Rotamers: 0 6 1 5 1 0 1
--+- TEST BLOCK   631 -+-
-MODEL       17
-REMARK ENERGY 8.737266
-ATOM      1  N   PRO A   1      -6.744  95.671  15.518
-ATOM      2  CA  PRO A   1      -5.413  96.206  15.782
-ATOM      3  C   PRO A   1      -4.369  95.207  16.268
-ATOM      4  O   PRO A   1      -4.645  94.011  16.336
-ATOM      5  CB  PRO A   1      -5.548  97.295  16.842
-ATOM      6  CG  PRO A   1      -7.718  96.144  16.427
-ATOM      7  N   LEU A   2      -3.171  95.690  16.606
-ATOM      8  CA  LEU A   2      -2.100  94.823  17.083
-ATOM      9  C   LEU A   2      -1.259  95.340  18.246
-ATOM     10  O   LEU A   2      -0.792  96.477  18.209
-ATOM     11  CB  LEU A   2      -1.159  94.567  15.912
-ATOM     12  CG  LEU A   2      -1.752  93.485  14.377
-ATOM     13  H   LEU A   2      -3.005  96.671  16.530
-ATOM     14  N   ASP A   3      -1.066  94.513  19.276
-ATOM     15  CA  ASP A   3      -0.279  94.907  20.439
-ATOM     16  C   ASP A   3       1.070  94.220  20.625
-ATOM     17  O   ASP A   3       1.260  93.099  20.157
-ATOM     18  CB  ASP A   3      -1.115  94.619  21.679
-ATOM     19  CG  ASP A   3      -1.452  92.791  21.986
-ATOM     20  H   ASP A   3      -1.471  93.602  19.248
-ATOM     21  N   GLU A   4       2.007  94.886  21.305
-ATOM     22  CA  GLU A   4       3.331  94.323  21.540
-ATOM     23  C   GLU A   4       3.813  94.335  22.987
-ATOM     24  O   GLU A   4       3.506  95.265  23.730
-ATOM     25  CB  GLU A   4       4.335  95.107  20.700
-ATOM     26  CG  GLU A   4       5.509  97.214  20.293
-ATOM     27  H   GLU A   4       1.794  95.794  21.661
-ATOM     28  N   PRO A   5       4.565  93.308  23.389
-ATOM     29  CA  PRO A   5       5.079  93.220  24.752
-ATOM     30  C   PRO A   5       5.911  94.440  25.136
-ATOM     31  O   PRO A   5       6.585  95.018  24.286
-ATOM     32  CB  PRO A   5       5.915  91.947  24.913
-ATOM     33  CG  PRO A   5       4.888  92.162  22.595
-ATOM     34  N   ALA A   6       5.865  94.833  26.411
-ATOM     35  CA  ALA A   6       6.622  95.987  26.885
-ATOM     36  C   ALA A   6       6.737  96.176  28.395
-ATOM     37  O   ALA A   6       5.748  96.492  29.053
-ATOM     38  CB  ALA A   6       5.953  97.232  26.321
-ATOM     39  H   ALA A   6       5.299  94.324  27.056
-ATOM     40  N   LEU A   7       7.939  95.984  28.944
-ATOM     41  CA  LEU A   7       8.160  96.138  30.378
-ATOM     42  C   LEU A   7       9.067  97.351  30.566
-ATOM     43  O   LEU A   7      10.027  97.523  29.820
-ATOM     44  CB  LEU A   7       8.720  94.874  31.029
-ATOM     45  CG  LEU A   7       7.229  93.604  30.701
-ATOM     46  H   LEU A   7       8.705  95.728  28.359
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 8.737266 ( diagnolE 13.000491 extE -9.224066 firstlastE 0.000000) Rotamers: 0 6 1 5 1 0 8
--+- TEST BLOCK   633 -+-
-MODEL       18
-REMARK ENERGY 8.117734
-ATOM      1  N   PRO A   1      -6.827  95.686  15.561
-ATOM      2  CA  PRO A   1      -5.496  96.221  15.825
-ATOM      3  C   PRO A   1      -4.451  95.221  16.311
-ATOM      4  O   PRO A   1      -4.728  94.026  16.379
-ATOM      5  CB  PRO A   1      -5.631  97.310  16.885
-ATOM      6  CG  PRO A   1      -7.801  96.159  16.470
-ATOM      7  N   LEU A   2      -3.254  95.705  16.649
-ATOM      8  CA  LEU A   2      -2.183  94.837  17.126
-ATOM      9  C   LEU A   2      -1.342  95.355  18.288
-ATOM     10  O   LEU A   2      -0.875  96.491  18.252
-ATOM     11  CB  LEU A   2      -1.241  94.582  15.955
-ATOM     12  CG  LEU A   2      -1.676  93.377  14.510
-ATOM     13  H   LEU A   2      -3.088  96.686  16.573
-ATOM     14  N   ASP A   3      -1.149  94.528  19.318
-ATOM     15  CA  ASP A   3      -0.362  94.921  20.481
-ATOM     16  C   ASP A   3       0.988  94.235  20.667
-ATOM     17  O   ASP A   3       1.177  93.114  20.200
-ATOM     18  CB  ASP A   3      -1.198  94.634  21.721
-ATOM     19  CG  ASP A   3      -1.535  92.806  22.029
-ATOM     20  H   ASP A   3      -1.554  93.616  19.291
-ATOM     21  N   GLU A   4       1.924  94.901  21.347
-ATOM     22  CA  GLU A   4       3.248  94.337  21.583
-ATOM     23  C   GLU A   4       3.804  94.365  23.003
-ATOM     24  O   GLU A   4       3.436  95.234  23.791
-ATOM     25  CB  GLU A   4       4.220  95.115  20.713
-ATOM     26  CG  GLU A   4       5.791  96.948  20.411
-ATOM     27  H   GLU A   4       1.711  95.808  21.703
-ATOM     28  N   PRO A   5       4.686  93.418  23.332
-ATOM     29  CA  PRO A   5       5.279  93.352  24.663
-ATOM     30  C   PRO A   5       5.990  94.647  25.045
-ATOM     31  O   PRO A   5       6.549  95.320  24.181
-ATOM     32  CB  PRO A   5       6.259  92.177  24.740
-ATOM     33  CG  PRO A   5       5.091  92.338  22.485
-ATOM     34  N   ALA A   6       5.971  94.998  26.333
-ATOM     35  CA  ALA A   6       6.619  96.216  26.806
-ATOM     36  C   ALA A   6       6.762  96.259  28.324
-ATOM     37  O   ALA A   6       5.762  96.340  29.034
-ATOM     38  CB  ALA A   6       5.828  97.437  26.329
-ATOM     39  H   ALA A   6       5.500  94.411  26.988
-ATOM     40  N   LEU A   7       7.999  96.204  28.823
-ATOM     41  CA  LEU A   7       8.250  96.238  30.259
-ATOM     42  C   LEU A   7       8.961  97.553  30.562
-ATOM     43  O   LEU A   7       9.853  97.956  29.819
-ATOM     44  CB  LEU A   7       9.027  95.018  30.753
-ATOM     45  CG  LEU A   7       7.616  93.647  30.787
-ATOM     46  H   LEU A   7       8.773  96.139  28.196
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 8.117734 ( diagnolE 12.408976 extE -9.236603 firstlastE 0.000000) Rotamers: 0 6 1 5 1 0 8
--+- TEST BLOCK   647 -+-
-MODEL       19
-REMARK ENERGY 7.233195
-ATOM      1  N   PRO A   1      -6.547  95.608  15.456
-ATOM      2  CA  PRO A   1      -5.216  96.143  15.721
-ATOM      3  C   PRO A   1      -4.182  95.148  16.238
-ATOM      4  O   PRO A   1      -4.482  93.965  16.379
-ATOM      5  CB  PRO A   1      -5.355  97.256  16.754
-ATOM      6  CG  PRO A   1      -7.527  96.105  16.345
-ATOM      7  N   LEU A   2      -2.966  95.623  16.521
-ATOM      8  CA  LEU A   2      -1.903  94.759  17.021
-ATOM      9  C   LEU A   2      -1.028  95.297  18.149
-ATOM     10  O   LEU A   2      -0.467  96.383  18.029
-ATOM     11  CB  LEU A   2      -0.985  94.448  15.848
-ATOM     12  CG  LEU A   2      -1.504  93.210  14.438
-ATOM     13  H   LEU A   2      -2.781  96.594  16.386
-ATOM     14  N   ASP A   3      -0.911  94.541  19.244
-ATOM     15  CA  ASP A   3      -0.099  94.959  20.381
-ATOM     16  C   ASP A   3       1.181  94.171  20.641
-ATOM     17  O   ASP A   3       1.267  93.000  20.279
-ATOM     18  CB  ASP A   3      -0.967  94.854  21.629
-ATOM     19  CG  ASP A   3      -1.922  93.057  21.525
-ATOM     20  H   ASP A   3      -1.390  93.667  19.284
-ATOM     21  N   GLU A   4       2.174  94.808  21.267
-ATOM     22  CA  GLU A   4       3.440  94.149  21.565
-ATOM     23  C   GLU A   4       3.948  94.226  23.001
-ATOM     24  O   GLU A   4       3.584  95.143  23.735
-ATOM     25  CB  GLU A   4       4.501  94.777  20.673
-ATOM     26  CG  GLU A   4       6.270  96.404  20.315
-ATOM     27  H   GLU A   4       2.045  95.760  21.537
-ATOM     28  N   PRO A   5       4.788  93.269  23.405
-ATOM     29  CA  PRO A   5       5.333  93.248  24.757
-ATOM     30  C   PRO A   5       6.225  94.426  25.137
-ATOM     31  O   PRO A   5       6.896  94.993  24.277
-ATOM     32  CB  PRO A   5       6.148  91.968  24.917
-ATOM     33  CG  PRO A   5       5.081  92.081  22.664
-ATOM     34  N   ALA A   6       6.236  94.795  26.420
-ATOM     35  CA  ALA A   6       7.053  95.907  26.891
-ATOM     36  C   ALA A   6       7.187  95.843  28.410
-ATOM     37  O   ALA A   6       6.189  95.938  29.120
-ATOM     38  CB  ALA A   6       6.474  97.252  26.441
-ATOM     39  H   ALA A   6       5.670  94.296  27.073
-ATOM     40  N   LEU A   7       8.415  95.682  28.908
-ATOM     41  CA  LEU A   7       8.657  95.608  30.345
-ATOM     42  C   LEU A   7       9.443  96.856  30.736
-ATOM     43  O   LEU A   7      10.363  97.252  30.023
-ATOM     44  CB  LEU A   7       9.356  94.314  30.761
-ATOM     45  CG  LEU A   7       7.868  93.136  31.155
-ATOM     46  H   LEU A   7       9.188  95.611  28.281
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 7.233195 ( diagnolE 11.976143 extE -9.484474 firstlastE 0.000000) Rotamers: 0 6 2 5 1 0 8
--+- TEST BLOCK   720 -+-
-MODEL       20
-REMARK ENERGY 5.666789
-ATOM      1  N   PRO A   1      -8.080  95.550  15.628
-ATOM      2  CA  PRO A   1      -6.655  95.758  15.862
-ATOM      3  C   PRO A   1      -5.946  94.552  16.470
-ATOM      4  O   PRO A   1      -6.584  93.538  16.745
-ATOM      5  CB  PRO A   1      -6.472  96.964  16.787
-ATOM      6  CG  PRO A   1      -8.897  96.357  16.451
-ATOM      7  N   LEU A   2      -4.632  94.658  16.679
-ATOM      8  CA  LEU A   2      -3.857  93.565  17.255
-ATOM      9  C   LEU A   2      -2.856  94.135  18.255
-ATOM     10  O   LEU A   2      -2.091  95.035  17.914
-ATOM     11  CB  LEU A   2      -3.163  92.733  16.173
-ATOM     12  CG  LEU A   2      -1.863  93.442  14.866
-ATOM     13  H   LEU A   2      -4.169  95.507  16.435
-ATOM     14  N   ASP A   3      -2.859  93.617  19.485
-ATOM     15  CA  ASP A   3      -1.944  94.089  20.518
-ATOM     16  C   ASP A   3      -0.750  93.209  20.876
-ATOM     17  O   ASP A   3      -0.787  92.001  20.650
-ATOM     18  CB  ASP A   3      -2.760  94.269  21.787
-ATOM     19  CG  ASP A   3      -3.502  92.678  22.476
-ATOM     20  H   ASP A   3      -3.504  92.888  19.703
-ATOM     21  N   GLU A   4       0.306  93.808  21.431
-ATOM     22  CA  GLU A   4       1.500  93.061  21.811
-ATOM     23  C   GLU A   4       2.164  93.390  23.144
-ATOM     24  O   GLU A   4       1.937  94.464  23.697
-ATOM     25  CB  GLU A   4       2.536  93.303  20.729
-ATOM     26  CG  GLU A   4       2.451  95.498  20.043
-ATOM     27  H   GLU A   4       0.277  94.792  21.589
-ATOM     28  N   PRO A   5       2.984  92.472  23.661
-ATOM     29  CA  PRO A   5       3.671  92.684  24.930
-ATOM     30  C   PRO A   5       4.730  93.775  25.052
-ATOM     31  O   PRO A   5       5.553  93.937  24.153
-ATOM     32  CB  PRO A   5       4.369  91.384  25.253
-ATOM     33  CG  PRO A   5       3.332  91.248  23.045
-ATOM     34  N   ALA A   6       4.713  94.522  26.158
-ATOM     35  CA  ALA A   6       5.681  95.592  26.376
-ATOM     36  C   ALA A   6       5.809  95.777  27.885
-ATOM     37  O   ALA A   6       4.810  96.001  28.565
-ATOM     38  CB  ALA A   6       5.312  96.885  25.648
-ATOM     39  H   ALA A   6       4.021  94.344  26.854
-ATOM     40  N   LEU A   7       7.033  95.683  28.410
-ATOM     41  CA  LEU A   7       7.268  95.842  29.840
-ATOM     42  C   LEU A   7       8.149  97.074  30.026
-ATOM     43  O   LEU A   7       9.055  97.308  29.230
-ATOM     44  CB  LEU A   7       7.869  94.589  30.480
-ATOM     45  CG  LEU A   7       9.434  94.275  29.310
-ATOM     46  H   LEU A   7       7.806  95.499  27.807
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 5.666789 ( diagnolE 12.470243 extE -11.943711 firstlastE 0.000000) Rotamers: 0 0 0 8 0 0 2
--+- TEST BLOCK   722 -+-
-MODEL       21
-REMARK ENERGY 5.337018
-ATOM      1  N   PRO A   1      -8.080  95.550  15.628
-ATOM      2  CA  PRO A   1      -6.655  95.758  15.862
-ATOM      3  C   PRO A   1      -5.946  94.552  16.470
-ATOM      4  O   PRO A   1      -6.584  93.538  16.745
-ATOM      5  CB  PRO A   1      -6.472  96.964  16.787
-ATOM      6  CG  PRO A   1      -8.897  96.357  16.451
-ATOM      7  N   LEU A   2      -4.632  94.658  16.679
-ATOM      8  CA  LEU A   2      -3.857  93.565  17.255
-ATOM      9  C   LEU A   2      -2.856  94.135  18.255
-ATOM     10  O   LEU A   2      -2.091  95.035  17.914
-ATOM     11  CB  LEU A   2      -3.163  92.733  16.173
-ATOM     12  CG  LEU A   2      -1.830  93.528  14.891
-ATOM     13  H   LEU A   2      -4.169  95.507  16.435
-ATOM     14  N   ASP A   3      -2.859  93.617  19.485
-ATOM     15  CA  ASP A   3      -1.944  94.089  20.518
-ATOM     16  C   ASP A   3      -0.750  93.209  20.876
-ATOM     17  O   ASP A   3      -0.787  92.001  20.650
-ATOM     18  CB  ASP A   3      -2.760  94.269  21.787
-ATOM     19  CG  ASP A   3      -3.269  92.787  22.709
-ATOM     20  H   ASP A   3      -3.504  92.888  19.703
-ATOM     21  N   GLU A   4       0.306  93.808  21.431
-ATOM     22  CA  GLU A   4       1.500  93.061  21.811
-ATOM     23  C   GLU A   4       2.164  93.390  23.144
-ATOM     24  O   GLU A   4       1.937  94.464  23.697
-ATOM     25  CB  GLU A   4       2.536  93.303  20.729
-ATOM     26  CG  GLU A   4       2.206  95.549  19.999
-ATOM     27  H   GLU A   4       0.277  94.792  21.589
-ATOM     28  N   PRO A   5       2.984  92.472  23.661
-ATOM     29  CA  PRO A   5       3.671  92.684  24.930
-ATOM     30  C   PRO A   5       4.730  93.775  25.052
-ATOM     31  O   PRO A   5       5.553  93.937  24.153
-ATOM     32  CB  PRO A   5       4.369  91.384  25.253
-ATOM     33  CG  PRO A   5       3.332  91.248  23.045
-ATOM     34  N   ALA A   6       4.713  94.522  26.158
-ATOM     35  CA  ALA A   6       5.681  95.592  26.376
-ATOM     36  C   ALA A   6       5.809  95.777  27.885
-ATOM     37  O   ALA A   6       4.810  96.001  28.565
-ATOM     38  CB  ALA A   6       5.312  96.885  25.648
-ATOM     39  H   ALA A   6       4.021  94.344  26.854
-ATOM     40  N   LEU A   7       7.033  95.683  28.410
-ATOM     41  CA  LEU A   7       7.268  95.842  29.840
-ATOM     42  C   LEU A   7       8.149  97.074  30.026
-ATOM     43  O   LEU A   7       9.055  97.308  29.230
-ATOM     44  CB  LEU A   7       7.869  94.589  30.480
-ATOM     45  CG  LEU A   7       9.240  94.202  28.921
-ATOM     46  H   LEU A   7       7.806  95.499  27.807
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 5.337018 ( diagnolE 12.470243 extE -12.273482 firstlastE 0.000000) Rotamers: 0 0 0 8 0 0 2
--+- TEST BLOCK   726 -+-
-MODEL       22
-REMARK ENERGY 3.766487
-ATOM      1  N   PRO A   1      -8.053  95.501  15.653
-ATOM      2  CA  PRO A   1      -6.628  95.709  15.888
-ATOM      3  C   PRO A   1      -5.919  94.503  16.495
-ATOM      4  O   PRO A   1      -6.557  93.488  16.770
-ATOM      5  CB  PRO A   1      -6.445  96.915  16.812
-ATOM      6  CG  PRO A   1      -8.870  96.308  16.476
-ATOM      7  N   LEU A   2      -4.605  94.609  16.704
-ATOM      8  CA  LEU A   2      -3.830  93.515  17.280
-ATOM      9  C   LEU A   2      -2.829  94.086  18.280
-ATOM     10  O   LEU A   2      -2.064  94.986  17.940
-ATOM     11  CB  LEU A   2      -3.136  92.683  16.198
-ATOM     12  CG  LEU A   2      -1.891  93.572  14.843
-ATOM     13  H   LEU A   2      -4.142  95.458  16.461
-ATOM     14  N   ASP A   3      -2.832  93.568  19.510
-ATOM     15  CA  ASP A   3      -1.917  94.040  20.544
-ATOM     16  C   ASP A   3      -0.723  93.160  20.901
-ATOM     17  O   ASP A   3      -0.759  91.952  20.676
-ATOM     18  CB  ASP A   3      -2.733  94.219  21.813
-ATOM     19  CG  ASP A   3      -3.389  92.799  22.675
-ATOM     20  H   ASP A   3      -3.477  92.838  19.728
-ATOM     21  N   GLU A   4       0.333  93.759  21.456
-ATOM     22  CA  GLU A   4       1.527  93.012  21.836
-ATOM     23  C   GLU A   4       2.191  93.341  23.169
-ATOM     24  O   GLU A   4       1.964  94.415  23.722
-ATOM     25  CB  GLU A   4       2.563  93.254  20.754
-ATOM     26  CG  GLU A   4       2.233  95.500  20.025
-ATOM     27  H   GLU A   4       0.304  94.743  21.615
-ATOM     28  N   PRO A   5       3.011  92.423  23.687
-ATOM     29  CA  PRO A   5       3.698  92.635  24.956
-ATOM     30  C   PRO A   5       4.660  93.818  25.000
-ATOM     31  O   PRO A   5       5.414  94.033  24.053
-ATOM     32  CB  PRO A   5       4.485  91.370  25.287
-ATOM     33  CG  PRO A   5       3.411  91.233  23.036
-ATOM     34  N   ALA A   6       4.638  94.583  26.094
-ATOM     35  CA  ALA A   6       5.516  95.739  26.239
-ATOM     36  C   ALA A   6       5.710  95.964  27.735
-ATOM     37  O   ALA A   6       4.734  96.114  28.467
-ATOM     38  CB  ALA A   6       4.993  96.978  25.514
-ATOM     39  H   ALA A   6       4.004  94.358  26.830
-ATOM     40  N   LEU A   7       6.965  95.990  28.191
-ATOM     41  CA  LEU A   7       7.264  96.199  29.603
-ATOM     42  C   LEU A   7       8.040  97.508  29.720
-ATOM     43  O   LEU A   7       8.876  97.805  28.869
-ATOM     44  CB  LEU A   7       8.009  95.018  30.227
-ATOM     45  CG  LEU A   7       9.277  94.760  28.463
-ATOM     46  H   LEU A   7       7.718  95.863  27.549
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 3.766487 ( diagnolE 10.895958 extE -12.125364 firstlastE 0.000000) Rotamers: 0 0 0 8 0 0 2
--+- TEST BLOCK   736 -+-
-MODEL       23
-REMARK ENERGY 4.062440
-ATOM      1  N   PRO A   1      -8.005  95.579  15.726
-ATOM      2  CA  PRO A   1      -6.581  95.788  15.960
-ATOM      3  C   PRO A   1      -5.872  94.581  16.567
-ATOM      4  O   PRO A   1      -6.509  93.567  16.842
-ATOM      5  CB  PRO A   1      -6.398  96.993  16.885
-ATOM      6  CG  PRO A   1      -8.823  96.387  16.549
-ATOM      7  N   LEU A   2      -4.558  94.687  16.777
-ATOM      8  CA  LEU A   2      -3.782  93.594  17.352
-ATOM      9  C   LEU A   2      -2.782  94.164  18.352
-ATOM     10  O   LEU A   2      -2.016  95.064  18.012
-ATOM     11  CB  LEU A   2      -3.088  92.762  16.270
-ATOM     12  CG  LEU A   2      -1.626  93.358  15.118
-ATOM     13  H   LEU A   2      -4.094  95.536  16.533
-ATOM     14  N   ASP A   3      -2.784  93.646  19.583
-ATOM     15  CA  ASP A   3      -1.869  94.118  20.616
-ATOM     16  C   ASP A   3      -0.676  93.238  20.973
-ATOM     17  O   ASP A   3      -0.712  92.030  20.748
-ATOM     18  CB  ASP A   3      -2.686  94.298  21.885
-ATOM     19  CG  ASP A   3      -3.499  92.742  22.540
-ATOM     20  H   ASP A   3      -3.429  92.917  19.801
-ATOM     21  N   GLU A   4       0.380  93.837  21.529
-ATOM     22  CA  GLU A   4       1.574  93.090  21.909
-ATOM     23  C   GLU A   4       2.198  93.395  23.267
-ATOM     24  O   GLU A   4       1.947  94.456  23.835
-ATOM     25  CB  GLU A   4       2.634  93.368  20.854
-ATOM     26  CG  GLU A   4       1.921  95.742  20.229
-ATOM     27  H   GLU A   4       0.352  94.822  21.687
-ATOM     28  N   PRO A   5       3.008  92.471  23.789
-ATOM     29  CA  PRO A   5       3.656  92.661  25.082
-ATOM     30  C   PRO A   5       4.598  93.854  25.210
-ATOM     31  O   PRO A   5       5.323  94.169  24.269
-ATOM     32  CB  PRO A   5       4.461  91.403  25.383
-ATOM     33  CG  PRO A   5       3.455  91.313  23.114
-ATOM     34  N   ALA A   6       4.589  94.517  26.369
-ATOM     35  CA  ALA A   6       5.449  95.672  26.598
-ATOM     36  C   ALA A   6       5.678  95.724  28.105
-ATOM     37  O   ALA A   6       4.721  95.688  28.875
-ATOM     38  CB  ALA A   6       4.898  96.972  26.017
-ATOM     39  H   ALA A   6       3.978  94.214  27.097
-ATOM     40  N   LEU A   7       6.942  95.808  28.529
-ATOM     41  CA  LEU A   7       7.273  95.863  29.948
-ATOM     42  C   LEU A   7       8.027  97.171  30.164
-ATOM     43  O   LEU A   7       8.837  97.561  29.325
-ATOM     44  CB  LEU A   7       8.042  94.637  30.436
-ATOM     45  CG  LEU A   7       9.533  94.586  29.119
-ATOM     46  H   LEU A   7       7.678  95.834  27.856
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 4.062440 ( diagnolE 11.323247 extE -12.299458 firstlastE 0.000000) Rotamers: 0 0 0 8 0 0 2
--+- TEST BLOCK  3052 -+-
-MODEL       24
-REMARK ENERGY 2.680548
-ATOM      1  N   PRO A   1     -10.043  94.677  19.106
-ATOM      2  CA  PRO A   1      -8.892  95.542  19.344
-ATOM      3  C   PRO A   1      -7.636  94.802  18.894
-ATOM      4  O   PRO A   1      -7.717  93.900  18.063
-ATOM      5  CB  PRO A   1      -8.803  95.994  20.804
-ATOM      6  CG  PRO A   1     -10.696  94.290  20.298
-ATOM      7  N   LEU A   2      -6.477  95.179  19.439
-ATOM      8  CA  LEU A   2      -5.216  94.539  19.081
-ATOM      9  C   LEU A   2      -4.389  94.465  20.360
-ATOM     10  O   LEU A   2      -4.642  95.214  21.301
-ATOM     11  CB  LEU A   2      -4.490  95.240  17.934
-ATOM     12  CG  LEU A   2      -2.792  94.245  17.196
-ATOM     13  H   LEU A   2      -6.473  95.918  20.110
-ATOM     14  N   ASP A   3      -3.402  93.567  20.398
-ATOM     15  CA  ASP A   3      -2.549  93.412  21.571
-ATOM     16  C   ASP A   3      -1.135  93.040  21.138
-ATOM     17  O   ASP A   3      -0.892  91.902  20.743
-ATOM     18  CB  ASP A   3      -3.124  92.376  22.542
-ATOM     19  CG  ASP A   3      -2.199  92.293  24.193
-ATOM     20  H   ASP A   3      -3.243  92.986  19.602
-ATOM     21  N   GLU A   4      -0.203  93.994  21.210
-ATOM     22  CA  GLU A   4       1.180  93.746  20.820
-ATOM     23  C   GLU A   4       2.136  93.838  22.006
-ATOM     24  O   GLU A   4       2.088  94.807  22.760
-ATOM     25  CB  GLU A   4       1.602  94.733  19.728
-ATOM     26  CG  GLU A   4      -0.203  94.791  18.219
-ATOM     27  H   GLU A   4      -0.461  94.900  21.538
-ATOM     28  N   PRO A   5       3.002  92.836  22.172
-ATOM     29  CA  PRO A   5       3.959  92.824  23.272
-ATOM     30  C   PRO A   5       5.031  93.909  23.279
-ATOM     31  O   PRO A   5       5.706  94.115  22.272
-ATOM     32  CB  PRO A   5       4.673  91.480  23.238
-ATOM     33  CG  PRO A   5       3.149  91.732  21.302
-ATOM     34  N   ALA A   6       5.190  94.603  24.409
-ATOM     35  CA  ALA A   6       6.186  95.662  24.524
-ATOM     36  C   ALA A   6       7.023  95.490  25.788
-ATOM     37  O   ALA A   6       6.479  95.211  26.854
-ATOM     38  CB  ALA A   6       5.513  97.039  24.507
-ATOM     39  H   ALA A   6       4.613  94.390  25.194
-ATOM     40  N   LEU A   7       8.344  95.654  25.672
-ATOM     41  CA  LEU A   7       9.237  95.512  26.817
-ATOM     42  C   LEU A   7       9.791  96.898  27.133
-ATOM     43  O   LEU A   7      10.513  97.472  26.320
-ATOM     44  CB  LEU A   7      10.336  94.475  26.583
-ATOM     45  CG  LEU A   7      11.793  94.629  25.273
-ATOM     46  H   LEU A   7       8.728  95.880  24.780
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 2.680548 ( diagnolE 9.521395 extE -11.856856 firstlastE 0.000000) Rotamers: 0 4 4 18 0 0 0
--+- TEST BLOCK  3075 -+-
-MODEL       25
-REMARK ENERGY 2.356965
-ATOM      1  N   PRO A   1     -10.071  95.065  18.952
-ATOM      2  CA  PRO A   1      -8.862  95.860  19.137
-ATOM      3  C   PRO A   1      -7.664  94.975  18.808
-ATOM      4  O   PRO A   1      -7.811  93.973  18.112
-ATOM      5  CB  PRO A   1      -8.771  96.464  20.540
-ATOM      6  CG  PRO A   1     -10.785  94.862  20.154
-ATOM      7  N   LEU A   2      -6.480  95.340  19.307
-ATOM      8  CA  LEU A   2      -5.270  94.565  19.054
-ATOM      9  C   LEU A   2      -4.497  94.439  20.364
-ATOM     10  O   LEU A   2      -4.698  95.237  21.276
-ATOM     11  CB  LEU A   2      -4.417  95.178  17.940
-ATOM     12  CG  LEU A   2      -2.892  94.063  17.186
-ATOM     13  H   LEU A   2      -6.422  96.164  19.866
-ATOM     14  N   ASP A   3      -3.616  93.441  20.459
-ATOM     15  CA  ASP A   3      -2.824  93.229  21.665
-ATOM     16  C   ASP A   3      -1.398  92.959  21.195
-ATOM     17  O   ASP A   3      -1.123  91.894  20.646
-ATOM     18  CB  ASP A   3      -3.381  92.134  22.572
-ATOM     19  CG  ASP A   3      -2.589  91.953  24.227
-ATOM     20  H   ASP A   3      -3.495  92.824  19.684
-ATOM     21  N   GLU A   4      -0.493  93.917  21.407
-ATOM     22  CA  GLU A   4       0.898  93.763  20.997
-ATOM     23  C   GLU A   4       1.864  93.855  22.174
-ATOM     24  O   GLU A   4       1.831  94.830  22.923
-ATOM     25  CB  GLU A   4       1.252  94.822  19.949
-ATOM     26  CG  GLU A   4      -0.851  94.991  18.716
-ATOM     27  H   GLU A   4      -0.776  94.761  21.858
-ATOM     28  N   PRO A   5       2.723  92.846  22.340
-ATOM     29  CA  PRO A   5       3.689  92.833  23.433
-ATOM     30  C   PRO A   5       4.735  93.943  23.458
-ATOM     31  O   PRO A   5       5.423  94.163  22.464
-ATOM     32  CB  PRO A   5       4.435  91.509  23.363
-ATOM     33  CG  PRO A   5       2.891  91.766  21.444
-ATOM     34  N   ALA A   6       4.858  94.642  24.589
-ATOM     35  CA  ALA A   6       5.826  95.724  24.722
-ATOM     36  C   ALA A   6       6.660  95.571  25.990
-ATOM     37  O   ALA A   6       6.116  95.283  27.054
-ATOM     38  CB  ALA A   6       5.116  97.081  24.711
-ATOM     39  H   ALA A   6       4.271  94.417  25.364
-ATOM     40  N   LEU A   7       7.978  95.760  25.881
-ATOM     41  CA  LEU A   7       8.868  95.638  27.030
-ATOM     42  C   LEU A   7       9.338  97.036  27.418
-ATOM     43  O   LEU A   7      10.030  97.691  26.641
-ATOM     44  CB  LEU A   7      10.037  94.690  26.757
-ATOM     45  CG  LEU A   7      11.441  94.983  25.403
-ATOM     46  H   LEU A   7       8.362  95.992  24.990
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 2.356965 ( diagnolE 8.958386 extE -11.788739 firstlastE 0.000000) Rotamers: 0 3 4 18 0 0 0
--+- TEST BLOCK  3083 -+-
-MODEL       26
-REMARK ENERGY 2.270039
-ATOM      1  N   PRO A   1     -10.052  95.042  18.750
-ATOM      2  CA  PRO A   1      -8.842  95.837  18.935
-ATOM      3  C   PRO A   1      -7.646  94.947  18.612
-ATOM      4  O   PRO A   1      -7.796  93.940  17.924
-ATOM      5  CB  PRO A   1      -8.754  96.447  20.335
-ATOM      6  CG  PRO A   1     -10.770  94.845  19.952
-ATOM      7  N   LEU A   2      -6.461  95.314  19.105
-ATOM      8  CA  LEU A   2      -5.253  94.536  18.857
-ATOM      9  C   LEU A   2      -4.467  94.503  20.164
-ATOM     10  O   LEU A   2      -4.635  95.382  21.006
-ATOM     11  CB  LEU A   2      -4.432  95.070  17.684
-ATOM     12  CG  LEU A   2      -2.977  94.041  16.863
-ATOM     13  H   LEU A   2      -6.401  96.143  19.657
-ATOM     14  N   ASP A   3      -3.610  93.493  20.336
-ATOM     15  CA  ASP A   3      -2.808  93.366  21.548
-ATOM     16  C   ASP A   3      -1.396  93.018  21.087
-ATOM     17  O   ASP A   3      -1.155  91.903  20.630
-ATOM     18  CB  ASP A   3      -3.382  92.369  22.553
-ATOM     19  CG  ASP A   3      -2.687  92.107  24.126
-ATOM     20  H   ASP A   3      -3.516  92.809  19.617
-ATOM     21  N   GLU A   4      -0.464  93.966  21.206
-ATOM     22  CA  GLU A   4       0.917  93.740  20.796
-ATOM     23  C   GLU A   4       1.886  93.827  21.971
-ATOM     24  O   GLU A   4       1.846  94.793  22.731
-ATOM     25  CB  GLU A   4       1.315  94.747  19.713
-ATOM     26  CG  GLU A   4      -0.462  94.947  18.264
-ATOM     27  H   GLU A   4      -0.719  94.853  21.584
-ATOM     28  N   PRO A   5       2.753  92.824  22.124
-ATOM     29  CA  PRO A   5       3.723  92.807  23.213
-ATOM     30  C   PRO A   5       4.760  93.925  23.248
-ATOM     31  O   PRO A   5       5.443  94.162  22.255
-ATOM     32  CB  PRO A   5       4.480  91.490  23.126
-ATOM     33  CG  PRO A   5       2.928  91.755  21.215
-ATOM     34  N   ALA A   6       4.879  94.612  24.387
-ATOM     35  CA  ALA A   6       5.839  95.701  24.529
-ATOM     36  C   ALA A   6       6.677  95.540  25.793
-ATOM     37  O   ALA A   6       6.138  95.237  26.855
-ATOM     38  CB  ALA A   6       5.117  97.052  24.535
-ATOM     39  H   ALA A   6       4.296  94.374  25.161
-ATOM     40  N   LEU A   7       7.993  95.743  25.683
-ATOM     41  CA  LEU A   7       8.887  95.615  26.828
-ATOM     42  C   LEU A   7       9.357  97.013  27.216
-ATOM     43  O   LEU A   7      10.049  97.668  26.439
-ATOM     44  CB  LEU A   7      10.054  94.666  26.551
-ATOM     45  CG  LEU A   7      11.508  94.978  25.272
-ATOM     46  H   LEU A   7       8.373  95.987  24.794
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 2.270039 ( diagnolE 9.301409 extE -12.256865 firstlastE 0.000000) Rotamers: 0 3 4 18 0 0 0
--+- TEST BLOCK  3100 -+-
-MODEL       27
-REMARK ENERGY 1.144656
-ATOM      1  N   PRO A   1     -10.079  95.190  18.442
-ATOM      2  CA  PRO A   1      -8.870  95.985  18.627
-ATOM      3  C   PRO A   1      -7.673  95.095  18.304
-ATOM      4  O   PRO A   1      -7.824  94.088  17.616
-ATOM      5  CB  PRO A   1      -8.781  96.596  20.027
-ATOM      6  CG  PRO A   1     -10.797  94.993  19.644
-ATOM      7  N   LEU A   2      -6.488  95.462  18.797
-ATOM      8  CA  LEU A   2      -5.280  94.684  18.549
-ATOM      9  C   LEU A   2      -4.494  94.651  19.856
-ATOM     10  O   LEU A   2      -4.662  95.530  20.698
-ATOM     11  CB  LEU A   2      -4.459  95.219  17.376
-ATOM     12  CG  LEU A   2      -3.081  94.302  16.448
-ATOM     13  H   LEU A   2      -6.428  96.291  19.350
-ATOM     14  N   ASP A   3      -3.637  93.641  20.028
-ATOM     15  CA  ASP A   3      -2.835  93.514  21.240
-ATOM     16  C   ASP A   3      -1.421  93.182  20.776
-ATOM     17  O   ASP A   3      -1.173  92.076  20.300
-ATOM     18  CB  ASP A   3      -3.399  92.507  22.240
-ATOM     19  CG  ASP A   3      -2.924  92.140  23.761
-ATOM     20  H   ASP A   3      -3.543  92.957  19.309
-ATOM     21  N   GLU A   4      -0.494  94.134  20.911
-ATOM     22  CA  GLU A   4       0.889  93.922  20.499
-ATOM     23  C   GLU A   4       1.820  94.017  21.704
-ATOM     24  O   GLU A   4       1.783  95.004  22.434
-ATOM     25  CB  GLU A   4       1.296  94.921  19.411
-ATOM     26  CG  GLU A   4      -0.981  94.964  18.221
-ATOM     27  H   GLU A   4      -0.756  95.013  21.304
-ATOM     28  N   PRO A   5       2.653  92.994  21.913
-ATOM     29  CA  PRO A   5       3.585  92.982  23.035
-ATOM     30  C   PRO A   5       4.648  94.075  23.006
-ATOM     31  O   PRO A   5       5.371  94.205  22.019
-ATOM     32  CB  PRO A   5       4.287  91.625  23.066
-ATOM     33  CG  PRO A   5       2.795  91.872  21.067
-ATOM     34  N   ALA A   6       4.747  94.861  24.081
-ATOM     35  CA  ALA A   6       5.729  95.936  24.157
-ATOM     36  C   ALA A   6       6.565  95.779  25.424
-ATOM     37  O   ALA A   6       6.031  95.425  26.473
-ATOM     38  CB  ALA A   6       5.056  97.311  24.101
-ATOM     39  H   ALA A   6       4.133  94.707  24.852
-ATOM     40  N   LEU A   7       7.871  96.042  25.331
-ATOM     41  CA  LEU A   7       8.761  95.923  26.480
-ATOM     42  C   LEU A   7       9.187  97.331  26.884
-ATOM     43  O   LEU A   7       9.860  98.015  26.115
-ATOM     44  CB  LEU A   7       9.954  95.008  26.203
-ATOM     45  CG  LEU A   7      11.207  95.204  24.692
-ATOM     46  H   LEU A   7       8.247  96.326  24.452
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 1.144656 ( diagnolE 8.647195 extE -12.259535 firstlastE 0.000000) Rotamers: 0 3 4 18 0 0 0
--+- TEST BLOCK  3116 -+-
-MODEL       28
-REMARK ENERGY 0.385908
-ATOM      1  N   PRO A   1     -10.211  95.021  18.403
-ATOM      2  CA  PRO A   1      -9.002  95.816  18.588
-ATOM      3  C   PRO A   1      -7.806  94.926  18.265
-ATOM      4  O   PRO A   1      -7.956  93.918  17.577
-ATOM      5  CB  PRO A   1      -8.914  96.426  19.988
-ATOM      6  CG  PRO A   1     -10.929  94.824  19.605
-ATOM      7  N   LEU A   2      -6.621  95.293  18.758
-ATOM      8  CA  LEU A   2      -5.412  94.515  18.510
-ATOM      9  C   LEU A   2      -4.630  94.480  19.819
-ATOM     10  O   LEU A   2      -4.805  95.355  20.665
-ATOM     11  CB  LEU A   2      -4.590  95.050  17.339
-ATOM     12  CG  LEU A   2      -3.049  94.024  16.621
-ATOM     13  H   LEU A   2      -6.561  96.121  19.311
-ATOM     14  N   ASP A   3      -3.768  93.475  19.989
-ATOM     15  CA  ASP A   3      -2.969  93.346  21.203
-ATOM     16  C   ASP A   3      -1.552  93.030  20.735
-ATOM     17  O   ASP A   3      -1.297  91.934  20.239
-ATOM     18  CB  ASP A   3      -3.525  92.331  22.197
-ATOM     19  CG  ASP A   3      -2.869  92.438  23.925
-ATOM     20  H   ASP A   3      -3.668  92.794  19.267
-ATOM     21  N   GLU A   4      -0.630  93.984  20.889
-ATOM     22  CA  GLU A   4       0.754  93.787  20.476
-ATOM     23  C   GLU A   4       1.770  93.940  21.604
-ATOM     24  O   GLU A   4       1.779  94.960  22.290
-ATOM     25  CB  GLU A   4       1.089  94.787  19.368
-ATOM     26  CG  GLU A   4      -1.133  94.771  18.187
-ATOM     27  H   GLU A   4      -0.897  94.854  21.298
-ATOM     28  N   PRO A   5       2.624  92.932  21.798
-ATOM     29  CA  PRO A   5       3.635  92.975  22.849
-ATOM     30  C   PRO A   5       4.630  94.099  22.584
-ATOM     31  O   PRO A   5       5.191  94.181  21.493
-ATOM     32  CB  PRO A   5       4.352  91.627  22.972
-ATOM     33  CG  PRO A   5       2.684  91.751  21.024
-ATOM     34  N   ALA A   6       4.852  94.965  23.576
-ATOM     35  CA  ALA A   6       5.784  96.077  23.429
-ATOM     36  C   ALA A   6       6.739  96.079  24.618
-ATOM     37  O   ALA A   6       6.318  95.832  25.746
-ATOM     38  CB  ALA A   6       5.055  97.416  23.283
-ATOM     39  H   ALA A   6       4.367  94.848  24.439
-ATOM     40  N   LEU A   7       8.022  96.355  24.371
-ATOM     41  CA  LEU A   7       9.020  96.383  25.435
-ATOM     42  C   LEU A   7       9.439  97.835  25.640
-ATOM     43  O   LEU A   7      10.015  98.442  24.741
-ATOM     44  CB  LEU A   7      10.209  95.466  25.145
-ATOM     45  CG  LEU A   7       9.997  93.484  25.132
-ATOM     46  H   LEU A   7       8.305  96.547  23.434
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 0.385908 ( diagnolE 8.466425 extE -12.818454 firstlastE 0.000000) Rotamers: 0 3 3 18 0 0 7
--+- TEST BLOCK  3130 -+-
-MODEL       29
-REMARK ENERGY 0.605881
-ATOM      1  N   PRO A   1     -10.247  95.009  18.227
-ATOM      2  CA  PRO A   1      -9.046  95.812  18.429
-ATOM      3  C   PRO A   1      -7.857  94.899  18.143
-ATOM      4  O   PRO A   1      -8.016  93.866  17.497
-ATOM      5  CB  PRO A   1      -8.985  96.461  19.810
-ATOM      6  CG  PRO A   1     -10.999  94.837  19.411
-ATOM      7  N   LEU A   2      -6.669  95.277  18.621
-ATOM      8  CA  LEU A   2      -5.467  94.478  18.407
-ATOM      9  C   LEU A   2      -4.686  94.487  19.717
-ATOM     10  O   LEU A   2      -4.856  95.394  20.529
-ATOM     11  CB  LEU A   2      -4.638  94.961  17.217
-ATOM     12  CG  LEU A   2      -3.266  93.999  16.328
-ATOM     13  H   LEU A   2      -6.602  96.127  19.139
-ATOM     14  N   ASP A   3      -3.831  93.482  19.925
-ATOM     15  CA  ASP A   3      -3.034  93.393  21.143
-ATOM     16  C   ASP A   3      -1.623  93.023  20.699
-ATOM     17  O   ASP A   3      -1.389  91.896  20.268
-ATOM     18  CB  ASP A   3      -3.615  92.435  22.180
-ATOM     19  CG  ASP A   3      -3.131  92.148  23.729
-ATOM     20  H   ASP A   3      -3.736  92.774  19.228
-ATOM     21  N   GLU A   4      -0.683  93.966  20.802
-ATOM     22  CA  GLU A   4       0.699  93.719  20.405
-ATOM     23  C   GLU A   4       1.712  93.940  21.523
-ATOM     24  O   GLU A   4       1.772  95.028  22.093
-ATOM     25  CB  GLU A   4       1.050  94.627  19.225
-ATOM     26  CG  GLU A   4      -1.041  94.686  17.995
-ATOM     27  H   GLU A   4      -0.933  94.863  21.159
-ATOM     28  N   PRO A   5       2.507  92.915  21.839
-ATOM     29  CA  PRO A   5       3.511  93.019  22.892
-ATOM     30  C   PRO A   5       4.564  94.078  22.583
-ATOM     31  O   PRO A   5       5.169  94.051  21.513
-ATOM     32  CB  PRO A   5       4.184  91.660  23.109
-ATOM     33  CG  PRO A   5       2.548  91.676  21.160
-ATOM     34  N   ALA A   6       4.786  95.010  23.513
-ATOM     35  CA  ALA A   6       5.770  96.068  23.320
-ATOM     36  C   ALA A   6       6.708  96.128  24.522
-ATOM     37  O   ALA A   6       6.260  95.993  25.658
-ATOM     38  CB  ALA A   6       5.092  97.420  23.076
-ATOM     39  H   ALA A   6       4.264  94.981  24.363
-ATOM     40  N   LEU A   7       8.004  96.330  24.275
-ATOM     41  CA  LEU A   7       8.987  96.404  25.351
-ATOM     42  C   LEU A   7       9.379  97.868  25.528
-ATOM     43  O   LEU A   7       9.844  98.499  24.582
-ATOM     44  CB  LEU A   7      10.198  95.505  25.096
-ATOM     45  CG  LEU A   7      10.154  93.561  25.314
-ATOM     46  H   LEU A   7       8.309  96.433  23.331
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 0.605881 ( diagnolE 8.628528 extE -12.959291 firstlastE 0.000000) Rotamers: 0 3 3 18 0 0 7
--+- TEST BLOCK  3943 -+-
-MODEL       30
-REMARK ENERGY 3.560960
-ATOM      1  N   PRO A   1      -7.397  96.696  14.797
-ATOM      2  CA  PRO A   1      -6.228  96.813  15.660
-ATOM      3  C   PRO A   1      -6.042  95.502  16.416
-ATOM      4  O   PRO A   1      -6.864  94.596  16.290
-ATOM      5  CB  PRO A   1      -6.339  98.008  16.611
-ATOM      6  CG  PRO A   1      -8.443  97.573  15.164
-ATOM      7  N   LEU A   2      -4.967  95.396  17.201
-ATOM      8  CA  LEU A   2      -4.693  94.186  17.968
-ATOM      9  C   LEU A   2      -3.745  94.439  19.136
-ATOM     10  O   LEU A   2      -3.141  95.507  19.218
-ATOM     11  CB  LEU A   2      -4.110  93.109  17.049
-ATOM     12  CG  LEU A   2      -5.176  92.000  15.862
-ATOM     13  H   LEU A   2      -4.334  96.165  17.264
-ATOM     14  N   ASP A   3      -3.612  93.464  20.038
-ATOM     15  CA  ASP A   3      -2.732  93.601  21.193
-ATOM     16  C   ASP A   3      -1.350  93.057  20.846
-ATOM     17  O   ASP A   3      -1.122  91.853  20.937
-ATOM     18  CB  ASP A   3      -3.315  92.906  22.427
-ATOM     19  CG  ASP A   3      -2.723  93.129  24.026
-ATOM     20  H   ASP A   3      -4.129  92.619  19.918
-ATOM     21  N   GLU A   4      -0.429  93.938  20.449
-ATOM     22  CA  GLU A   4       0.924  93.525  20.093
-ATOM     23  C   GLU A   4       2.005  93.795  21.135
-ATOM     24  O   GLU A   4       2.199  94.939  21.539
-ATOM     25  CB  GLU A   4       1.316  94.253  18.811
-ATOM     26  CG  GLU A   4      -0.870  94.550  17.748
-ATOM     27  H   GLU A   4      -0.673  94.904  20.394
-ATOM     28  N   PRO A   5       2.708  92.747  21.572
-ATOM     29  CA  PRO A   5       3.764  92.892  22.567
-ATOM     30  C   PRO A   5       5.045  93.505  22.011
-ATOM     31  O   PRO A   5       5.826  92.814  21.361
-ATOM     32  CB  PRO A   5       4.081  91.522  23.170
-ATOM     33  CG  PRO A   5       2.405  91.397  21.284
-ATOM     34  N   ALA A   6       5.264  94.798  22.264
-ATOM     35  CA  ALA A   6       6.457  95.483  21.781
-ATOM     36  C   ALA A   6       7.271  95.676  23.056
-ATOM     37  O   ALA A   6       6.712  95.665  24.151
-ATOM     38  CB  ALA A   6       6.208  96.739  20.965
-ATOM     39  H   ALA A   6       4.594  95.308  22.799
-ATOM     40  N   LEU A   7       8.588  95.853  22.920
-ATOM     41  CA  LEU A   7       9.459  96.046  24.074
-ATOM     42  C   LEU A   7       9.768  97.511  24.368
-ATOM     43  O   LEU A   7      10.141  98.255  23.464
-ATOM     44  CB  LEU A   7      10.771  95.291  23.846
-ATOM     45  CG  LEU A   7      10.871  93.359  23.945
-ATOM     46  H   LEU A   7       8.985  95.852  22.005
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 3.560960 ( diagnolE 10.852852 extE -14.264629 firstlastE 0.000000) Rotamers: 0 7 3 18 0 0 6
--+- TEST BLOCK  3944 -+-
-MODEL       31
-REMARK ENERGY 3.485349
-ATOM      1  N   PRO A   1      -7.397  96.696  14.797
-ATOM      2  CA  PRO A   1      -6.228  96.813  15.660
-ATOM      3  C   PRO A   1      -6.042  95.502  16.416
-ATOM      4  O   PRO A   1      -6.864  94.596  16.290
-ATOM      5  CB  PRO A   1      -6.339  98.008  16.611
-ATOM      6  CG  PRO A   1      -8.443  97.573  15.164
-ATOM      7  N   LEU A   2      -4.967  95.396  17.201
-ATOM      8  CA  LEU A   2      -4.693  94.186  17.968
-ATOM      9  C   LEU A   2      -3.745  94.439  19.136
-ATOM     10  O   LEU A   2      -3.141  95.507  19.218
-ATOM     11  CB  LEU A   2      -4.110  93.109  17.049
-ATOM     12  CG  LEU A   2      -5.176  92.000  15.862
-ATOM     13  H   LEU A   2      -4.334  96.165  17.264
-ATOM     14  N   ASP A   3      -3.612  93.464  20.038
-ATOM     15  CA  ASP A   3      -2.732  93.601  21.193
-ATOM     16  C   ASP A   3      -1.350  93.057  20.846
-ATOM     17  O   ASP A   3      -1.122  91.853  20.937
-ATOM     18  CB  ASP A   3      -3.315  92.906  22.427
-ATOM     19  CG  ASP A   3      -2.513  92.992  23.991
-ATOM     20  H   ASP A   3      -4.129  92.619  19.918
-ATOM     21  N   GLU A   4      -0.429  93.938  20.449
-ATOM     22  CA  GLU A   4       0.924  93.525  20.093
-ATOM     23  C   GLU A   4       2.005  93.795  21.135
-ATOM     24  O   GLU A   4       2.199  94.939  21.539
-ATOM     25  CB  GLU A   4       1.316  94.253  18.811
-ATOM     26  CG  GLU A   4      -0.593  94.909  17.593
-ATOM     27  H   GLU A   4      -0.673  94.904  20.394
-ATOM     28  N   PRO A   5       2.708  92.747  21.572
-ATOM     29  CA  PRO A   5       3.764  92.892  22.567
-ATOM     30  C   PRO A   5       5.045  93.505  22.011
-ATOM     31  O   PRO A   5       5.826  92.814  21.361
-ATOM     32  CB  PRO A   5       4.081  91.522  23.170
-ATOM     33  CG  PRO A   5       2.405  91.397  21.284
-ATOM     34  N   ALA A   6       5.264  94.798  22.264
-ATOM     35  CA  ALA A   6       6.457  95.483  21.781
-ATOM     36  C   ALA A   6       7.271  95.676  23.056
-ATOM     37  O   ALA A   6       6.712  95.665  24.151
-ATOM     38  CB  ALA A   6       6.208  96.739  20.965
-ATOM     39  H   ALA A   6       4.594  95.308  22.799
-ATOM     40  N   LEU A   7       8.588  95.853  22.920
-ATOM     41  CA  LEU A   7       9.459  96.046  24.074
-ATOM     42  C   LEU A   7       9.768  97.511  24.368
-ATOM     43  O   LEU A   7      10.141  98.255  23.464
-ATOM     44  CB  LEU A   7      10.771  95.291  23.846
-ATOM     45  CG  LEU A   7      10.948  93.401  24.198
-ATOM     46  H   LEU A   7       8.985  95.852  22.005
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 3.485349 ( diagnolE 10.852852 extE -14.340240 firstlastE 0.000000) Rotamers: 0 7 3 19 0 0 6
--+- TEST BLOCK  3945 -+-
-MODEL       32
-REMARK ENERGY 3.441570
-ATOM      1  N   PRO A   1      -7.325  96.633  14.862
-ATOM      2  CA  PRO A   1      -6.156  96.750  15.725
-ATOM      3  C   PRO A   1      -5.970  95.439  16.482
-ATOM      4  O   PRO A   1      -6.792  94.534  16.355
-ATOM      5  CB  PRO A   1      -6.267  97.945  16.676
-ATOM      6  CG  PRO A   1      -8.371  97.511  15.229
-ATOM      7  N   LEU A   2      -4.895  95.333  17.266
-ATOM      8  CA  LEU A   2      -4.621  94.123  18.034
-ATOM      9  C   LEU A   2      -3.673  94.376  19.201
-ATOM     10  O   LEU A   2      -3.069  95.444  19.283
-ATOM     11  CB  LEU A   2      -4.038  93.046  17.115
-ATOM     12  CG  LEU A   2      -2.506  93.931  16.327
-ATOM     13  H   LEU A   2      -4.262  96.102  17.329
-ATOM     14  N   ASP A   3      -3.540  93.401  20.103
-ATOM     15  CA  ASP A   3      -2.660  93.538  21.258
-ATOM     16  C   ASP A   3      -1.278  92.994  20.911
-ATOM     17  O   ASP A   3      -1.051  91.790  21.002
-ATOM     18  CB  ASP A   3      -3.243  92.844  22.493
-ATOM     19  CG  ASP A   3      -2.256  93.145  24.074
-ATOM     20  H   ASP A   3      -4.057  92.556  19.984
-ATOM     21  N   GLU A   4      -0.357  93.875  20.514
-ATOM     22  CA  GLU A   4       0.996  93.462  20.158
-ATOM     23  C   GLU A   4       2.077  93.732  21.200
-ATOM     24  O   GLU A   4       2.271  94.877  21.604
-ATOM     25  CB  GLU A   4       1.388  94.190  18.876
-ATOM     26  CG  GLU A   4       2.387  96.364  19.448
-ATOM     27  H   GLU A   4      -0.601  94.841  20.460
-ATOM     28  N   PRO A   5       2.780  92.684  21.637
-ATOM     29  CA  PRO A   5       3.836  92.829  22.632
-ATOM     30  C   PRO A   5       5.117  93.442  22.076
-ATOM     31  O   PRO A   5       5.898  92.751  21.426
-ATOM     32  CB  PRO A   5       4.152  91.459  23.235
-ATOM     33  CG  PRO A   5       2.477  91.334  21.349
-ATOM     34  N   ALA A   6       5.336  94.735  22.330
-ATOM     35  CA  ALA A   6       6.529  95.420  21.846
-ATOM     36  C   ALA A   6       7.343  95.613  23.121
-ATOM     37  O   ALA A   6       6.784  95.602  24.216
-ATOM     38  CB  ALA A   6       6.280  96.676  21.030
-ATOM     39  H   ALA A   6       4.666  95.245  22.864
-ATOM     40  N   LEU A   7       8.660  95.790  22.985
-ATOM     41  CA  LEU A   7       9.531  95.983  24.139
-ATOM     42  C   LEU A   7       9.840  97.448  24.433
-ATOM     43  O   LEU A   7      10.213  98.192  23.529
-ATOM     44  CB  LEU A   7      10.843  95.229  23.911
-ATOM     45  CG  LEU A   7      11.103  93.393  24.366
-ATOM     46  H   LEU A   7       9.057  95.789  22.070
-TER      47      LEU A   7
-ENDMDL
-Energy = totalE 3.441570 ( diagnolE 10.852852 extE -14.384019 firstlastE 0.000000) Rotamers: 0 2 3 1 0 0 6
 -+-    11 CLUSTERS BLOCK     0 -+-
-MODEL       33
-REMARK ENERGY 700222.686401
-ATOM      1  N   PRO A   1      -1.202   0.521   3.178
+MODEL        1
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
 ATOM      2  CA  PRO A   1       0.000   0.000   3.819
-ATOM      3  C   PRO A   1       1.235  -0.649   4.435
-ATOM      4  O   PRO A   1       1.505  -1.822   4.183
-ATOM      5  CB  PRO A   1      -0.075   0.011   3.974
-ATOM      6  CG  PRO A   1      -2.300   0.616   4.062
-ATOM      7  N   LEU A   2       1.985   0.107   5.241
-ATOM      8  CA  LEU A   2       3.187  -0.414   5.882
-ATOM      9  C   LEU A   2       2.978  -0.228   7.382
-ATOM     10  O   LEU A   2       2.534   0.833   7.815
-ATOM     11  CB  LEU A   2       4.476   0.220   5.364
-ATOM     12  CG  LEU A   2       4.978   2.115   5.582
-ATOM     13  H   LEU A   2       1.715   1.053   5.408
-ATOM     14  N   ASP A   3       3.297  -1.254   8.175
-ATOM     15  CA  ASP A   3       3.138  -1.183   9.623
-ATOM     16  C   ASP A   3       4.517  -1.461  10.213
-ATOM     17  O   ASP A   3       5.199  -2.384   9.775
-ATOM     18  CB  ASP A   3       2.049  -2.108  10.161
-ATOM     19  CG  ASP A   3       2.355  -3.946   9.567
-ATOM     20  H   ASP A   3       3.654  -2.091   7.766
-ATOM     21  N   GLU A   4       4.928  -0.667  11.204
-ATOM     22  CA  GLU A   4       6.229  -0.844  11.840
-ATOM     23  C   GLU A   4       5.948  -1.050  13.325
-ATOM     24  O   GLU A   4       5.141  -0.327  13.905
-ATOM     25  CB  GLU A   4       7.204   0.297  11.558
-ATOM     26  CG  GLU A   4       8.424   1.528   9.784
-ATOM     27  H   GLU A   4       4.330   0.067  11.518
-ATOM     28  N   PRO A   5       6.609  -2.033  13.941
-ATOM     29  CA  PRO A   5       6.416  -2.316  15.359
-ATOM     30  C   PRO A   5       7.793  -2.199  16.003
-ATOM     31  O   PRO A   5       8.772  -2.711  15.463
-ATOM     32  CB  PRO A   5       5.733  -3.656  15.623
-ATOM     33  CG  PRO A   5       6.310  -3.138  13.113
-ATOM     34  N   ALA A   6       7.873  -1.527  17.155
-ATOM     35  CA  ALA A   6       9.141  -1.355  17.856
-ATOM     36  C   ALA A   6       8.936  -1.942  19.248
-ATOM     37  O   ALA A   6       7.913  -1.685  19.880
-ATOM     38  CB  ALA A   6       9.635   0.090  17.871
-ATOM     39  H   ALA A   6       7.044  -1.133  17.545
-ATOM     40  N   LEU A   7       9.902  -2.728  19.728
-ATOM     41  CA  LEU A   7       9.808  -3.341  21.049
-ATOM     42  C   LEU A   7      11.039  -2.874  21.819
-ATOM     43  O   LEU A   7      12.143  -2.885  21.280
-ATOM     44  CB  LEU A   7       9.658  -4.860  21.005
-ATOM     45  CG  LEU A   7      11.022  -6.118  20.333
-ATOM     46  H   LEU A   7      10.710  -2.900  19.169
-TER      47      LEU A   7
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 700222.686401 ( diagnolE 134.844981 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 21 0 0 0
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     1 -+-
-MODEL       34
-REMARK ENERGY 700222.686401
-ATOM      1  N   PRO A   1      -1.202   0.521   3.178
+MODEL        2
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
 ATOM      2  CA  PRO A   1       0.000   0.000   3.819
-ATOM      3  C   PRO A   1       1.235  -0.649   4.435
-ATOM      4  O   PRO A   1       1.505  -1.822   4.183
-ATOM      5  CB  PRO A   1      -0.075   0.011   3.974
-ATOM      6  CG  PRO A   1      -2.300   0.616   4.062
-ATOM      7  N   LEU A   2       1.985   0.107   5.241
-ATOM      8  CA  LEU A   2       3.187  -0.414   5.882
-ATOM      9  C   LEU A   2       2.978  -0.228   7.382
-ATOM     10  O   LEU A   2       2.534   0.833   7.815
-ATOM     11  CB  LEU A   2       4.476   0.220   5.364
-ATOM     12  CG  LEU A   2       4.978   2.115   5.582
-ATOM     13  H   LEU A   2       1.715   1.053   5.408
-ATOM     14  N   ASP A   3       3.297  -1.254   8.175
-ATOM     15  CA  ASP A   3       3.138  -1.183   9.623
-ATOM     16  C   ASP A   3       4.517  -1.461  10.213
-ATOM     17  O   ASP A   3       5.199  -2.384   9.775
-ATOM     18  CB  ASP A   3       2.049  -2.108  10.161
-ATOM     19  CG  ASP A   3       2.355  -3.946   9.567
-ATOM     20  H   ASP A   3       3.654  -2.091   7.766
-ATOM     21  N   GLU A   4       4.928  -0.667  11.204
-ATOM     22  CA  GLU A   4       6.229  -0.844  11.840
-ATOM     23  C   GLU A   4       5.948  -1.050  13.325
-ATOM     24  O   GLU A   4       5.141  -0.327  13.905
-ATOM     25  CB  GLU A   4       7.204   0.297  11.558
-ATOM     26  CG  GLU A   4       8.424   1.528   9.784
-ATOM     27  H   GLU A   4       4.330   0.067  11.518
-ATOM     28  N   PRO A   5       6.609  -2.033  13.941
-ATOM     29  CA  PRO A   5       6.416  -2.316  15.359
-ATOM     30  C   PRO A   5       7.793  -2.199  16.003
-ATOM     31  O   PRO A   5       8.772  -2.711  15.463
-ATOM     32  CB  PRO A   5       5.733  -3.656  15.623
-ATOM     33  CG  PRO A   5       6.310  -3.138  13.113
-ATOM     34  N   ALA A   6       7.873  -1.527  17.155
-ATOM     35  CA  ALA A   6       9.141  -1.355  17.856
-ATOM     36  C   ALA A   6       8.936  -1.942  19.248
-ATOM     37  O   ALA A   6       7.913  -1.685  19.880
-ATOM     38  CB  ALA A   6       9.635   0.090  17.871
-ATOM     39  H   ALA A   6       7.044  -1.133  17.545
-ATOM     40  N   LEU A   7       9.902  -2.728  19.728
-ATOM     41  CA  LEU A   7       9.808  -3.341  21.049
-ATOM     42  C   LEU A   7      11.039  -2.874  21.819
-ATOM     43  O   LEU A   7      12.143  -2.885  21.280
-ATOM     44  CB  LEU A   7       9.658  -4.860  21.005
-ATOM     45  CG  LEU A   7      11.022  -6.118  20.333
-ATOM     46  H   LEU A   7      10.710  -2.900  19.169
-TER      47      LEU A   7
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 700222.686401 ( diagnolE 134.844981 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 21 0 0 0
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     2 -+-
-MODEL       35
-REMARK ENERGY 700222.686401
-ATOM      1  N   PRO A   1      -1.202   0.521   3.178
+MODEL        3
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
 ATOM      2  CA  PRO A   1       0.000   0.000   3.819
-ATOM      3  C   PRO A   1       1.235  -0.649   4.435
-ATOM      4  O   PRO A   1       1.505  -1.822   4.183
-ATOM      5  CB  PRO A   1      -0.075   0.011   3.974
-ATOM      6  CG  PRO A   1      -2.300   0.616   4.062
-ATOM      7  N   LEU A   2       1.985   0.107   5.241
-ATOM      8  CA  LEU A   2       3.187  -0.414   5.882
-ATOM      9  C   LEU A   2       2.978  -0.228   7.382
-ATOM     10  O   LEU A   2       2.534   0.833   7.815
-ATOM     11  CB  LEU A   2       4.476   0.220   5.364
-ATOM     12  CG  LEU A   2       4.978   2.115   5.582
-ATOM     13  H   LEU A   2       1.715   1.053   5.408
-ATOM     14  N   ASP A   3       3.297  -1.254   8.175
-ATOM     15  CA  ASP A   3       3.138  -1.183   9.623
-ATOM     16  C   ASP A   3       4.517  -1.461  10.213
-ATOM     17  O   ASP A   3       5.199  -2.384   9.775
-ATOM     18  CB  ASP A   3       2.049  -2.108  10.161
-ATOM     19  CG  ASP A   3       2.355  -3.946   9.567
-ATOM     20  H   ASP A   3       3.654  -2.091   7.766
-ATOM     21  N   GLU A   4       4.928  -0.667  11.204
-ATOM     22  CA  GLU A   4       6.229  -0.844  11.840
-ATOM     23  C   GLU A   4       5.948  -1.050  13.325
-ATOM     24  O   GLU A   4       5.141  -0.327  13.905
-ATOM     25  CB  GLU A   4       7.204   0.297  11.558
-ATOM     26  CG  GLU A   4       8.424   1.528   9.784
-ATOM     27  H   GLU A   4       4.330   0.067  11.518
-ATOM     28  N   PRO A   5       6.609  -2.033  13.941
-ATOM     29  CA  PRO A   5       6.416  -2.316  15.359
-ATOM     30  C   PRO A   5       7.793  -2.199  16.003
-ATOM     31  O   PRO A   5       8.772  -2.711  15.463
-ATOM     32  CB  PRO A   5       5.733  -3.656  15.623
-ATOM     33  CG  PRO A   5       6.310  -3.138  13.113
-ATOM     34  N   ALA A   6       7.873  -1.527  17.155
-ATOM     35  CA  ALA A   6       9.141  -1.355  17.856
-ATOM     36  C   ALA A   6       8.936  -1.942  19.248
-ATOM     37  O   ALA A   6       7.913  -1.685  19.880
-ATOM     38  CB  ALA A   6       9.635   0.090  17.871
-ATOM     39  H   ALA A   6       7.044  -1.133  17.545
-ATOM     40  N   LEU A   7       9.902  -2.728  19.728
-ATOM     41  CA  LEU A   7       9.808  -3.341  21.049
-ATOM     42  C   LEU A   7      11.039  -2.874  21.819
-ATOM     43  O   LEU A   7      12.143  -2.885  21.280
-ATOM     44  CB  LEU A   7       9.658  -4.860  21.005
-ATOM     45  CG  LEU A   7      11.022  -6.118  20.333
-ATOM     46  H   LEU A   7      10.710  -2.900  19.169
-TER      47      LEU A   7
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 700222.686401 ( diagnolE 134.844981 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 21 0 0 0
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     3 -+-
-MODEL       36
-REMARK ENERGY 700222.686401
-ATOM      1  N   PRO A   1      -1.202   0.521   3.178
+MODEL        4
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
 ATOM      2  CA  PRO A   1       0.000   0.000   3.819
-ATOM      3  C   PRO A   1       1.235  -0.649   4.435
-ATOM      4  O   PRO A   1       1.505  -1.822   4.183
-ATOM      5  CB  PRO A   1      -0.075   0.011   3.974
-ATOM      6  CG  PRO A   1      -2.300   0.616   4.062
-ATOM      7  N   LEU A   2       1.985   0.107   5.241
-ATOM      8  CA  LEU A   2       3.187  -0.414   5.882
-ATOM      9  C   LEU A   2       2.978  -0.228   7.382
-ATOM     10  O   LEU A   2       2.534   0.833   7.815
-ATOM     11  CB  LEU A   2       4.476   0.220   5.364
-ATOM     12  CG  LEU A   2       4.978   2.115   5.582
-ATOM     13  H   LEU A   2       1.715   1.053   5.408
-ATOM     14  N   ASP A   3       3.297  -1.254   8.175
-ATOM     15  CA  ASP A   3       3.138  -1.183   9.623
-ATOM     16  C   ASP A   3       4.517  -1.461  10.213
-ATOM     17  O   ASP A   3       5.199  -2.384   9.775
-ATOM     18  CB  ASP A   3       2.049  -2.108  10.161
-ATOM     19  CG  ASP A   3       2.355  -3.946   9.567
-ATOM     20  H   ASP A   3       3.654  -2.091   7.766
-ATOM     21  N   GLU A   4       4.928  -0.667  11.204
-ATOM     22  CA  GLU A   4       6.229  -0.844  11.840
-ATOM     23  C   GLU A   4       5.948  -1.050  13.325
-ATOM     24  O   GLU A   4       5.141  -0.327  13.905
-ATOM     25  CB  GLU A   4       7.204   0.297  11.558
-ATOM     26  CG  GLU A   4       8.424   1.528   9.784
-ATOM     27  H   GLU A   4       4.330   0.067  11.518
-ATOM     28  N   PRO A   5       6.609  -2.033  13.941
-ATOM     29  CA  PRO A   5       6.416  -2.316  15.359
-ATOM     30  C   PRO A   5       7.793  -2.199  16.003
-ATOM     31  O   PRO A   5       8.772  -2.711  15.463
-ATOM     32  CB  PRO A   5       5.733  -3.656  15.623
-ATOM     33  CG  PRO A   5       6.310  -3.138  13.113
-ATOM     34  N   ALA A   6       7.873  -1.527  17.155
-ATOM     35  CA  ALA A   6       9.141  -1.355  17.856
-ATOM     36  C   ALA A   6       8.936  -1.942  19.248
-ATOM     37  O   ALA A   6       7.913  -1.685  19.880
-ATOM     38  CB  ALA A   6       9.635   0.090  17.871
-ATOM     39  H   ALA A   6       7.044  -1.133  17.545
-ATOM     40  N   LEU A   7       9.902  -2.728  19.728
-ATOM     41  CA  LEU A   7       9.808  -3.341  21.049
-ATOM     42  C   LEU A   7      11.039  -2.874  21.819
-ATOM     43  O   LEU A   7      12.143  -2.885  21.280
-ATOM     44  CB  LEU A   7       9.658  -4.860  21.005
-ATOM     45  CG  LEU A   7      11.022  -6.118  20.333
-ATOM     46  H   LEU A   7      10.710  -2.900  19.169
-TER      47      LEU A   7
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 700222.686401 ( diagnolE 134.844981 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 21 0 0 0
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     4 -+-
-MODEL       37
-REMARK ENERGY 700222.686401
-ATOM      1  N   PRO A   1      -1.202   0.521   3.178
+MODEL        5
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
 ATOM      2  CA  PRO A   1       0.000   0.000   3.819
-ATOM      3  C   PRO A   1       1.235  -0.649   4.435
-ATOM      4  O   PRO A   1       1.505  -1.822   4.183
-ATOM      5  CB  PRO A   1      -0.075   0.011   3.974
-ATOM      6  CG  PRO A   1      -2.300   0.616   4.062
-ATOM      7  N   LEU A   2       1.985   0.107   5.241
-ATOM      8  CA  LEU A   2       3.187  -0.414   5.882
-ATOM      9  C   LEU A   2       2.978  -0.228   7.382
-ATOM     10  O   LEU A   2       2.534   0.833   7.815
-ATOM     11  CB  LEU A   2       4.476   0.220   5.364
-ATOM     12  CG  LEU A   2       4.978   2.115   5.582
-ATOM     13  H   LEU A   2       1.715   1.053   5.408
-ATOM     14  N   ASP A   3       3.297  -1.254   8.175
-ATOM     15  CA  ASP A   3       3.138  -1.183   9.623
-ATOM     16  C   ASP A   3       4.517  -1.461  10.213
-ATOM     17  O   ASP A   3       5.199  -2.384   9.775
-ATOM     18  CB  ASP A   3       2.049  -2.108  10.161
-ATOM     19  CG  ASP A   3       2.355  -3.946   9.567
-ATOM     20  H   ASP A   3       3.654  -2.091   7.766
-ATOM     21  N   GLU A   4       4.928  -0.667  11.204
-ATOM     22  CA  GLU A   4       6.229  -0.844  11.840
-ATOM     23  C   GLU A   4       5.948  -1.050  13.325
-ATOM     24  O   GLU A   4       5.141  -0.327  13.905
-ATOM     25  CB  GLU A   4       7.204   0.297  11.558
-ATOM     26  CG  GLU A   4       8.424   1.528   9.784
-ATOM     27  H   GLU A   4       4.330   0.067  11.518
-ATOM     28  N   PRO A   5       6.609  -2.033  13.941
-ATOM     29  CA  PRO A   5       6.416  -2.316  15.359
-ATOM     30  C   PRO A   5       7.793  -2.199  16.003
-ATOM     31  O   PRO A   5       8.772  -2.711  15.463
-ATOM     32  CB  PRO A   5       5.733  -3.656  15.623
-ATOM     33  CG  PRO A   5       6.310  -3.138  13.113
-ATOM     34  N   ALA A   6       7.873  -1.527  17.155
-ATOM     35  CA  ALA A   6       9.141  -1.355  17.856
-ATOM     36  C   ALA A   6       8.936  -1.942  19.248
-ATOM     37  O   ALA A   6       7.913  -1.685  19.880
-ATOM     38  CB  ALA A   6       9.635   0.090  17.871
-ATOM     39  H   ALA A   6       7.044  -1.133  17.545
-ATOM     40  N   LEU A   7       9.902  -2.728  19.728
-ATOM     41  CA  LEU A   7       9.808  -3.341  21.049
-ATOM     42  C   LEU A   7      11.039  -2.874  21.819
-ATOM     43  O   LEU A   7      12.143  -2.885  21.280
-ATOM     44  CB  LEU A   7       9.658  -4.860  21.005
-ATOM     45  CG  LEU A   7      11.022  -6.118  20.333
-ATOM     46  H   LEU A   7      10.710  -2.900  19.169
-TER      47      LEU A   7
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 700222.686401 ( diagnolE 134.844981 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 21 0 0 0
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     5 -+-
-MODEL       38
-REMARK ENERGY 8.105001
-ATOM      1  N   PRO A   1      -4.488  96.777  13.215
-ATOM      2  CA  PRO A   1      -3.619  96.946  14.374
-ATOM      3  C   PRO A   1      -3.908  95.969  15.508
-ATOM      4  O   PRO A   1      -4.964  95.340  15.525
-ATOM      5  CB  PRO A   1      -3.755  98.377  14.898
-ATOM      6  CG  PRO A   1      -5.149  97.987  12.830
-ATOM      7  N   LEU A   2      -2.976  95.840  16.456
-ATOM      8  CA  LEU A   2      -3.151  94.933  17.585
-ATOM      9  C   LEU A   2      -2.330  95.274  18.825
-ATOM     10  O   LEU A   2      -1.585  96.252  18.820
-ATOM     11  CB  LEU A   2      -2.778  93.522  17.133
-ATOM     12  CG  LEU A   2      -1.002  93.819  16.333
-ATOM     13  H   LEU A   2      -2.138  96.377  16.389
-ATOM     14  N   ASP A   3      -2.464  94.474  19.885
-ATOM     15  CA  ASP A   3      -1.727  94.709  21.122
-ATOM     16  C   ASP A   3      -0.266  94.371  20.839
-ATOM     17  O   ASP A   3       0.148  93.228  21.021
-ATOM     18  CB  ASP A   3      -2.297  93.935  22.310
-ATOM     19  CG  ASP A   3      -2.259  92.022  21.984
-ATOM     20  H   ASP A   3      -3.085  93.695  19.830
-ATOM     21  N   GLU A   4       0.515  95.360  20.397
-ATOM     22  CA  GLU A   4       1.926  95.147  20.096
-ATOM     23  C   GLU A   4       2.953  95.344  21.207
-ATOM     24  O   GLU A   4       3.034  96.425  21.786
-ATOM     25  CB  GLU A   4       2.287  96.122  18.993
-ATOM     26  CG  GLU A   4       2.750  98.404  18.259
-ATOM     27  H   GLU A   4       0.122  96.268  20.269
-ATOM     28  N   PRO A   5       3.737  94.304  21.504
-ATOM     29  CA  PRO A   5       4.752  94.384  22.549
-ATOM     30  C   PRO A   5       6.000  95.185  22.189
-ATOM     31  O   PRO A   5       6.860  94.691  21.463
-ATOM     32  CB  PRO A   5       5.182  92.963  22.909
-ATOM     33  CG  PRO A   5       3.583  92.999  20.985
-ATOM     34  N   ALA A   6       6.101  96.417  22.693
-ATOM     35  CA  ALA A   6       7.251  97.269  22.412
-ATOM     36  C   ALA A   6       8.088  97.341  23.685
-ATOM     37  O   ALA A   6       7.538  97.352  24.784
-ATOM     38  CB  ALA A   6       6.848  98.650  21.894
-ATOM     39  H   ALA A   6       5.370  96.764  23.276
-ATOM     40  N   LEU A   7       9.415  97.389  23.542
-ATOM     41  CA  LEU A   7      10.308  97.459  24.693
-ATOM     42  C   LEU A   7      10.943  98.822  24.948
-ATOM     43  O   LEU A   7      11.480  99.434  24.027
-ATOM     44  CB  LEU A   7      11.428  96.440  24.493
-ATOM     45  CG  LEU A   7      11.013  94.522  24.365
-ATOM     46  H   LEU A   7       9.805  97.376  22.624
-TER      47      LEU A   7
+MODEL        6
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
+ATOM      2  CA  PRO A   1       0.000   0.000   3.819
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 8.105001 ( diagnolE 14.939926 extE -13.318239 firstlastE 0.000000) Rotamers: 1 2 1 3 0 0 6
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     6 -+-
-MODEL       39
-REMARK ENERGY 3.441570
-ATOM      1  N   PRO A   1      -7.325  96.633  14.862
-ATOM      2  CA  PRO A   1      -6.156  96.750  15.725
-ATOM      3  C   PRO A   1      -5.970  95.439  16.482
-ATOM      4  O   PRO A   1      -6.792  94.534  16.355
-ATOM      5  CB  PRO A   1      -6.267  97.945  16.676
-ATOM      6  CG  PRO A   1      -8.371  97.511  15.229
-ATOM      7  N   LEU A   2      -4.895  95.333  17.266
-ATOM      8  CA  LEU A   2      -4.621  94.123  18.034
-ATOM      9  C   LEU A   2      -3.673  94.376  19.201
-ATOM     10  O   LEU A   2      -3.069  95.444  19.283
-ATOM     11  CB  LEU A   2      -4.038  93.046  17.115
-ATOM     12  CG  LEU A   2      -2.506  93.931  16.327
-ATOM     13  H   LEU A   2      -4.262  96.102  17.329
-ATOM     14  N   ASP A   3      -3.540  93.401  20.103
-ATOM     15  CA  ASP A   3      -2.660  93.538  21.258
-ATOM     16  C   ASP A   3      -1.278  92.994  20.911
-ATOM     17  O   ASP A   3      -1.051  91.790  21.002
-ATOM     18  CB  ASP A   3      -3.243  92.844  22.493
-ATOM     19  CG  ASP A   3      -2.256  93.145  24.074
-ATOM     20  H   ASP A   3      -4.057  92.556  19.984
-ATOM     21  N   GLU A   4      -0.357  93.875  20.514
-ATOM     22  CA  GLU A   4       0.996  93.462  20.158
-ATOM     23  C   GLU A   4       2.077  93.732  21.200
-ATOM     24  O   GLU A   4       2.271  94.877  21.604
-ATOM     25  CB  GLU A   4       1.388  94.190  18.876
-ATOM     26  CG  GLU A   4       2.387  96.364  19.448
-ATOM     27  H   GLU A   4      -0.601  94.841  20.460
-ATOM     28  N   PRO A   5       2.780  92.684  21.637
-ATOM     29  CA  PRO A   5       3.836  92.829  22.632
-ATOM     30  C   PRO A   5       5.117  93.442  22.076
-ATOM     31  O   PRO A   5       5.898  92.751  21.426
-ATOM     32  CB  PRO A   5       4.152  91.459  23.235
-ATOM     33  CG  PRO A   5       2.477  91.334  21.349
-ATOM     34  N   ALA A   6       5.336  94.735  22.330
-ATOM     35  CA  ALA A   6       6.529  95.420  21.846
-ATOM     36  C   ALA A   6       7.343  95.613  23.121
-ATOM     37  O   ALA A   6       6.784  95.602  24.216
-ATOM     38  CB  ALA A   6       6.280  96.676  21.030
-ATOM     39  H   ALA A   6       4.666  95.245  22.864
-ATOM     40  N   LEU A   7       8.660  95.790  22.985
-ATOM     41  CA  LEU A   7       9.531  95.983  24.139
-ATOM     42  C   LEU A   7       9.840  97.448  24.433
-ATOM     43  O   LEU A   7      10.213  98.192  23.529
-ATOM     44  CB  LEU A   7      10.843  95.229  23.911
-ATOM     45  CG  LEU A   7      11.103  93.393  24.366
-ATOM     46  H   LEU A   7       9.057  95.789  22.070
-TER      47      LEU A   7
+MODEL        7
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
+ATOM      2  CA  PRO A   1       0.000   0.000   3.819
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 3.441570 ( diagnolE 10.852852 extE -14.384019 firstlastE 0.000000) Rotamers: 0 2 3 1 0 0 6
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     7 -+-
-MODEL       40
-REMARK ENERGY 0.605881
-ATOM      1  N   PRO A   1     -10.247  95.009  18.227
-ATOM      2  CA  PRO A   1      -9.046  95.812  18.429
-ATOM      3  C   PRO A   1      -7.857  94.899  18.143
-ATOM      4  O   PRO A   1      -8.016  93.866  17.497
-ATOM      5  CB  PRO A   1      -8.985  96.461  19.810
-ATOM      6  CG  PRO A   1     -10.999  94.837  19.411
-ATOM      7  N   LEU A   2      -6.669  95.277  18.621
-ATOM      8  CA  LEU A   2      -5.467  94.478  18.407
-ATOM      9  C   LEU A   2      -4.686  94.487  19.717
-ATOM     10  O   LEU A   2      -4.856  95.394  20.529
-ATOM     11  CB  LEU A   2      -4.638  94.961  17.217
-ATOM     12  CG  LEU A   2      -3.266  93.999  16.328
-ATOM     13  H   LEU A   2      -6.602  96.127  19.139
-ATOM     14  N   ASP A   3      -3.831  93.482  19.925
-ATOM     15  CA  ASP A   3      -3.034  93.393  21.143
-ATOM     16  C   ASP A   3      -1.623  93.023  20.699
-ATOM     17  O   ASP A   3      -1.389  91.896  20.268
-ATOM     18  CB  ASP A   3      -3.615  92.435  22.180
-ATOM     19  CG  ASP A   3      -3.131  92.148  23.729
-ATOM     20  H   ASP A   3      -3.736  92.774  19.228
-ATOM     21  N   GLU A   4      -0.683  93.966  20.802
-ATOM     22  CA  GLU A   4       0.699  93.719  20.405
-ATOM     23  C   GLU A   4       1.712  93.940  21.523
-ATOM     24  O   GLU A   4       1.772  95.028  22.093
-ATOM     25  CB  GLU A   4       1.050  94.627  19.225
-ATOM     26  CG  GLU A   4      -1.041  94.686  17.995
-ATOM     27  H   GLU A   4      -0.933  94.863  21.159
-ATOM     28  N   PRO A   5       2.507  92.915  21.839
-ATOM     29  CA  PRO A   5       3.511  93.019  22.892
-ATOM     30  C   PRO A   5       4.564  94.078  22.583
-ATOM     31  O   PRO A   5       5.169  94.051  21.513
-ATOM     32  CB  PRO A   5       4.184  91.660  23.109
-ATOM     33  CG  PRO A   5       2.548  91.676  21.160
-ATOM     34  N   ALA A   6       4.786  95.010  23.513
-ATOM     35  CA  ALA A   6       5.770  96.068  23.320
-ATOM     36  C   ALA A   6       6.708  96.128  24.522
-ATOM     37  O   ALA A   6       6.260  95.993  25.658
-ATOM     38  CB  ALA A   6       5.092  97.420  23.076
-ATOM     39  H   ALA A   6       4.264  94.981  24.363
-ATOM     40  N   LEU A   7       8.004  96.330  24.275
-ATOM     41  CA  LEU A   7       8.987  96.404  25.351
-ATOM     42  C   LEU A   7       9.379  97.868  25.528
-ATOM     43  O   LEU A   7       9.844  98.499  24.582
-ATOM     44  CB  LEU A   7      10.198  95.505  25.096
-ATOM     45  CG  LEU A   7      10.154  93.561  25.314
-ATOM     46  H   LEU A   7       8.309  96.433  23.331
-TER      47      LEU A   7
+MODEL        8
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
+ATOM      2  CA  PRO A   1       0.000   0.000   3.819
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 0.605881 ( diagnolE 8.628528 extE -12.959291 firstlastE 0.000000) Rotamers: 0 3 3 18 0 0 7
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     8 -+-
-MODEL       41
-REMARK ENERGY 10.085595
-ATOM      1  N   PRO A   1      -9.075  93.823  15.788
-ATOM      2  CA  PRO A   1      -7.982  94.661  16.269
-ATOM      3  C   PRO A   1      -6.909  93.658  16.680
-ATOM      4  O   PRO A   1      -6.917  92.521  16.212
-ATOM      5  CB  PRO A   1      -8.370  95.661  17.349
-ATOM      6  CG  PRO A   1     -10.253  93.959  16.557
-ATOM      7  N   LEU A   2      -5.987  94.073  17.552
-ATOM      8  CA  LEU A   2      -4.916  93.195  18.011
-ATOM      9  C   LEU A   2      -4.337  93.660  19.344
-ATOM     10  O   LEU A   2      -4.458  94.833  19.692
-ATOM     11  CB  LEU A   2      -3.810  93.112  16.954
-ATOM     12  CG  LEU A   2      -2.421  94.378  16.572
-ATOM     13  H   LEU A   2      -6.032  95.007  17.897
-ATOM     14  N   ASP A   3      -3.709  92.747  20.089
-ATOM     15  CA  ASP A   3      -3.119  93.084  21.379
-ATOM     16  C   ASP A   3      -1.598  92.974  21.404
-ATOM     17  O   ASP A   3      -1.034  92.087  20.767
-ATOM     18  CB  ASP A   3      -3.707  92.169  22.455
-ATOM     19  CG  ASP A   3      -3.191  92.515  24.193
-ATOM     20  H   ASP A   3      -3.643  91.810  19.753
-ATOM     21  N   GLU A   4      -0.933  93.870  22.137
-ATOM     22  CA  GLU A   4       0.523  93.856  22.231
-ATOM     23  C   GLU A   4       0.787  94.047  23.721
-ATOM     24  O   GLU A   4       0.414  95.072  24.286
-ATOM     25  CB  GLU A   4       1.236  94.843  21.320
-ATOM     26  CG  GLU A   4      -0.446  94.744  19.395
-ATOM     27  H   GLU A   4      -1.445  94.568  22.633
-ATOM     28  N   PRO A   5       1.429  93.064  24.358
-ATOM     29  CA  PRO A   5       1.732  93.144  25.783
-ATOM     30  C   PRO A   5       2.577  94.376  26.092
-ATOM     31  O   PRO A   5       3.405  94.776  25.277
-ATOM     32  CB  PRO A   5       2.442  91.871  26.255
-ATOM     33  CG  PRO A   5       2.028  91.950  23.729
-ATOM     34  N   ALA A   6       2.371  94.978  27.266
-ATOM     35  CA  ALA A   6       3.123  96.163  27.663
-ATOM     36  C   ALA A   6       3.454  96.276  29.148
-ATOM     37  O   ALA A   6       2.776  96.998  29.876
-ATOM     38  CB  ALA A   6       2.314  97.394  27.263
-ATOM     39  H   ALA A   6       1.684  94.608  27.888
-ATOM     40  N   LEU A   7       4.492  95.567  29.598
-ATOM     41  CA  LEU A   7       4.894  95.602  31.000
-ATOM     42  C   LEU A   7       5.959  96.571  31.502
-ATOM     43  O   LEU A   7       7.094  96.537  31.031
-ATOM     44  CB  LEU A   7       5.430  94.231  31.296
-ATOM     45  CG  LEU A   7       6.917  93.341  30.299
-ATOM     46  H   LEU A   7       5.005  94.999  28.959
-TER      47      LEU A   7
+MODEL        9
+REMARK ENERGY 700222.466560
+ATOM      1  N   PRO A   1       1.202   0.521   3.178
+ATOM      2  CA  PRO A   1       0.000   0.000   3.819
+ATOM      3  C   PRO A   1      -1.235  -0.649   4.435
+ATOM      4  O   PRO A   1      -1.505  -1.822   4.183
+ATOM      5  CB  PRO A   1      -0.099   0.104   3.724
+ATOM      6  CG  PRO A   1       0.919   1.361   2.077
+ATOM      7  N   LEU A   2      -1.985   0.107   5.241
+ATOM      8  CA  LEU A   2      -3.187  -0.414   5.882
+ATOM      9  C   LEU A   2      -4.327   0.499   5.445
+ATOM     10  O   LEU A   2      -4.177   1.719   5.454
+ATOM     11  CB  LEU A   2      -3.059  -0.544   7.398
+ATOM     12  CG  LEU A   2      -2.839   0.962   8.654
+ATOM     13  H   LEU A   2      -1.715   1.053   5.408
+ATOM     14  N   ASP A   3      -5.465  -0.085   5.062
+ATOM     15  CA  ASP A   3      -6.618   0.694   4.624
+ATOM     16  C   ASP A   3      -7.770   0.293   5.541
+ATOM     17  O   ASP A   3      -7.966  -0.892   5.800
+ATOM     18  CB  ASP A   3      -6.937   0.528   3.140
+ATOM     19  CG  ASP A   3      -7.143  -1.364   2.690
+ATOM     20  H   ASP A   3      -5.528  -1.081   5.075
+ATOM     21  N   THR A   4      -8.529   1.275   6.032
+ATOM     22  CA  THR A   4      -9.656   1.004   6.918
+ATOM     23  C   THR A   4     -10.881   1.610   6.240
+ATOM     24  O   THR A   4     -10.819   2.735   5.750
+ATOM     25  CB  THR A   4      -9.441   1.503   8.345
+ATOM     26  OG1 THR A   4     -10.516   1.229   9.180
+ATOM     27  CG2 THR A   4      -9.205   3.047   8.314
+ATOM     28  H   THR A   4      -8.321   2.219   5.786
+ATOM     29  N   PRO A   5     -11.991   0.869   6.211
+ATOM     30  CA  PRO A   5     -13.219   1.352   5.588
+ATOM     31  C   PRO A   5     -14.289   1.304   6.674
+ATOM     32  O   PRO A   5     -14.386   0.317   7.400
+ATOM     33  CB  PRO A   5     -13.601   0.586   4.324
+ATOM     34  CG  PRO A   5     -11.516  -0.331   5.635
+ATOM     35  N   ALA A   6     -15.092   2.365   6.788
+ATOM     36  CA  ALA A   6     -16.148   2.423   7.792
+ATOM     37  C   ALA A   6     -17.447   2.647   7.024
+ATOM     38  O   ALA A   6     -17.493   3.480   6.121
+ATOM     39  CB  ALA A   6     -15.897   3.466   8.879
+ATOM     40  H   ALA A   6     -14.965   3.138   6.170
+ATOM     41  N   LEU A   7     -18.501   1.909   7.378
+ATOM     42  CA  LEU A   7     -19.791   2.042   6.710
+ATOM     43  C   LEU A   7     -20.798   2.388   7.803
+ATOM     44  O   LEU A   7     -20.785   1.775   8.868
+ATOM     45  CB  LEU A   7     -20.181   0.814   5.891
+ATOM     46  CG  LEU A   7     -20.561  -0.974   6.632
+ATOM     47  H   LEU A   7     -18.404   1.248   8.120
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 10.085595 ( diagnolE 15.019534 extE -10.247361 firstlastE 0.000000) Rotamers: 0 0 3 18 0 0 0
+Energy = totalE 700222.466560 ( diagnolE 135.069912 extE 699993.000000 firstlastE 0.000000) Rotamers: 0 0 0 0 0 0 0
 -+-    11 CLUSTERS BLOCK     9 -+-
-MODEL       42
-REMARK ENERGY 4.062440
-ATOM      1  N   PRO A   1      -8.005  95.579  15.726
-ATOM      2  CA  PRO A   1      -6.581  95.788  15.960
-ATOM      3  C   PRO A   1      -5.872  94.581  16.567
-ATOM      4  O   PRO A   1      -6.509  93.567  16.842
-ATOM      5  CB  PRO A   1      -6.398  96.993  16.885
-ATOM      6  CG  PRO A   1      -8.823  96.387  16.549
-ATOM      7  N   LEU A   2      -4.558  94.687  16.777
-ATOM      8  CA  LEU A   2      -3.782  93.594  17.352
-ATOM      9  C   LEU A   2      -2.782  94.164  18.352
-ATOM     10  O   LEU A   2      -2.016  95.064  18.012
-ATOM     11  CB  LEU A   2      -3.088  92.762  16.270
-ATOM     12  CG  LEU A   2      -1.626  93.358  15.118
-ATOM     13  H   LEU A   2      -4.094  95.536  16.533
-ATOM     14  N   ASP A   3      -2.784  93.646  19.583
-ATOM     15  CA  ASP A   3      -1.869  94.118  20.616
-ATOM     16  C   ASP A   3      -0.676  93.238  20.973
-ATOM     17  O   ASP A   3      -0.712  92.030  20.748
-ATOM     18  CB  ASP A   3      -2.686  94.298  21.885
-ATOM     19  CG  ASP A   3      -3.499  92.742  22.540
-ATOM     20  H   ASP A   3      -3.429  92.917  19.801
-ATOM     21  N   GLU A   4       0.380  93.837  21.529
-ATOM     22  CA  GLU A   4       1.574  93.090  21.909
-ATOM     23  C   GLU A   4       2.198  93.395  23.267
-ATOM     24  O   GLU A   4       1.947  94.456  23.835
-ATOM     25  CB  GLU A   4       2.634  93.368  20.854
-ATOM     26  CG  GLU A   4       1.921  95.742  20.229
-ATOM     27  H   GLU A   4       0.352  94.822  21.687
-ATOM     28  N   PRO A   5       3.008  92.471  23.789
-ATOM     29  CA  PRO A   5       3.656  92.661  25.082
-ATOM     30  C   PRO A   5       4.598  93.854  25.210
-ATOM     31  O   PRO A   5       5.323  94.169  24.269
-ATOM     32  CB  PRO A   5       4.461  91.403  25.383
-ATOM     33  CG  PRO A   5       3.455  91.313  23.114
-ATOM     34  N   ALA A   6       4.589  94.517  26.369
-ATOM     35  CA  ALA A   6       5.449  95.672  26.598
-ATOM     36  C   ALA A   6       5.678  95.724  28.105
-ATOM     37  O   ALA A   6       4.721  95.688  28.875
-ATOM     38  CB  ALA A   6       4.898  96.972  26.017
-ATOM     39  H   ALA A   6       3.978  94.214  27.097
-ATOM     40  N   LEU A   7       6.942  95.808  28.529
-ATOM     41  CA  LEU A   7       7.273  95.863  29.948
-ATOM     42  C   LEU A   7       8.027  97.171  30.164
-ATOM     43  O   LEU A   7       8.837  97.561  29.325
-ATOM     44  CB  LEU A   7       8.042  94.637  30.436
-ATOM     45  CG  LEU A   7       9.533  94.586  29.119
-ATOM     46  H   LEU A   7       7.678  95.834  27.856
-TER      47      LEU A   7
+MODEL       10
+REMARK ENERGY 13.770314
+ATOM      1  N   PRO A   1      14.944 102.454  12.109
+ATOM      2  CA  PRO A   1      13.996 101.782  12.991
+ATOM      3  C   PRO A   1      12.541 101.613  12.568
+ATOM      4  O   PRO A   1      12.117 102.196  11.573
+ATOM      5  CB  PRO A   1      13.969 102.590  14.266
+ATOM      6  CG  PRO A   1      15.368 103.706  12.608
+ATOM      7  N   LEU A   2      11.775 100.818  13.320
+ATOM      8  CA  LEU A   2      10.369 100.587  13.006
+ATOM      9  C   LEU A   2       9.329 101.155  13.966
+ATOM     10  O   LEU A   2       9.557 101.186  15.173
+ATOM     11  CB  LEU A   2      10.160  99.081  12.954
+ATOM     12  CG  LEU A   2      11.074  98.493  14.601
+ATOM     13  H   LEU A   2      12.175 100.371  14.117
+ATOM     14  N   ASP A   3       8.189 101.605  13.435
+ATOM     15  CA  ASP A   3       7.128 102.168  14.262
+ATOM     16  C   ASP A   3       5.865 101.316  14.180
+ATOM     17  O   ASP A   3       5.438 100.951  13.086
+ATOM     18  CB  ASP A   3       6.832 103.614  13.851
+ATOM     19  CG  ASP A   3       5.564 104.359  15.262
+ATOM     20  H   ASP A   3       8.061 101.554  12.447
+ATOM     21  N   THR A   4       5.266 101.000  15.331
+ATOM     22  CA  THR A   4       4.053 100.190  15.367
+ATOM     23  C   THR A   4       2.823 101.089  15.284
+ATOM     24  O   THR A   4       2.620 101.935  16.151
+ATOM     25  CB  THR A   4       4.012  99.312  16.621
+ATOM     26  OG1 THR A   4       2.804  98.520  16.614
+ATOM     27  CG2 THR A   4       3.990 100.183  17.881
+ATOM     28  H   THR A   4       5.659 101.325  16.188
+ATOM     29  N   PRO A   5       2.004 100.909  14.245
+ATOM     30  CA  PRO A   5       0.800 101.713  14.068
+ATOM     31  C   PRO A   5      -0.244 101.515  15.162
+ATOM     32  O   PRO A   5      -0.121 100.598  15.972
+ATOM     33  CB  PRO A   5       0.173 101.380  12.714
+ATOM     34  CG  PRO A   5       2.156  99.919  13.247
+ATOM     35  N   ALA A   6      -1.271 102.369  15.189
+ATOM     36  CA  ALA A   6      -2.325 102.270  16.192
+ATOM     37  C   ALA A   6      -3.756 102.321  15.666
+ATOM     38  O   ALA A   6      -3.965 102.416  14.459
+ATOM     39  CB  ALA A   6      -2.144 103.417  17.180
+ATOM     40  H   ALA A   6      -1.317 103.093  14.505
+ATOM     41  N   LEU A   7      -4.740 102.259  16.567
+ATOM     42  CA  LEU A   7      -6.144 102.300  16.173
+ATOM     43  C   LEU A   7      -6.803 103.422  16.970
+ATOM     44  O   LEU A   7      -6.636 103.494  18.185
+ATOM     45  CB  LEU A   7      -6.848 100.955  16.352
+ATOM     46  CG  LEU A   7      -8.511 100.441  15.590
+ATOM     47  H   LEU A   7      -4.508 102.182  17.534
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 4.062440 ( diagnolE 11.323247 extE -12.299458 firstlastE 0.000000) Rotamers: 0 0 0 8 0 0 2
+Energy = totalE 13.770314 ( diagnolE 13.263715 extE -4.375775 firstlastE 0.000000) Rotamers: 0 2 3 0 0 0 3
 -+-    11 CLUSTERS BLOCK    10 -+-
-MODEL       43
-REMARK ENERGY 3.441570
-ATOM      1  N   PRO A   1      -7.325  96.633  14.862
-ATOM      2  CA  PRO A   1      -6.156  96.750  15.725
-ATOM      3  C   PRO A   1      -5.970  95.439  16.482
-ATOM      4  O   PRO A   1      -6.792  94.534  16.355
-ATOM      5  CB  PRO A   1      -6.267  97.945  16.676
-ATOM      6  CG  PRO A   1      -8.371  97.511  15.229
-ATOM      7  N   LEU A   2      -4.895  95.333  17.266
-ATOM      8  CA  LEU A   2      -4.621  94.123  18.034
-ATOM      9  C   LEU A   2      -3.673  94.376  19.201
-ATOM     10  O   LEU A   2      -3.069  95.444  19.283
-ATOM     11  CB  LEU A   2      -4.038  93.046  17.115
-ATOM     12  CG  LEU A   2      -2.506  93.931  16.327
-ATOM     13  H   LEU A   2      -4.262  96.102  17.329
-ATOM     14  N   ASP A   3      -3.540  93.401  20.103
-ATOM     15  CA  ASP A   3      -2.660  93.538  21.258
-ATOM     16  C   ASP A   3      -1.278  92.994  20.911
-ATOM     17  O   ASP A   3      -1.051  91.790  21.002
-ATOM     18  CB  ASP A   3      -3.243  92.844  22.493
-ATOM     19  CG  ASP A   3      -2.256  93.145  24.074
-ATOM     20  H   ASP A   3      -4.057  92.556  19.984
-ATOM     21  N   GLU A   4      -0.357  93.875  20.514
-ATOM     22  CA  GLU A   4       0.996  93.462  20.158
-ATOM     23  C   GLU A   4       2.077  93.732  21.200
-ATOM     24  O   GLU A   4       2.271  94.877  21.604
-ATOM     25  CB  GLU A   4       1.388  94.190  18.876
-ATOM     26  CG  GLU A   4       2.387  96.364  19.448
-ATOM     27  H   GLU A   4      -0.601  94.841  20.460
-ATOM     28  N   PRO A   5       2.780  92.684  21.637
-ATOM     29  CA  PRO A   5       3.836  92.829  22.632
-ATOM     30  C   PRO A   5       5.117  93.442  22.076
-ATOM     31  O   PRO A   5       5.898  92.751  21.426
-ATOM     32  CB  PRO A   5       4.152  91.459  23.235
-ATOM     33  CG  PRO A   5       2.477  91.334  21.349
-ATOM     34  N   ALA A   6       5.336  94.735  22.330
-ATOM     35  CA  ALA A   6       6.529  95.420  21.846
-ATOM     36  C   ALA A   6       7.343  95.613  23.121
-ATOM     37  O   ALA A   6       6.784  95.602  24.216
-ATOM     38  CB  ALA A   6       6.280  96.676  21.030
-ATOM     39  H   ALA A   6       4.666  95.245  22.864
-ATOM     40  N   LEU A   7       8.660  95.790  22.985
-ATOM     41  CA  LEU A   7       9.531  95.983  24.139
-ATOM     42  C   LEU A   7       9.840  97.448  24.433
-ATOM     43  O   LEU A   7      10.213  98.192  23.529
-ATOM     44  CB  LEU A   7      10.843  95.229  23.911
-ATOM     45  CG  LEU A   7      11.103  93.393  24.366
-ATOM     46  H   LEU A   7       9.057  95.789  22.070
-TER      47      LEU A   7
+MODEL       11
+REMARK ENERGY 13.770314
+ATOM      1  N   PRO A   1      14.944 102.454  12.109
+ATOM      2  CA  PRO A   1      13.996 101.782  12.991
+ATOM      3  C   PRO A   1      12.541 101.613  12.568
+ATOM      4  O   PRO A   1      12.117 102.196  11.573
+ATOM      5  CB  PRO A   1      13.969 102.590  14.266
+ATOM      6  CG  PRO A   1      15.368 103.706  12.608
+ATOM      7  N   LEU A   2      11.775 100.818  13.320
+ATOM      8  CA  LEU A   2      10.369 100.587  13.006
+ATOM      9  C   LEU A   2       9.329 101.155  13.966
+ATOM     10  O   LEU A   2       9.557 101.186  15.173
+ATOM     11  CB  LEU A   2      10.160  99.081  12.954
+ATOM     12  CG  LEU A   2      11.074  98.493  14.601
+ATOM     13  H   LEU A   2      12.175 100.371  14.117
+ATOM     14  N   ASP A   3       8.189 101.605  13.435
+ATOM     15  CA  ASP A   3       7.128 102.168  14.262
+ATOM     16  C   ASP A   3       5.865 101.316  14.180
+ATOM     17  O   ASP A   3       5.438 100.951  13.086
+ATOM     18  CB  ASP A   3       6.832 103.614  13.851
+ATOM     19  CG  ASP A   3       5.564 104.359  15.262
+ATOM     20  H   ASP A   3       8.061 101.554  12.447
+ATOM     21  N   THR A   4       5.266 101.000  15.331
+ATOM     22  CA  THR A   4       4.053 100.190  15.367
+ATOM     23  C   THR A   4       2.823 101.089  15.284
+ATOM     24  O   THR A   4       2.620 101.935  16.151
+ATOM     25  CB  THR A   4       4.012  99.312  16.621
+ATOM     26  OG1 THR A   4       2.804  98.520  16.614
+ATOM     27  CG2 THR A   4       3.990 100.183  17.881
+ATOM     28  H   THR A   4       5.659 101.325  16.188
+ATOM     29  N   PRO A   5       2.004 100.909  14.245
+ATOM     30  CA  PRO A   5       0.800 101.713  14.068
+ATOM     31  C   PRO A   5      -0.244 101.515  15.162
+ATOM     32  O   PRO A   5      -0.121 100.598  15.972
+ATOM     33  CB  PRO A   5       0.173 101.380  12.714
+ATOM     34  CG  PRO A   5       2.156  99.919  13.247
+ATOM     35  N   ALA A   6      -1.271 102.369  15.189
+ATOM     36  CA  ALA A   6      -2.325 102.270  16.192
+ATOM     37  C   ALA A   6      -3.756 102.321  15.666
+ATOM     38  O   ALA A   6      -3.965 102.416  14.459
+ATOM     39  CB  ALA A   6      -2.144 103.417  17.180
+ATOM     40  H   ALA A   6      -1.317 103.093  14.505
+ATOM     41  N   LEU A   7      -4.740 102.259  16.567
+ATOM     42  CA  LEU A   7      -6.144 102.300  16.173
+ATOM     43  C   LEU A   7      -6.803 103.422  16.970
+ATOM     44  O   LEU A   7      -6.636 103.494  18.185
+ATOM     45  CB  LEU A   7      -6.848 100.955  16.352
+ATOM     46  CG  LEU A   7      -8.511 100.441  15.590
+ATOM     47  H   LEU A   7      -4.508 102.182  17.534
+TER      48      LEU A   7
 ENDMDL
-Energy = totalE 3.441570 ( diagnolE 10.852852 extE -14.384019 firstlastE 0.000000) Rotamers: 0 2 3 1 0 0 6
+Energy = totalE 13.770314 ( diagnolE 13.263715 extE -4.375775 firstlastE 0.000000) Rotamers: 0 2 3 0 0 0 3

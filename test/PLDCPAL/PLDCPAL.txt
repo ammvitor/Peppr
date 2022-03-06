@@ -1,12 +1,12 @@
-Detected 4 cores, request 2 cores, using 2 cores
+Detected 8 cores, request 1 cores, using 1 cores
 using ramaprob.data in current folder
-Performing search (1 ADCP runs with 5000 steps each) ...
+Warning: overwriting output file PLDCPAL/PLDCPAL_1.pdb
+Performing search (1 ADCP runs with 800 steps each) ...
 0%   10   20   30   40   50   60   70   80   90   100%
 |----|----|----|----|----|----|----|----|----|----|
-**************************************************Docking performed in 5.01 seconds, i.e. 0 hours 00 minutes 05.014298 seconds 
+**************************************************Docking performed in 2.01 seconds, i.e. 0 hours 00 minutes 02.005106 seconds 
 mode |  affinity  | clust. | ref. | clust. | rmsd | best | energy | best |
      | (kcal/mol) | rmsd   | rmsd |  size  | avg. | rmsd |  avg.  | run  |
 -----+------------+--------+------+--------+------+------+--------+------+
-   1         -2.4     0.0   999.0      19   999.0 999.0    -1.4    027 
-   2         -1.0     2.7   999.0       1      NA      NA    026 
+   1         -0.8     0.0   999.0      13   999.0 999.0    -0.3    009 
 clean up unzipped map files
