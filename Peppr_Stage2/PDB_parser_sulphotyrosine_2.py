@@ -123,7 +123,7 @@ class PDBfile:
         CE2=[]
         N=[]
         C=[]
-        b=[0.001,0.002,0.003]                                                       # To adjust the addition value
+        b=[0.001,0.002,0.003,0.004]                                                       # To adjust the addition value
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 CZ.append(self.X_peratom[i]+b[addition])
@@ -288,7 +288,7 @@ class PDBfile:
         OH=[]
         CE1=[]
         CE2=[]
-        b=[0.001,0.002,0.003]
+        b=[0.001,0.002,0.003,0.004]
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 CZ.append(self.X_peratom[i]+b[addition])

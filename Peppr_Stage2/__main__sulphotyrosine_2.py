@@ -23,7 +23,7 @@ with open('outlist.dat',"r") as list_pdb:                                       
         
         for residue_ndx in range(0,len(x.residue_name)):
             if(x.residue_name[residue_ndx] == "TYR" and x.residue_index[residue_ndx] == tyrosynetobemod ):
-                for i in range(3):
+                for i in range(4):
                     print(i, "  "+linesplit[1])  # for checking errors
                     try:                                                            # to deal with the erro ‘matrix is numerically singular’
                         x.PDBreader(linesplit[1]) 

@@ -5,10 +5,10 @@ Performing search (2 ADCP runs with 800 steps each) ...
 |----|----|----|----|----|----|----|----|----|----|
 *************************0 ENDED WITH ERROR
 0 err
-**************************************************Docking performed in 2.01 seconds, i.e. 0 hours 00 minutes 02.007862 seconds 
+**************************************************Docking performed in 2.01 seconds, i.e. 0 hours 00 minutes 02.012990 seconds 
 mode |  affinity  | clust. | ref. | clust. | rmsd | best | energy | best |
      | (kcal/mol) | rmsd   | rmsd |  size  | avg. | rmsd |  avg.  | run  |
 -----+------------+--------+------+--------+------+------+--------+------+
-   1          0.9     0.0   999.0       3   999.0 999.0     1.2    008 
-   2          1.2     2.7   999.0       1      NA      NA    007 
+   1         -7.1     0.0   999.0      23   999.0 999.0    -4.7    033 
+   2         -1.0     2.0   999.0       2   999.0 999.0    -0.6    003 
 clean up unzipped map files
