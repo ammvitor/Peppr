@@ -27,42 +27,42 @@ with open('outlist.dat',"r") as list_pdb:                                       
                     print(i, "  "+linesplit[1])  # for checking errors
                     try:                                                            # to deal with the erro ‘matrix is numerically singular’
                         x.PDBreader(linesplit[1]) 
-                        x.addPO3_toTYR(i)                                           # 'i' is used for setting the addition values in method 'add_PO3'                                              
+                        x.addPO3_toTYR(i,tyrosynetobemod)                           # 'i' is used for setting the addition values, 'tyrosynetobemod' is used for locate the specific TYR in method 'add_PO3'                                              
                         x.PDBwriter(linesplit[0]+"_PO3.pdb")
                         pdbfilenames_tocat.append(linesplit[0]+"_PO3.pdb")
-                        x.obabel_mol2_em(linesplit[0]+"_PO3.pdb",linesplit[0]+"_PO3.mol2")
+                        x.obabel_mol2_em(linesplit[0]+"_PO3.pdb",linesplit[0]+"_PO3.mol2",tyrosynetobemod,"PTM")
                         mol2filenames_tocat.append(linesplit[0]+"_PO3.mol2")
                         x.n_c_Cyclic_PDBwriter(linesplit[0]+"_PO3_N-C_cyc.pdb")
                         cycpdbfilenames_tocat.append(linesplit[0]+"_PO3_N-C_cyc.pdb")
-                        x.obabel_mol2_cyc(linesplit[0]+"_PO3_N-C_cyc.pdb", linesplit[0]+"_PO3_N-C_cyc.mol2")
+                        x.obabel_mol2_cyc(linesplit[0]+"_PO3_N-C_cyc.pdb", linesplit[0]+"_PO3_N-C_cyc.mol2",tyrosynetobemod,"PTM")
                         cycmol2filenames_tocat.append(linesplit[0]+"_PO3_N-C_cyc.mol2")
                         os.system('rm ' +linesplit[0]+"_PO3_N-C_cyc.pdb")
                         
                         x.PDBreader(linesplit[1])
-                        x.addSO3_toTYR(i)                                           # 'i' is used for setting the addition values in method 'add_SO3'
+                        x.addSO3_toTYR(i,tyrosynetobemod)                                           # 'i' is used for setting the addition values in method 'add_SO3'
                         x.PDBwriter(linesplit[0]+"_SO3.pdb")
                         pdbfilenames_tocat.append(linesplit[0]+"_SO3.pdb")
-                        x.obabel_mol2_em(linesplit[0]+"_SO3.pdb",linesplit[0]+"_SO3.mol2")
+                        x.obabel_mol2_em(linesplit[0]+"_SO3.pdb",linesplit[0]+"_SO3.mol2",tyrosynetobemod,"PTM")
                         mol2filenames_tocat.append(linesplit[0]+"_SO3.mol2")
                         mol2filenames_tocat.append(linesplit[0]+"_SO3.mol2")
                         x.n_c_Cyclic_PDBwriter(linesplit[0]+"_SO3_N-C_cyc.pdb")
                         cycpdbfilenames_tocat.append(linesplit[0]+"_SO3_N-C_cyc.pdb")
-                        x.obabel_mol2_cyc(linesplit[0]+"_SO3_N-C_cyc.pdb", linesplit[0]+"_SO3_N-C_cyc.mol2")
+                        x.obabel_mol2_cyc(linesplit[0]+"_SO3_N-C_cyc.pdb", linesplit[0]+"_SO3_N-C_cyc.mol2",tyrosynetobemod,"PTM")
                         cycmol2filenames_tocat.append(linesplit[0]+"_SO3_N-C_cyc.mol2")
                         os.system('rm '+linesplit[0]+"_SO3_N-C_cyc.pdb")
                     except:
                         pass
-
                 break
+                
         x.PDBreader(linesplit[1])
         x.PDBwriter(linesplit[0]+".pdb")
         pdbfilenames_tocat.append(linesplit[0]+".pdb")
-        x.obabel_mol2_em(linesplit[0]+".pdb",linesplit[0]+".mol2")
+        x.obabel_mol2_em(linesplit[0]+".pdb",linesplit[0]+".mol2",tyrosynetobemod,"NOTPTM")
         mol2filenames_tocat.append(linesplit[0]+".mol2")
         
         x.n_c_Cyclic_PDBwriter(linesplit[0]+"_cyc.pdb")
         cycpdbfilenames_tocat.append(linesplit[0]+"_cyc.pdb")
-        x.obabel_mol2_cyc(linesplit[0]+"_cyc.pdb", linesplit[0]+"_cyc.mol2")
+        x.obabel_mol2_cyc(linesplit[0]+"_cyc.pdb", linesplit[0]+"_cyc.mol2",tyrosynetobemod,"NOTPTM")
         cycmol2filenames_tocat.append(linesplit[0]+"_cyc.mol2")
         os.system('rm '+linesplit[0]+"_cyc.pdb")
         

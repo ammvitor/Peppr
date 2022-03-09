@@ -5,7 +5,7 @@ outfile_name TLLDYL/TLLDYL_1.pdb
 pace 1
 stretch 800
 test mask 8802
-random seed 220152
+random seed 832648
 parameters Bias=NULL,external=5,constrains,1.0,1.0,Opt=1,0.25,0.75,0.0
 acceptance ratio 0.5
 amplitude -0.1

@@ -2,6 +2,7 @@
 Peppr - Automated pipeline for peptide generation, docking and scoring
 
 For test
+# Please modify the Peppr_Stage2/__main__.py file "tyrtobemod = " to the residue index which you want to add PTMs.
  cd ./test
  rm -rf *
  cp ../Peppr_Stage2/test/test.trg .

@@ -9,6 +9,7 @@ To run
 	python ../Peppr/Peppr_main.py -c 3 -i PLDXPAL -t done.trg -p 50 -N 4 -n 500000
 
 For test
+# Please modify the Peppr_Stage2/__main__.py file "tyrtobemod = " to the residue index which you want to add PTMs.
  cd ./test
  rm -rf *
  cp ../Peppr_Stage2/test/test.trg .

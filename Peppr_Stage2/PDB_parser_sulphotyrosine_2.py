@@ -49,27 +49,89 @@ class PDBfile:
     
 
     
-    def obabel_mol2_em(self, filename,outputname):
+    def obabel_mol2_em(self, filename,outputname,tyrtomod,ptm):
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
-        cyclic=false
-        if(cyclic):
-            os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+        if(ptm == "PTM"):
+           self.MOL2readerwriter("pep.mol2",filename,tyrtomod) 
+           os.system('obabel modified_'+filename+'.mol2 -O '+outputname)
         else:
-            os.system('obabel pep.mol2 -O '+outputname+' ')
+            os.system('obabel pep.mol2 -O '+outputname)
 
-        os.system('rm pep.mol2')
+        os.system('rm pep.mol2 modified_'+filename+'.mol2')
 
-    def obabel_mol2_cyc(self, filename,outputname):
+    def obabel_mol2_cyc(self, filename,outputname,tyrtomod,ptm):
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
-        os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
-        # os.system('obabel -ipdb '+filename+' -O '+outputname+' --minimize --steps 1500 --sd ')
-        # os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
-        os.system('rm pep.mol2')
+        # print(ptm)
+        if(ptm == "PTM"):
+            # print(ptm)
+            self.MOL2readerwriter("pep.mol2",filename,tyrtomod)
+            os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+        else:
+            os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+
+        os.system('rm pep.mol2 modified_'+filename+".mol2")
+        
+
+     
+    def find_p_s_atom_index(self,tyrtomod):
+        for i in range(0,len(self.atomic_index)):
+            if(self.atomic_name[i] == "P" or self.atomic_name[i] == "S" and self.residue_name[i] == "TYR" and self.residue_index[i] == tyrtomod):
+                p_s_atom_index = self.atomic_index[i]
+        return int(p_s_atom_index)
+
             
+    def MOL2readerwriter(self,filename,outputname,tyrtomod):
+        # self.atomic_index.clear()
+        bond_index = []
+        bond_a1 = []
+        bond_a2 = []
+        bond_type = []
+        not_bond_lines = []
+        bond_lines = []
+        p_s = self.find_p_s_atom_index(tyrtomod)
+        # print(p_s)
+        f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
+        count_line=0
+        count_sign=0
+        for line in f:                                                      # 为了找到bond内容起始行
+            count_line += 1
+            not_bond_lines.append(line)
+            if(line.startswith('@')):                                       # 这里可能出问题！可以尝试start with "@"
+                count_sign += 1
+                if(count_sign == 3):
+                    bond_start = count_line + 1
+                    
+        # print(bond_start)
+        f.close()
+        f = open(filename, "r")
+        count = 0 
+        for line in f:
+            count += 1
+            if(count >= bond_start):
+                bond_lines.append(line)
+                bond_index.append(line.split()[0])
+                bond_a1.append(int(line.split()[1]))
+                bond_a2.append(int(line.split()[2]))
+                bond_type.append(line.split()[3])
+        # print(bond_a1) 
+        list_a1 = [p_s + 1, p_s + 2, p_s + 3, p_s]
+        list_a2 = [p_s + 1, p_s + 2, p_s + 3, p_s, p_s - 2]
+        del_line_index = 5000
+        for i in range(0,len(bond_lines)):
+            # print(list_a1, list_a2)
+            if(bond_a1[i] in list_a1 and bond_a2[i] not in list_a2):
+                # print(bond_a1[i], bond_a2[i])
+                del_line_index = bond_start + i - 1                                 # 'bond_start' 是bond第一行，i从0计数，因此二者之和=行数，行数 - 1 = 行的index
+                # print(del_line_index)
+
+        with open(filename) as fp_in:
+            with open("modified_"+outputname+".mol2", 'w') as fp_out:
+                fp_out.writelines(line for i, line in enumerate(fp_in) if i != del_line_index)
+        os.system('sed -i '+"'" +str(del_line_index)+"G' modified_"+outputname+".mol2")
 
 
     
-    def addSO3_toTYR(self,addition):                                                # 'addition' used to adjust the addition value of coordinations
+    def addSO3_toTYR(self,addition,tyrtobemod):                                                # 'addition' used to adjust the addition value of coordinations
         a = 3
         refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]                   # reference coordination from crystal structure:1H8I, modified the bond length between S-OH; S-CZ; CZ-CE2; CZ-CE1 based on the output bond length of Crankpep   
         refCZ=[round(15.504,a), round(5.242,a), round(37.912,a)]
@@ -125,19 +187,19 @@ class PDBfile:
         C=[]
         b=[0.001,0.002,0.003,0.004]                                                       # To adjust the addition value
         for i in range (0, len(self.X_peratom)):
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 CZ.append(self.X_peratom[i]+b[addition])
                 CZ.append(self.Y_peratom[i]+b[addition])
                 CZ.append(self.Z_peratom[i]+b[addition])
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "OH"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "OH" and self.residue_index[i] == tyrtobemod):
                 OH.append(self.X_peratom[i]+b[addition])
                 OH.append(self.Y_peratom[i]+b[addition])
                 OH.append(self.Z_peratom[i]+b[addition])
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE1"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE1" and self.residue_index[i] == tyrtobemod):
                 CE1.append(self.X_peratom[i]+b[addition])
                 CE1.append(self.Y_peratom[i]+b[addition])
                 CE1.append(self.Z_peratom[i]+b[addition])
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE2"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE2" and self.residue_index[i] == tyrtobemod):
                 CE2.append(self.X_peratom[i])
                 CE2.append(self.Y_peratom[i])
                 CE2.append(self.Z_peratom[i])
@@ -153,7 +215,7 @@ class PDBfile:
                             [x,y,z],[OH[0],OH[1],OH[2]])
         print(solvedS)
         for i in range (0, len(self.X_peratom)):                                # add S to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+1, 1+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+1, "S")
                 self.residue_name.insert(i+1,"TYR")
@@ -176,7 +238,7 @@ class PDBfile:
                             [x,y,z],[solvedS[0],solvedS[1],solvedS[2]])
         print(solvedO1)
         for i in range (0, len(self.X_peratom)):                                # add O1 to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+2, 2+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+2, "O1")
                 self.residue_name.insert(i+2,"TYR")
@@ -200,7 +262,7 @@ class PDBfile:
                             [x,y,z],[solvedS[0],solvedS[1],solvedS[2]])
         #print(solvedO2)
         for i in range (0, len(self.X_peratom)):                                # add O2 to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+3, "O2")
                 self.residue_name.insert(i+3,"TYR")                
@@ -224,7 +286,7 @@ class PDBfile:
                             [x,y,z],[solvedS[0],solvedS[1],solvedS[2]])
         #print(solvedO3)
         for i in range (0, len(self.X_peratom)):                                    # add O3 to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+4, 3+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+4, "O3")
                 self.residue_name.insert(i+4,"TYR")
@@ -239,7 +301,7 @@ class PDBfile:
         for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
             self.atomic_index[i] = float(i+1)
         
-    def addPO3_toTYR(self,addition):                                                # 'addition' used to adjust the addition value of coordinations
+    def addPO3_toTYR(self,addition,tyrtobemod):                                                # 'addition' used to adjust the addition value of coordinations
         a = 3
         refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]                   # reference coordination from crystal structure:1H8I   
         refCZ=[round(15.504,a), round(5.242,a), round(37.912,a)]
@@ -290,19 +352,19 @@ class PDBfile:
         CE2=[]
         b=[0.001,0.002,0.003,0.004]
         for i in range (0, len(self.X_peratom)):
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 CZ.append(self.X_peratom[i]+b[addition])
                 CZ.append(self.Y_peratom[i]+b[addition])
                 CZ.append(self.Z_peratom[i]+b[addition])
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "OH"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "OH" and self.residue_index[i] == tyrtobemod):
                 OH.append(self.X_peratom[i]+b[addition])
                 OH.append(self.Y_peratom[i]+b[addition])
                 OH.append(self.Z_peratom[i]+b[addition])
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE1"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE1" and self.residue_index[i] == tyrtobemod):
                 CE1.append(self.X_peratom[i]+b[addition])
                 CE1.append(self.Y_peratom[i]+b[addition])
                 CE1.append(self.Z_peratom[i]+b[addition])
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE2"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE2" and self.residue_index[i] == tyrtobemod):
                 CE2.append(self.X_peratom[i])
                 CE2.append(self.Y_peratom[i])
                 CE2.append(self.Z_peratom[i])
@@ -319,7 +381,7 @@ class PDBfile:
                             [x,y,z],[OH[0],OH[1],OH[2]])
         #print(solvedP)
         for i in range (0, len(self.X_peratom)):                                # add S to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+1, 1+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+1, "P")
                 self.residue_name.insert(i+1,"TYR")
@@ -344,7 +406,7 @@ class PDBfile:
                             [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
         #print(solvedO1)
         for i in range (0, len(self.X_peratom)):                                # add O1 to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+2, 2+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+2, "O1")
                 self.residue_name.insert(i+2,"TYR")
@@ -369,7 +431,7 @@ class PDBfile:
                             [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
         #print(solvedO2)
         for i in range (0, len(self.X_peratom)):                                # add O2 to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+3, "O2")
                 self.residue_name.insert(i+3,"TYR")
@@ -394,7 +456,7 @@ class PDBfile:
                             [x,y,z],[solvedO2[0],solvedO2[1],solvedO2[2]])
         #print(solvedO3)
         for i in range (0, len(self.X_peratom)):                                # add O3 to the end of TYR
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
+            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+4, 4+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+4, "O3")
                 self.residue_name.insert(i+4,"TYR")
