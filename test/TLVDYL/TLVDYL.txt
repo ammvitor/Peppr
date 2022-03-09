@@ -1,0 +1,14 @@
+Detected 2 cores, request 2 cores, using 2 cores
+using ramaprob.data in current folder
+Performing search (2 ADCP runs with 800 steps each) ...
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+*************************0 ENDED WITH ERROR
+0 err
+**************************************************Docking performed in 2.01 seconds, i.e. 0 hours 00 minutes 02.007862 seconds 
+mode |  affinity  | clust. | ref. | clust. | rmsd | best | energy | best |
+     | (kcal/mol) | rmsd   | rmsd |  size  | avg. | rmsd |  avg.  | run  |
+-----+------------+--------+------+--------+------+------+--------+------+
+   1          0.9     0.0   999.0       3   999.0 999.0     1.2    008 
+   2          1.2     2.7   999.0       1      NA      NA    007 
+clean up unzipped map files

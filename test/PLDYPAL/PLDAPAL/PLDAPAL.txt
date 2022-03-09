@@ -1,2 +1,0 @@
-Detected 8 cores, request 1 cores, using 1 cores
-copying the ramaprob.data file from /home/jvscunha/ADFRsuite-1.0/CCSBpckgs/ADCP/ramaprob.data to /home/jvscunha/Peppr/test/PLDYPAL

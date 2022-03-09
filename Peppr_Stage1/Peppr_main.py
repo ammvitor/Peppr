@@ -55,7 +55,7 @@ adcphome = os.environ['ADCPHOME']+"/bin/adcp"
 res = 0                                # Prepare this variable for a global using purpose
 
 #Peppr_functions.set_sequence()
-Peppr_functions.adcp_run()             # updated
+Peppr_functions.adcp_run()             # updated, adcp_run() includes "set_sequence", "structure_correct", "extract_score", "sort_list"
 
 print("Congratulations! It's finished!")
 

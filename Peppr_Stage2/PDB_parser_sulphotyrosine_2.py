@@ -47,29 +47,7 @@ class PDBfile:
         d = abs(mod_d) / mod_area
         return d
     
-    def n_c_Cyclic(self):
-        find_c_atom_index = []
-        find_n_atom_index = []
-        for i in range(0,len(self.atomic_index)):
-            if(self.atomic_name[i] == "C"):
-                find_c_atom_index.append(self.atomic_index[i])
-            if(self.atomic_name[i] == "N"):
-                find_n_atom_index.append(self.atomic_index[i])
-        c_terminal_atomIndex = max(find_c_atom_index)
-        n_terminal_atomIndex = min(find_n_atom_index)
-        return n_terminal_atomIndex, c_terminal_atomIndex
-    
-    def n_cysteine_Cyclic(self):
-        find_s_atom_index = []
-        find_n_atom_index = []
-        for i in range(0,len(self.atomic_index)):
-            if(self.residue_name[i] == "CYS" and self.atomic_name[i] == "SG"):
-                find_s_atom_index.append(self.atomic_index[i])
-            if(self.atomic_name[i] == "N"):
-                find_n_atom_index.append(self.atomic_index[i])
-        s_terminal_atomIndex = max(find_s_atom_index)
-        n_terminal_atomIndex = min(find_n_atom_index)
-        return n_terminal_atomIndex, s_terminal_atomIndex
+
     
     def obabel_mol2_em(self, filename,outputname):
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
@@ -80,13 +58,20 @@ class PDBfile:
             os.system('obabel pep.mol2 -O '+outputname+' ')
 
         os.system('rm pep.mol2')
+
+    def obabel_mol2_cyc(self, filename,outputname):
+        os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
+        os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+        # os.system('obabel -ipdb '+filename+' -O '+outputname+' --minimize --steps 1500 --sd ')
+        # os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+        os.system('rm pep.mol2')
             
 
 
     
-    def addSO3_toTYR(self):
+    def addSO3_toTYR(self,addition):                                                # 'addition' used to adjust the addition value of coordinations
         a = 3
-        refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]               # reference coordination from crystal structure:1H8I, modified the bond length between S-OH; S-CZ; CZ-CE2; CZ-CE1 based on the output bond length of Crankpep   
+        refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]                   # reference coordination from crystal structure:1H8I, modified the bond length between S-OH; S-CZ; CZ-CE2; CZ-CE1 based on the output bond length of Crankpep   
         refCZ=[round(15.504,a), round(5.242,a), round(37.912,a)]
         refOH=[round(16.403,a), round(6.281,a), round(37.877,a)]
         refS=[round(17.374,a), round(6.411,a), round(36.652,a)]
@@ -138,33 +123,25 @@ class PDBfile:
         CE2=[]
         N=[]
         C=[]
-
+        b=[0.001,0.002,0.003]                                                       # To adjust the addition value
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
-                CZ.append(round(self.X_peratom[i],a))
-                CZ.append(round(self.Y_peratom[i],a))
-                CZ.append(round(self.Z_peratom[i],a))
+                CZ.append(self.X_peratom[i]+b[addition])
+                CZ.append(self.Y_peratom[i]+b[addition])
+                CZ.append(self.Z_peratom[i]+b[addition])
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "OH"):
-                OH.append(round(self.X_peratom[i],a))
-                OH.append(round(self.Y_peratom[i],a))
-                OH.append(round(self.Z_peratom[i],a))
+                OH.append(self.X_peratom[i]+b[addition])
+                OH.append(self.Y_peratom[i]+b[addition])
+                OH.append(self.Z_peratom[i]+b[addition])
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE1"):
-                CE1.append(round(self.X_peratom[i],a))
-                CE1.append(round(self.Y_peratom[i],a))
-                CE1.append(round(self.Z_peratom[i],a))
+                CE1.append(self.X_peratom[i]+b[addition])
+                CE1.append(self.Y_peratom[i]+b[addition])
+                CE1.append(self.Z_peratom[i]+b[addition])
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE2"):
-                CE2.append(round(self.X_peratom[i],a))
-                CE2.append(round(self.Y_peratom[i],a))
-                CE2.append(round(self.X_peratom[i],a))
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "N"):
-                N.append(round(self.X_peratom[i],a))
-                N.append(round(self.Y_peratom[i],a))
-                N.append(round(self.Z_peratom[i],a))
-            if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "C"):
-                C.append(round(self.X_peratom[i],a))
-                C.append(round(self.Y_peratom[i],a))
-                C.append(round(self.Z_peratom[i],a))
-       
+                CE2.append(self.X_peratom[i])
+                CE2.append(self.Y_peratom[i])
+                CE2.append(self.Z_peratom[i])
+
 
         # Calculate the coordination for atom "S"
         x = Symbol('x')
@@ -246,7 +223,7 @@ class PDBfile:
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO3_CE1**2],
                             [x,y,z],[solvedS[0],solvedS[1],solvedS[2]])
         #print(solvedO3)
-        for i in range (0, len(self.X_peratom)):                                # add O3 to the end of TYR
+        for i in range (0, len(self.X_peratom)):                                    # add O3 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+4, 3+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+4, "O3")
@@ -259,12 +236,12 @@ class PDBfile:
                 self.bfactor_per_factor.insert(i+4,float(1))
                 self.charge_per_factor.insert(i+4,float(1))
                 self.Atomtype_per_atom.insert(i+4,"O") 
-        for i in range(0,len(self.X_peratom)):                                  # rearrange the atomic index numbers
+        for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
             self.atomic_index[i] = float(i+1)
         
-    def addPO3_toTYR(self):                                                     # Try different reference structure when PTM group seems wonky
+    def addPO3_toTYR(self,addition):                                                # 'addition' used to adjust the addition value of coordinations
         a = 3
-        refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]               # reference coordination from crystal structure:1H8I   
+        refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]                   # reference coordination from crystal structure:1H8I   
         refCZ=[round(15.504,a), round(5.242,a), round(37.912,a)]
         refOH=[round(16.403,a), round(6.281,a), round(37.877,a)]
         refP=[round(17.374,a), round(6.411,a), round(36.652,a)]
@@ -276,28 +253,7 @@ class PDBfile:
         refN=[round(12.324,a), round(2.361,a), round(40.323,a)]
         refCE2=[round(15.970,a), round(4.014,a), round(38.340,a)]
         
-        # refCE1=[20.662, -11.243, -17.021]                                         # reference coordination from crystal structure: 1UUR  PO3-TYR
-        # refCZ=[20.149, -11.976, -15.967]
-        # refOH=[19.631, -13.238, -16.157]
-        # refP=[19.336, -13.751, -17.676]
-        # refO1=[20.662, -14.158, -18.183]
-        # refO2=[18.489, -14.959, -17.511]
-        # refO3=[18.687, -12.719, -18.522]
-        
-        # refO=[22.528,  -5.206, -16.512]
-        # refN=[20.861,  -7.073, -17.280]
-        # refCE2=[20.163, -11.452, -14.680]
-        
-        # refCE1=[14.198, 5.377, 37.512]                                          # reference coordination from crystal structure:1H8I   SO3-TYR
-        # refCZ=[15.499, 5.246, 37.909]
-        # refOH=[16.410, 6.289, 37.877]
-        # refP=[17.381, 6.419, 36.652]
-        # refO1=[18.169, 5.224, 36.410]
-        # refO2=[16.366, 6.993, 35.794]
-        # refO3=[18.354, 7.492, 37.142]
-        # # refO=[10.081, 0.746, 38.038]
-        # # refN=[12.330, 2.368, 40.323]
-        # # refCE2=[15.974, 4.024, 38.340]
+
         
         distP_OH=self.DistanceCalculator(refP,refOH)                                 # reference distance between atom S and atom OH
         distP_CZ=self.DistanceCalculator(refP,refCZ)                                 # reference distance between atom S and atom CZ
@@ -332,20 +288,20 @@ class PDBfile:
         OH=[]
         CE1=[]
         CE2=[]
-
+        b=[0.001,0.002,0.003]
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
-                CZ.append(self.X_peratom[i])
-                CZ.append(self.Y_peratom[i])
-                CZ.append(self.Z_peratom[i])
+                CZ.append(self.X_peratom[i]+b[addition])
+                CZ.append(self.Y_peratom[i]+b[addition])
+                CZ.append(self.Z_peratom[i]+b[addition])
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "OH"):
-                OH.append(self.X_peratom[i])
-                OH.append(self.Y_peratom[i])
-                OH.append(self.Z_peratom[i])
+                OH.append(self.X_peratom[i]+b[addition])
+                OH.append(self.Y_peratom[i]+b[addition])
+                OH.append(self.Z_peratom[i]+b[addition])
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE1"):
-                CE1.append(self.X_peratom[i])
-                CE1.append(self.Y_peratom[i])
-                CE1.append(self.Z_peratom[i])
+                CE1.append(self.X_peratom[i]+b[addition])
+                CE1.append(self.Y_peratom[i]+b[addition])
+                CE1.append(self.Z_peratom[i]+b[addition])
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CE2"):
                 CE2.append(self.X_peratom[i])
                 CE2.append(self.Y_peratom[i])
@@ -415,7 +371,7 @@ class PDBfile:
         for i in range (0, len(self.X_peratom)):                                # add O2 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ"):
                 self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
-                self.atomic_name.insert(i+3, "O3")
+                self.atomic_name.insert(i+3, "O2")
                 self.residue_name.insert(i+3,"TYR")
                 self.chain_name.insert(i+3,"A")
                 self.residue_index.insert(i+3,self.residue_index[i])
@@ -542,14 +498,90 @@ class PDBfile:
                                              self.bfactor_per_factor[i],                    # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
                                              self.charge_per_factor[i],                     # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
                                              self.Atomtype_per_atom[i]), file = f )         # %12s,右对齐，输出共占12列，若小于12列，则从左端以空格补齐
-
-        n, c = self.n_c_Cyclic()
-        # n, s = self.n_cysteine_Cyclic()
-        # if user ask to N-Cysteine then:
-        print("%-6s%5d%5d" % ("CONECT", int(n), int(c)), file = f)
-        # if user ask to N-C Terminal then:
-        # print("%-6s%5d%5d" % ("CONECT", int(n), int(s)), file = f)
         print("END", file = f)
-        
         f.close()
+            
+
+    def n_c_Cyclic_PDBwriter(self,filename):
+        find_c_atom_index = []
+        find_n_atom_index = []
+        find_ca_tom_index = []
+        for i in range(0,len(self.atomic_index)):
+            if(self.atomic_name[i] == "C"):
+                find_c_atom_index.append(self.atomic_index[i])
+            if(self.atomic_name[i] == "N"):
+                find_n_atom_index.append(self.atomic_index[i])
+            if(self.atomic_name[i] == "CA"):
+                find_ca_tom_index.append(self.atomic_index[i])
+            if(self.residue_name[i]== "PRO" and self.residue_index[i]==1 and self.atomic_name[i] == "CD"):
+                cd_terminal_atomIndex = self.atomic_index[i]
+        c_terminal_atomIndex = max(find_c_atom_index)
+        n_terminal_atomIndex = min(find_n_atom_index)
+        ca_terminal_atomIndex= min(find_ca_tom_index)
+        # return n_terminal_atomIndex, c_terminal_atomIndex
+        f = open(filename, "w")                                                             # f的内容为打开filename，操作为将print的写入原文件
+        for i in range (0 ,len(self.atomic_index)):                                         # 创建循环，i 为从0开始的数列，原子数量相同  
+            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     # 格式化输出,%4s,右对齐,输出共占4列,若长度小于4列，则左端以空格补齐，若大于4列，则输出实际长度,字符串
+                                             self.atomic_index[i],                          # %7d,右对齐,输出共占7列，若长度小于7列，则左端以空格补齐,有符号的十进制证整数
+                                             self.atomic_name[i],                           # %-4s,左对齐,输出共占4列,若长度小于4列，则右端以空格补齐，若大于4列，则输出实际长度,字符串
+                                             self.residue_name[i],                          # %1s,右对齐，输出共占1列，若小于1列，则从左端以空格补齐，若大于1列，则输出实际长度,字符串
+                                             self.chain_name[i],                            # %2s,右对齐，输出共占2列，若小于2列，则从左端以空格补齐，若大于2列，则输出实际长度,字符串
+                                             self.residue_index[i],                         # %4d,右对齐，输出共占4列，若长度小于4列，则左端以空格补齐，有符号的十进制证整数
+                                             self.X_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
+                                             self.Y_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
+                                             self.Z_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
+                                             self.bfactor_per_factor[i],                    # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
+                                             self.charge_per_factor[i],                     # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
+                                             self.Atomtype_per_atom[i]), file = f )         # %12s,右对齐，输出共占12列，若小于12列，则从左端以空格补齐
+        if(self.residue_name[1]=="PRO"):                                                    # If the first residue is PRO, then the 'N' in n-terminal should like this: N-C; N-CA; N-CD他
+            print("%-6s%5d%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(c_terminal_atomIndex), int(ca_terminal_atomIndex), int(cd_terminal_atomIndex)), file = f)
+        else:                                                                               # If the first residue is not PRO, then the 'N' in n-terminal
+            print("%-6s%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(c_terminal_atomIndex), int(ca_terminal_atomIndex)), file = f)
+            print("%-6s%5d%5d%5d%5d" % ("CONECT", int(c_terminal_atomIndex), int(n_terminal_atomIndex), int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)+1), file = f)
+            print("%-6s%5d%5d" % ("CONECT", int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)), file = f)
+            print("END", file = f)
+            f.close()
+    
+    def n_cysteine_Cyclic_PDBwriter(self,filename):
+        find_s_atom_index = []
+        find_n_atom_index = []
+        for i in range(0,len(self.atomic_index)):
+            if(self.residue_name[i] == "CYS" and self.atomic_name[i] == "SG"):
+                find_s_atom_index.append(self.atomic_index[i])
+            if(self.atomic_name[i] == "N"):
+                find_n_atom_index.append(self.atomic_index[i])
+
+        s_terminal_atomIndex = max(find_s_atom_index)
+        n_terminal_atomIndex = min(find_n_atom_index)
+        # return n_terminal_atomIndex, s_terminal_atomIndex
+        f = open(filename, "w")                                                             # f的内容为打开filename，操作为将print的写入原文件
+        for i in range (0 ,len(self.atomic_index)):                                         # 创建循环，i 为从0开始的数列，原子数量相同  
+            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     # 格式化输出,%4s,右对齐,输出共占4列,若长度小于4列，则左端以空格补齐，若大于4列，则输出实际长度,字符串
+                                             self.atomic_index[i],                          # %7d,右对齐,输出共占7列，若长度小于7列，则左端以空格补齐,有符号的十进制证整数
+                                             self.atomic_name[i],                           # %-4s,左对齐,输出共占4列,若长度小于4列，则右端以空格补齐，若大于4列，则输出实际长度,字符串
+                                             self.residue_name[i],                          # %1s,右对齐，输出共占1列，若小于1列，则从左端以空格补齐，若大于1列，则输出实际长度,字符串
+                                             self.chain_name[i],                            # %2s,右对齐，输出共占2列，若小于2列，则从左端以空格补齐，若大于2列，则输出实际长度,字符串
+                                             self.residue_index[i],                         # %4d,右对齐，输出共占4列，若长度小于4列，则左端以空格补齐，有符号的十进制证整数
+                                             self.X_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
+                                             self.Y_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
+                                             self.Z_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
+                                             self.bfactor_per_factor[i],                    # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
+                                             self.charge_per_factor[i],                     # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
+                                             self.Atomtype_per_atom[i]), file = f )         # %12s,右对齐，输出共占12列，若小于12列，则从左端以空格补齐
+        # n, s = self.n_cysteine_Cyclic()
+        print("%-6s%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(s_terminal_atomIndex)), file = f)
+        print("END", file = f)
+        f.close()
+        
+    
+        # if user ask to N-C Terminal then:  
+        # n, c = self.n_c_Cyclic()
+        # print("%-6s%5d%5d" % ("CONECT", int(n), int(c)), file = f)
+
+        # # if user ask to N-Cysteine then:
+        # n, s = self.n_cysteine_Cyclic()
+        # print("%-6s%5d%5d" % ("CONECT", int(n), int(s)), file = f)
+        # print("END", file = f)
+        
+        # f.close()
         
