@@ -5,6 +5,7 @@ import numpy
 import math
 import os
 from sympy import *
+from Bio.PDB import PDBParser, PDBIO, Chain, Residue
 
 class PDBfile:
 
@@ -47,27 +48,44 @@ class PDBfile:
         d = abs(mod_d) / mod_area
         return d
     
+    def structure_correct(self,outputname):                                                  # To fix the ugly structure and save the fixed structures, finally return a path; e.g 'outputname' = PLDYS/PLDYS
+        #calls biopdb to fix the broken pdb results for the top1 poses per sequence
+        io = PDBIO()                                                                    # call the class 'PDBIO()' within BIO.PDB
+        #fix it by loading to biopdb and printing 
+        # total_number_of_output=["1","2","3","4","5","6","7","8","9","10"]
+        # for rank in total_number_of_output:
+        #     try:
+        pdb = PDBParser(QUIET=True).get_structure("UGLY", outputname)    # 'get_structure(self, ID, file)' is a method in class 'PDBParser', 
+        io.set_structure(pdb)                                                                   # 'set_structure(self, pdb_object)' is a method in class 'PDBIO'    
+        io.save(outputname+"_corrected.pdb")                                    # 'save(self, file, select=_select, write_end=True, preserve_atom_numbering=False)' is a method in class 'PDBIO'
+                #reads the output files with the energy to rank poses
+                
+            # except:
+            #     pass
+            
+        return(os.getcwd()+"/"+outputname+"_ranked_"+"1"+"_corrected.pdb")    
 
     
-    def obabel_mol2_em(self, filename,outputname,tyrtomod,ptm):
+    def obabel_mol2_em(self, filename,outputname,tyrtomod,ptm):                     # For dealing with non_cyclic.pdb
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
         if(ptm == "PTM"):
-           self.MOL2readerwriter("pep.mol2",filename,tyrtomod) 
+           self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod) 
            os.system('obabel modified_'+filename+'.mol2 -O '+outputname)
         else:
             os.system('obabel pep.mol2 -O '+outputname)
 
         os.system('rm pep.mol2 modified_'+filename+'.mol2')
 
-    def obabel_mol2_cyc(self, filename,outputname,tyrtomod,ptm):
+    def obabel_mol2_cyc(self, filename,outputname,tyrtomod,ptm):                    # For dealing with cyclic.pdp
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
         # print(ptm)
         if(ptm == "PTM"):
             # print(ptm)
-            self.MOL2readerwriter("pep.mol2",filename,tyrtomod)
+            self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod)
             os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
         else:
-            os.system('obabel pep.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+            self.not_ptm_MOL2readerwriter("pep.mol2", filename)
+            os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
 
         os.system('rm pep.mol2 modified_'+filename+".mol2")
         
@@ -79,8 +97,14 @@ class PDBfile:
                 p_s_atom_index = self.atomic_index[i]
         return int(p_s_atom_index)
 
+    def find_n_c_atom_index(self):
+        n_c_indexs = []
+        for i in range(0,len(self.atomic_index)):
+            if(self.atomic_name[i] == "N" or self.atomic_name[i] == "C"):
+                n_c_indexs.append(self.atomic_index[i])
+        return n_c_indexs
             
-    def MOL2readerwriter(self,filename,outputname,tyrtomod):
+    def ptm_MOL2readerwriter(self,filename,outputname,tyrtomod):
         # self.atomic_index.clear()
         bond_index = []
         bond_a1 = []
@@ -99,7 +123,7 @@ class PDBfile:
             if(line.startswith('@')):                                       # 这里可能出问题！可以尝试start with "@"
                 count_sign += 1
                 if(count_sign == 3):
-                    bond_start = count_line + 1
+                    bond_start = count_line + 1                             # 用于记录@bond之后的内容，不包括@bond
                     
         # print(bond_start)
         f.close()
@@ -107,7 +131,7 @@ class PDBfile:
         count = 0 
         for line in f:
             count += 1
-            if(count >= bond_start):
+            if(count >= bond_start):                                                # 将mol2文件中的bond信息分别存储到列表中,不包括bond行
                 bond_lines.append(line)
                 bond_index.append(line.split()[0])
                 bond_a1.append(int(line.split()[1]))
@@ -116,20 +140,67 @@ class PDBfile:
         # print(bond_a1) 
         list_a1 = [p_s + 1, p_s + 2, p_s + 3, p_s]
         list_a2 = [p_s + 1, p_s + 2, p_s + 3, p_s, p_s - 2]
-        del_line_index = 5000
+        n_c_index = self.find_n_c_atom_index()                               # 新加！用于提取所有的N和C原子
+        
+        # del_line_index = 5000
+        del_line_index = []                                                         # 新加！创建与PTM之间错误bond的index列表，并在之后将之删除
         for i in range(0,len(bond_lines)):
             # print(list_a1, list_a2)
             if(bond_a1[i] in list_a1 and bond_a2[i] not in list_a2):
-                # print(bond_a1[i], bond_a2[i])
-                del_line_index = bond_start + i - 1                                 # 'bond_start' 是bond第一行，i从0计数，因此二者之和=行数，行数 - 1 = 行的index
-                # print(del_line_index)
+                del_line_index.append(bond_start + i - 1)                           # 新加！'bond_start' 是bond第一行，i从0计数，因此二者之和=行数，行数 - 1 = 行的index
+            elif(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):    # 新加！ 只要bond_a1属于C或O，都不管，其他的只要bond_a1和bond_a2之间的差值大于6(因为TRP-W中CB-CG之差=6，因此为了避开所有常规键)
+                del_line_index.append(bond_start + i - 1)
+
 
         with open(filename) as fp_in:
             with open("modified_"+outputname+".mol2", 'w') as fp_out:
-                fp_out.writelines(line for i, line in enumerate(fp_in) if i != del_line_index)
-        os.system('sed -i '+"'" +str(del_line_index)+"G' modified_"+outputname+".mol2")
+                fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  # 新加！ 当行数为需要删掉的行的时候，不写入
+        for del_line_indexes in del_line_index:                                                     # 新加！
+            os.system('sed -i '+"'" +str(del_line_indexes)+"G' modified_"+outputname+".mol2")       # 新加！在被删掉的行那里加入空行，否则mol2无法成功
 
+    def not_ptm_MOL2readerwriter(self,filename,outputname):
+        # self.atomic_index.clear()
+        bond_index = []
+        bond_a1 = []
+        bond_a2 = []
+        bond_type = []
+        not_bond_lines = []
+        bond_lines = []
+        f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
+        count_line=0
+        count_sign=0
+        for line in f:                                                      # 为了找到bond内容起始行
+            count_line += 1
+            not_bond_lines.append(line)
+            if(line.startswith('@')):                                       # 这里可能出问题！可以尝试start with "@"
+                count_sign += 1
+                if(count_sign == 3):
+                    bond_start = count_line + 1                             # 用于记录@bond之后的内容，不包括@bond
+                    
+        # print(bond_start)
+        f.close()
+        f = open(filename, "r")
+        count = 0 
+        for line in f:
+            count += 1
+            if(count >= bond_start):                                                # 将mol2文件中的bond信息分别存储到列表中,不包括bond行
+                bond_lines.append(line)
+                bond_index.append(line.split()[0])
+                bond_a1.append(int(line.split()[1]))
+                bond_a2.append(int(line.split()[2]))
+                bond_type.append(line.split()[3])
+        n_c_index = self.find_n_c_atom_index()                               # 新加！用于提取所有的N和C原子
+        del_line_index = []                                                         # 新加！创建与PTM之间错误bond的index列表，并在之后将之删除
+        for i in range(0,len(bond_lines)):
+            # print(list_a1, list_a2)
+            if(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):
+                del_line_index.append(bond_start + i - 1)                           # 新加！'bond_start' 是bond第一行，i从0计数，因此二者之和=行数，行数 - 1 = 行的index
 
+        with open(filename) as fp_in:
+            with open("modified_"+outputname+".mol2", 'w') as fp_out:
+                fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  # 新加！ 当行数为需要删掉的行的时候，不写入
+        for del_line_indexes in del_line_index:                                                     # 新加！
+            os.system('sed -i '+"'" +str(del_line_indexes)+"G' modified_"+outputname+".mol2")   
     
     def addSO3_toTYR(self,addition,tyrtobemod):                                                # 'addition' used to adjust the addition value of coordinations
         a = 3
@@ -564,7 +635,7 @@ class PDBfile:
         f.close()
             
 
-    def n_c_Cyclic_PDBwriter(self,filename):
+    def n_c_Cyclic_PDBwriter(self,filename,tyrtomod):
         find_c_atom_index = []
         find_n_atom_index = []
         find_ca_tom_index = []
@@ -575,7 +646,7 @@ class PDBfile:
                 find_n_atom_index.append(self.atomic_index[i])
             if(self.atomic_name[i] == "CA"):
                 find_ca_tom_index.append(self.atomic_index[i])
-            if(self.residue_name[i]== "PRO" and self.residue_index[i]==1 and self.atomic_name[i] == "CD"):
+            if(self.residue_name[i]== "PRO" and self.residue_index[i]==1 and self.atomic_name[i] == "CD"):      # 用于第一个残基是PRO的时候用的
                 cd_terminal_atomIndex = self.atomic_index[i]
         c_terminal_atomIndex = max(find_c_atom_index)
         n_terminal_atomIndex = min(find_n_atom_index)
@@ -601,8 +672,17 @@ class PDBfile:
             print("%-6s%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(c_terminal_atomIndex), int(ca_terminal_atomIndex)), file = f)
             print("%-6s%5d%5d%5d%5d" % ("CONECT", int(c_terminal_atomIndex), int(n_terminal_atomIndex), int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)+1), file = f)
             print("%-6s%5d%5d" % ("CONECT", int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)), file = f)
-            print("END", file = f)
-            f.close()
+        try:
+            ptm_index = self.find_p_s_atom_index(tyrtomod)                                  # 新加！为PTM添加连接，以便于生成pep.mol2时保留PTM的连接
+            if ptm_index:                                                                   # 新加！如果是有PTM的残基，则输出一下内容
+                print("%-6s%5d%5d%5d%5d%5d" % ("CONECT", int(ptm_index), int(ptm_index)-2, int(ptm_index)+1, int(ptm_index)+2, int(ptm_index)+3), file = f)     # S OH O1 O2 O3 
+                print("%-6s%5d%5d" % ("CONECT", int(ptm_index)-2, int(ptm_index)), file = f)                                                                    # OH S
+            # print("END", file = f)
+        except:
+            pass
+        f.close()
+        # self.structure_correct(filename)                                                    # 试图为pdb格式添加正确的bond，也可尝试先纠正，再加PTM的键
+        self.pdb_residues_side_chain_conect(filename)
     
     def n_cysteine_Cyclic_PDBwriter(self,filename):
         find_s_atom_index = []
@@ -636,14 +716,145 @@ class PDBfile:
         f.close()
         
     
-        # if user ask to N-C Terminal then:  
-        # n, c = self.n_c_Cyclic()
-        # print("%-6s%5d%5d" % ("CONECT", int(n), int(c)), file = f)
 
-        # # if user ask to N-Cysteine then:
-        # n, s = self.n_cysteine_Cyclic()
-        # print("%-6s%5d%5d" % ("CONECT", int(n), int(s)), file = f)
-        # print("END", file = f)
         
-        # f.close()
+    def pdb_residues_side_chain_conect(self, filename):                                     # 新加！用于再*cyclic.pdb文件中添加全部残基side chain CONECT信息
+        # for i in range (0, len(self.X_peratom)):
+        #     if(self.atomic_name[i] == "N" and self.residue_index[i] == restomod):
+        #         pre_residue_index = self.residue_index(i-1)
+        #     elif(self.residue_index[i] == restomod and self.residue_index[i] != self.residue_index[i+1] ):
+        #         post_residue_index = self.residue_index(i+1)
+        # ALA sidechain CONECT
+        aa = ["ALA","CYS","ASP","GLU","PHE","GLY","HIS","ILE","LYS","LEU","MET","ASN","PRO","GLN","ARG","SER","THR","VAL","TRP","TYR"]
+        n_index = []
+        pep_seq = []
+        # for i in range(1, max(self.residue_index)+1):
+        for i in range(len(self.atomic_index)):
+            if(self.atomic_name[i] == "N"):
+                n_index.append(self.atomic_index[i])
+                pep_seq.append(self.residue_name[i])
+        self.side_chain_conect(pep_seq,n_index,filename)
+                
+    def side_chain_conect(self,pepseq,nindex,filename):                                    # 新加！不知道需不需要*pepseq
+        f = open(filename, "a")                                                            # 'a'代表追加写入，'w'是覆盖写入
+        for i in range(len(pepseq)):
+            if(pepseq[i] == "ALA"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+            elif(pepseq[i] == "CYS"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+5), file = f) # CB-CG
+            elif(pepseq[i] == "ASP"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # OD1-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+7), file = f) # OD2-CG
+            elif(pepseq[i] == "GLU"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+8), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+8), file = f) # CD-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # CD-OE1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD-OE2
+            elif(pepseq[i] == "PHE"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+9), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+9), file = f) # CD1-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD1-CE1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+9), file = f) # CD2-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+8), file = f) # CD2-CE2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+7, int(nindex[i])+10), file = f) # CE2-CZ
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+8, int(nindex[i])+10), file = f) # CE2-CZ
+            # elif(pepseq[i] == "GLY"):
+            elif(pepseq[i] == "HIS"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+9), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+9), file = f) # CD2-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+8), file = f) # CD2-NE2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+9), file = f) # ND1-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+7), file = f) # ND1-CE1
+            elif(pepseq[i] == "ILE"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+6), file = f) # CB-CG1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # CD1-CG1    
+            elif(pepseq[i] == "LYS"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # CD-CE
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+8), file = f) # CE-NZ
+            elif(pepseq[i] == "LEU"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD1-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+7), file = f) # CD2-CG
+            elif(pepseq[i] == "MET"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # SD-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # SD-CE
+            elif(pepseq[i] == "ASN"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # ND2-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+7), file = f) # OD1-CG
+            elif(pepseq[i] == "PRO"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i]), int(nindex[i])+1), file = f) # N-CA
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+6), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # CD-CG                
+            elif(pepseq[i] == "GLN"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+8), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+8), file = f) # CD-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD-OE1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # CD-NE2
+            elif(pepseq[i] == "ARG"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+7), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+6), file = f) # CD-NE
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+10), file = f) # NE-CZ
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+8, int(nindex[i])+10), file = f) # NH1-CZ
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+9, int(nindex[i])+10), file = f) # NH2-CZ
+            elif(pepseq[i] == "SER"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+5), file = f) # CB-OG
+            elif(pepseq[i] == "THR"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+5), file = f) # CB-CG2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+6), file = f) # CB-OG1
+            elif(pepseq[i] == "VAL"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+5), file = f) # CB-CG1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+6), file = f) # CB-CG2
+            elif(pepseq[i] == "TRP"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+10), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+10), file = f) # CD1-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+9), file = f) # CD1-NE1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+10), file = f) # CD2-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+7), file = f) # CD2-CE2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+8), file = f) # CD2-CE3
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+7, int(nindex[i])+9), file = f) # CE2-NE1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+7, int(nindex[i])+12), file = f) # CE2-CZ2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+8, int(nindex[i])+13), file = f) # CE3-CZ3
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+11, int(nindex[i])+12), file = f) # CH2-CZ2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+11, int(nindex[i])+13), file = f) # CH2-CZ3
+            elif(pepseq[i] == "TYR"):
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+4, int(nindex[i])+9), file = f) # CB-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+9), file = f) # CD1-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+5, int(nindex[i])+7), file = f) # CD1-CE1
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+9), file = f) # CD2-CG
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+6, int(nindex[i])+8), file = f) # CD2-CE2
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+7, int(nindex[i])+11), file = f) # CE2-CZ
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+8, int(nindex[i])+11), file = f) # CE2-CZ
+                print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+10, int(nindex[i])+11), file = f) # OH-CZ
+                
+        print("END", file = f)
+        f.close()        
+                
+            
+                       
+            
         
