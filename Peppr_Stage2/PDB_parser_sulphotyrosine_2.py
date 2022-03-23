@@ -9,7 +9,7 @@ from Bio.PDB import PDBParser, PDBIO, Chain, Residue
 
 class PDBfile:
 
-    atomic_index = []
+    atomic_index = []                                                               # each empty list here is to used as the charactors for object.
     atomic_name = []
     residue_name = []
     chain_name = []
@@ -23,186 +23,161 @@ class PDBfile:
     
     #def __init__(self,filename,tyrosynetobemod):
        
-    def DistanceCalculator(self,a,b):                                            # Calculate the distance between point_a and point_b, here a and b are two list include the 3D coordinations
+    def DistanceCalculator(self,a,b):                                               # Calculate the distance between point_a and point_b, here a and b are two list include the 3D coordinations
         dist =math.sqrt(numpy.square(a[0]-b[0]) + numpy.square(a[1]-b[1])+numpy.square(a[2]-b[2])) 
         return dist 
     
     
-    def define_area(self,point1,point2,point3):                                  # define a plane, for the purpose of calculating the distance between a point and a plane
+    def define_area(self,point1,point2,point3):                                     # define a plane, for the purpose of calculating the distance between a point and a plane
         point1 = numpy.asarray(point1)
         point2 = numpy.asarray(point2)
         point3 = numpy.asarray(point3)
         p12    = numpy.asmatrix(point2 - point1)
         p13    = numpy.asmatrix(point3 - point1)
-        n      = numpy.cross(p12,p13)                                            # set the normal vector
+        n      = numpy.cross(p12,p13)                                               # set the normal vector
         px     = n[0,0]
         py     = n[0,1]
         pz     = n[0,2]
         d      = -(px * point1[0] + py * point2[1] + pz * point3[2])
         return px, py, pz, d   
         
-    def point_to_area_distance(self,point1,point2,point3,point4):                # calculate the distance between a point and a plane, here, point1,2,3 are the 3 points for define the plane; where point4 is the target point
+    def point_to_area_distance(self,point1,point2,point3,point4):                   # calculate the distance between a point and a plane, here, point1,2,3 are the 3 points for define the plane; where point4 is the target point
         px, py, pz, d = self.define_area(point1, point2, point3)
         mod_d = px * point4[0] + py * point4[1] + pz * point4[2] + d
         mod_area = numpy.sqrt(numpy.sum(numpy.square([px,py,pz])))
         d = abs(mod_d) / mod_area
         return d
     
-    def structure_correct(self,outputname):                                                  # To fix the ugly structure and save the fixed structures, finally return a path; e.g 'outputname' = PLDYS/PLDYS
-        #calls biopdb to fix the broken pdb results for the top1 poses per sequence
-        io = PDBIO()                                                                    # call the class 'PDBIO()' within BIO.PDB
-        #fix it by loading to biopdb and printing 
-        # total_number_of_output=["1","2","3","4","5","6","7","8","9","10"]
-        # for rank in total_number_of_output:
-        #     try:
-        pdb = PDBParser(QUIET=True).get_structure("UGLY", outputname)    # 'get_structure(self, ID, file)' is a method in class 'PDBParser', 
-        io.set_structure(pdb)                                                                   # 'set_structure(self, pdb_object)' is a method in class 'PDBIO'    
-        io.save(outputname+"_corrected.pdb")                                    # 'save(self, file, select=_select, write_end=True, preserve_atom_numbering=False)' is a method in class 'PDBIO'
-                #reads the output files with the energy to rank poses
-                
-            # except:
-            #     pass
-            
-        return(os.getcwd()+"/"+outputname+"_ranked_"+"1"+"_corrected.pdb")    
 
     
     def obabel_mol2_em(self, filename,outputname,tyrtomod,ptm):                     # For dealing with non_cyclic.pdb
-        os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
-        if(ptm == "PTM"):
-           self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod) 
-           os.system('obabel modified_'+filename+'.mol2 -O '+outputname)
+        os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')                       # call obabel to convert PLDYL_PO3.pdb fille to pep.mol2
+        if(ptm == "PTM"):                                                           # if this is for PTM residues then we still need to correct the wrong bonds between sidechains
+           self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod)                  # mainly used for delete mis connected sidechain atoms and replace them with empty line, finally save the edited file as modified_PLDYL_PO3.mol2
+           os.system('obabel modified_'+filename+'.mol2 -O '+outputname)            # re-arrange the modified mol2 file and output as PLDYL_PO3.mol2 or PLDYL_SO3.mol2
         else:
-            os.system('obabel pep.mol2 -O '+outputname)
+            os.system('obabel pep.mol2 -O '+outputname)                             # if the pdb file is not added ptms then save as PLDYL.mol2 directly
 
         os.system('rm pep.mol2 modified_'+filename+'.mol2')
 
     def obabel_mol2_cyc(self, filename,outputname,tyrtomod,ptm):                    # For dealing with cyclic.pdp
-        os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')
+        os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')                       # call obabel to convert PLDYL_PO3.pdb fille to pep.mol2
         # print(ptm)
-        if(ptm == "PTM"):
+        if(ptm == "PTM"):                                                           # if this is for PTM residues then we still need to correct the wrong bonds between sidechains
             # print(ptm)
-            self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod)
-            os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
+            self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod)                 # mainly used for delete mis connected sidechain atoms and replace them with empty line, finally save the edited file as modified_PLDYL_PO3.mol2
+            os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')   # call obabel to minimize the modified cyclic structure, mainly to build cyclic structure based on bond information
         else:
-            self.not_ptm_MOL2readerwriter("pep.mol2", filename)
+            self.not_ptm_MOL2readerwriter("pep.mol2", filename)                     # the difference between "not_ptm_MOL2readerwriter" and "ptm_MOL2readerwriter" is this one not to need to find PTM atoms
             os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
 
         os.system('rm pep.mol2 modified_'+filename+".mol2")
         
 
      
-    def find_p_s_atom_index(self,tyrtomod):
+    def find_p_s_atom_index(self,tyrtomod):                                         # this is used in "ptm_MOL2readerwriter" and "n_c_Cyclic_PDBwriter" methods, to find the "s" atom in SO3 and "p" atom in PO3 
         for i in range(0,len(self.atomic_index)):
             if(self.atomic_name[i] == "P" or self.atomic_name[i] == "S" and self.residue_name[i] == "TYR" and self.residue_index[i] == tyrtomod):
                 p_s_atom_index = self.atomic_index[i]
         return int(p_s_atom_index)
 
-    def find_n_c_atom_index(self):
+    def find_n_c_atom_index(self):                                                  # this is used in "ptm_MOL2readerwriter" and "not_ptm_MOL2readerwriter" methods, to find every "N" atom and "C" atom
         n_c_indexs = []
         for i in range(0,len(self.atomic_index)):
             if(self.atomic_name[i] == "N" or self.atomic_name[i] == "C"):
                 n_c_indexs.append(self.atomic_index[i])
         return n_c_indexs
             
-    def ptm_MOL2readerwriter(self,filename,outputname,tyrtomod):
-        # self.atomic_index.clear()
-        bond_index = []
-        bond_a1 = []
-        bond_a2 = []
-        bond_type = []
+    def ptm_MOL2readerwriter(self,filename,outputname,tyrtomod):                    # For deleting wrongly linked bond, "filename" = pep.mol2 ; outputname = TLDYRL_SO3.pdb
+        bond_index = []                                                             # list for collecting bond indexs
+        bond_a1 = []                                                                # list for collecting the first atom in the bond line
+        bond_a2 = []                                                                # list for collecting the second atom in the bond line
+        bond_type = []                                                              # list for collecting the bond type information
         not_bond_lines = []
         bond_lines = []
-        p_s = self.find_p_s_atom_index(tyrtomod)
-        # print(p_s)
-        f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
-        count_line=0
-        count_sign=0
-        for line in f:                                                      # 为了找到bond内容起始行
-            count_line += 1
+        p_s = self.find_p_s_atom_index(tyrtomod)                                    # call find_p_s_atom_index method to grep the atom index of p in PO3 or s in SO3
+        f = open(filename, "r")                                                     # f is the content wiithin filename(pep.mol2), operator is reading
+        count_line=0                                                                # count_line is used for count the iteration times
+        count_sign=0                                                                # count_sign is used for counting the times while "@" showed in pep.mol2
+        for line in f:                                                              # here the f is a list which includes all lines within in pep.mol2
+            count_line += 1                                                         # line number
             not_bond_lines.append(line)
-            if(line.startswith('@')):                                       # 这里可能出问题！可以尝试start with "@"
-                count_sign += 1
-                if(count_sign == 3):
-                    bond_start = count_line + 1                             # 用于记录@bond之后的内容，不包括@bond
+            if(line.startswith('@')):                                               # "startwith" is a method to determine whether this line is started with the specified sign
+                count_sign += 1                                                     # each time find the line is started with "@", count_sign + 1
+                if(count_sign == 3):                                                # while count_sign == 3, which means current line is @< bond > line, from the next line on is the bond information
+                    bond_start = count_line + 1                                     # because while count_sign == 3, the current line is @< bond > line, so the next line is what we want
                     
-        # print(bond_start)
-        f.close()
-        f = open(filename, "r")
+        f.close()                                                                   # close file f
+        f = open(filename, "r")                                                     # re-open pep.mol2 as f for reading
         count = 0 
         for line in f:
             count += 1
-            if(count >= bond_start):                                                # 将mol2文件中的bond信息分别存储到列表中,不包括bond行
-                bond_lines.append(line)
-                bond_index.append(line.split()[0])
-                bond_a1.append(int(line.split()[1]))
-                bond_a2.append(int(line.split()[2]))
-                bond_type.append(line.split()[3])
-        # print(bond_a1) 
-        list_a1 = [p_s + 1, p_s + 2, p_s + 3, p_s]
-        list_a2 = [p_s + 1, p_s + 2, p_s + 3, p_s, p_s - 2]
-        n_c_index = self.find_n_c_atom_index()                               # 新加！用于提取所有的N和C原子
+            if(count >= bond_start):                                                # count = the current line number, as count >= bond_start which means current line is bond information line
+                bond_lines.append(line)                                             # append full bond informations to bond_lines list
+                bond_index.append(line.split()[0])                                  # append the first column which is the bond idexs of each bond to bond_index
+                bond_a1.append(int(line.split()[1]))                                # append the second column which is the first atom in the bond to bond_a1
+                bond_a2.append(int(line.split()[2]))                                # append the third column which is the second atom in the bond to bond_a2
+                bond_type.append(line.split()[3])                                   # append the fourth column which is the bond type in the bond to bond_type 
+        list_a1 = [p_s + 1, p_s + 2, p_s + 3, p_s]                                  # creat the list for PTM sidechains, O1 = p_s + 1; O2 = p_s + 2; O3 = p_s + 3
+        list_a2 = [p_s + 1, p_s + 2, p_s + 3, p_s, p_s - 2]                         # OH = p_s - 2
+        n_c_index = self.find_n_c_atom_index()                                      # call method "find_n_c_atom_index" to grep all start atom "n" and tail atom "c" for each residue
         
-        # del_line_index = 5000
-        del_line_index = []                                                         # 新加！创建与PTM之间错误bond的index列表，并在之后将之删除
-        for i in range(0,len(bond_lines)):
-            # print(list_a1, list_a2)
-            if(bond_a1[i] in list_a1 and bond_a2[i] not in list_a2):
-                del_line_index.append(bond_start + i - 1)                           # 新加！'bond_start' 是bond第一行，i从0计数，因此二者之和=行数，行数 - 1 = 行的index
-            elif(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):    # 新加！ 只要bond_a1属于C或O，都不管，其他的只要bond_a1和bond_a2之间的差值大于6(因为TRP-W中CB-CG之差=6，因此为了避开所有常规键)
-                del_line_index.append(bond_start + i - 1)
+        del_line_index = []                                                         # creat the list for wrongly generated bond information while conver pdb to mol2.
+        for i in range(0,len(bond_lines)):                                          # iterat the list of bond lines
+            if(bond_a1[i] in list_a1 and bond_a2[i] not in list_a2):                # if first atom in bond is P, S, O1, O2 or O3; in the mean time the 2nd atom in the bond is not P, S, O1, O2 or O3 or OH  then add this line number to list
+                del_line_index.append(bond_start + i - 1)                           # 'bond_start' = number of the 1st line of bond lines，i started from 0，so bond_start + i = current line number;  current line number - 1 = current line index
+            elif(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):    # As long as the 1st atom of bond isn't c or n terminal for each residue，the absolute value between bond_a1 and bond_a2 > 6(because in TRP-W CB-CG=6，which is the biggest difference in natural residues)
+                del_line_index.append(bond_start + i - 1)                           # 'bond_start' = number of the 1st line of bond lines，i started from 0，so bond_start + i = current line number;  current line number - 1 = current line index
 
 
-        with open(filename) as fp_in:
-            with open("modified_"+outputname+".mol2", 'w') as fp_out:
-                fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  # 新加！ 当行数为需要删掉的行的时候，不写入
-        for del_line_indexes in del_line_index:                                                     # 新加！
-            os.system('sed -i '+"'" +str(del_line_indexes)+"G' modified_"+outputname+".mol2")       # 新加！在被删掉的行那里加入空行，否则mol2无法成功
+        with open(filename) as fp_in:                                               # this time started to edit pep.mol2, firstly we open pep.mol2 as fp_in
+            with open("modified_"+outputname+".mol2", 'w') as fp_out:               # create the output file as fp_out
+                fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  # while the line index in pep.mol2 = the error bond line's index, we skip this line
+        for del_line_indexes in del_line_index:                                     # in the previous step, we skipped the wrong bond line, but we still need to add empty line to replace their position, otherwise obabel won't work for us
+            os.system('sed -i '+"'" +str(del_line_indexes)+"G' modified_"+outputname+".mol2")  # replace the skipped lines with empty line, in order to let obabel work sucessfully
 
-    def not_ptm_MOL2readerwriter(self,filename,outputname):
-        # self.atomic_index.clear()
+    def not_ptm_MOL2readerwriter(self,filename,outputname):                         # basicly the same as previous method "ptm_MOL2_readerwriter", except this one don't need to concern PTM sidechain atoms
         bond_index = []
         bond_a1 = []
         bond_a2 = []
         bond_type = []
         not_bond_lines = []
         bond_lines = []
-        f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
+        f = open(filename, "r")                                             
         count_line=0
         count_sign=0
-        for line in f:                                                      # 为了找到bond内容起始行
+        for line in f:                                                      
             count_line += 1
             not_bond_lines.append(line)
-            if(line.startswith('@')):                                       # 这里可能出问题！可以尝试start with "@"
+            if(line.startswith('@')):                                       
                 count_sign += 1
                 if(count_sign == 3):
-                    bond_start = count_line + 1                             # 用于记录@bond之后的内容，不包括@bond
+                    bond_start = count_line + 1                             
                     
-        # print(bond_start)
         f.close()
         f = open(filename, "r")
         count = 0 
         for line in f:
             count += 1
-            if(count >= bond_start):                                                # 将mol2文件中的bond信息分别存储到列表中,不包括bond行
+            if(count >= bond_start):                                                
                 bond_lines.append(line)
                 bond_index.append(line.split()[0])
                 bond_a1.append(int(line.split()[1]))
                 bond_a2.append(int(line.split()[2]))
                 bond_type.append(line.split()[3])
-        n_c_index = self.find_n_c_atom_index()                               # 新加！用于提取所有的N和C原子
-        del_line_index = []                                                         # 新加！创建与PTM之间错误bond的index列表，并在之后将之删除
+        n_c_index = self.find_n_c_atom_index()                               
+        del_line_index = []                                                         
         for i in range(0,len(bond_lines)):
-            # print(list_a1, list_a2)
             if(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):
-                del_line_index.append(bond_start + i - 1)                           # 新加！'bond_start' 是bond第一行，i从0计数，因此二者之和=行数，行数 - 1 = 行的index
+                del_line_index.append(bond_start + i - 1)                           
 
         with open(filename) as fp_in:
             with open("modified_"+outputname+".mol2", 'w') as fp_out:
-                fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  # 新加！ 当行数为需要删掉的行的时候，不写入
-        for del_line_indexes in del_line_index:                                                     # 新加！
+                fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  
+        for del_line_indexes in del_line_index:                                                     
             os.system('sed -i '+"'" +str(del_line_indexes)+"G' modified_"+outputname+".mol2")   
     
-    def addSO3_toTYR(self,addition,tyrtobemod):                                                # 'addition' used to adjust the addition value of coordinations
+    def addSO3_toTYR(self,addition,tyrtobemod):                                     # 'addition' used to adjust the addition value of coordinations, which is "count" in __main__file
         a = 3
         refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]                   # reference coordination from crystal structure:1H8I, modified the bond length between S-OH; S-CZ; CZ-CE2; CZ-CE1 based on the output bond length of Crankpep   
         refCZ=[round(15.504,a), round(5.242,a), round(37.912,a)]
@@ -219,7 +194,7 @@ class PDBfile:
         distS_OH=self.DistanceCalculator(refS,refOH)                                 # reference distance between atom S and atom OH
         distS_CZ=self.DistanceCalculator(refS,refCZ)                                 # reference distance between atom S and atom CZ
         distS_CE1=self.DistanceCalculator(refS,refCE1)                               # reference distance between atom S and atom CE1
-        # distS_CE2=self.DistanceCalculator(refS,refCE2)                               # reference distance between atom S and atom CE2        
+        # distS_CE2=self.DistanceCalculator(refS,refCE2)                             # reference distance between atom S and atom CE2        
         distS_N=self.DistanceCalculator(refS,refN)
         distS_C=self.DistanceCalculator(refS,refC)
         
@@ -256,7 +231,7 @@ class PDBfile:
         CE2=[]
         N=[]
         C=[]
-        b=[0.001,0.002,0.003,0.004]                                                       # To adjust the addition value
+        b=[0.001,0.002,0.003,0.004]                                                 # To adjust the addition value
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 CZ.append(self.X_peratom[i]+b[addition])
@@ -372,7 +347,7 @@ class PDBfile:
         for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
             self.atomic_index[i] = float(i+1)
         
-    def addPO3_toTYR(self,addition,tyrtobemod):                                                # 'addition' used to adjust the addition value of coordinations
+    def addPO3_toTYR(self,addition,tyrtobemod):                                     # 'addition' used to adjust the addition value of coordinations
         a = 3
         refCE1=[round(14.180,a), round(5.372,a), round(37.509,a)]                   # reference coordination from crystal structure:1H8I   
         refCZ=[round(15.504,a), round(5.242,a), round(37.912,a)]
@@ -391,7 +366,7 @@ class PDBfile:
         distP_OH=self.DistanceCalculator(refP,refOH)                                 # reference distance between atom S and atom OH
         distP_CZ=self.DistanceCalculator(refP,refCZ)                                 # reference distance between atom S and atom CZ
         distP_CE1=self.DistanceCalculator(refP,refCE1)                               # reference distance between atom S and atom CE1
-        # distP_CE2=self.DistanceCalculator(refP,refCE2)                               # reference distance between atom S and atom CE2        
+        # distP_CE2=self.DistanceCalculator(refP,refCE2)                             # reference distance between atom S and atom CE2        
         
         distO1_OH=self.DistanceCalculator(refO1,refOH)                               # reference distance between atom O1 and atom OH
         distO1_CZ=self.DistanceCalculator(refO1,refCZ)                               # reference distance between atom O1 and atom CZ
@@ -451,7 +426,7 @@ class PDBfile:
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distP_CE1**2],
                             [x,y,z],[OH[0],OH[1],OH[2]])
         #print(solvedP)
-        for i in range (0, len(self.X_peratom)):                                # add S to the end of TYR
+        for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+1, 1+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+1, "P")
@@ -476,7 +451,7 @@ class PDBfile:
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO1_CE1**2],
                             [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
         #print(solvedO1)
-        for i in range (0, len(self.X_peratom)):                                # add O1 to the end of TYR
+        for i in range (0, len(self.X_peratom)):                                    # add O1 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+2, 2+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+2, "O1")
@@ -501,7 +476,7 @@ class PDBfile:
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO2_CE1**2],
                             [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
         #print(solvedO2)
-        for i in range (0, len(self.X_peratom)):                                # add O2 to the end of TYR
+        for i in range (0, len(self.X_peratom)):                                    # add O2 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+3, "O2")
@@ -526,7 +501,7 @@ class PDBfile:
                              (x-CE1[0])**2+(y-CE1[1])**2+(z-CE1[2])**2-distO3_CE1**2],
                             [x,y,z],[solvedO2[0],solvedO2[1],solvedO2[2]])
         #print(solvedO3)
-        for i in range (0, len(self.X_peratom)):                                # add O3 to the end of TYR
+        for i in range (0, len(self.X_peratom)):                                    # add O3 to the end of TYR
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 self.atomic_index.insert(i+4, 4+float(len(self.X_peratom)))
                 self.atomic_name.insert(i+4, "O3")
@@ -539,7 +514,7 @@ class PDBfile:
                 self.bfactor_per_factor.insert(i+4,float(1))
                 self.charge_per_factor.insert(i+4,float(1))
                 self.Atomtype_per_atom.insert(i+4,"O") 
-        for i in range(0,len(self.X_peratom)):                                  # rearrange the atomic index numbers
+        for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
             self.atomic_index[i] = float(i+1)
 
     
@@ -585,8 +560,8 @@ class PDBfile:
     
 
     
-    def PDBreader(self,filename):
-        self.atomic_index.clear()
+    def PDBreader(self,filename):                                                   # first method to be called in __main__, used for creating object and charactors.
+        self.atomic_index.clear()                                                   # cleaveage the information of previous object before put new record into these charactors
         self.atomic_index.clear()
         self.atomic_name.clear()
         self.residue_name.clear()
@@ -598,47 +573,47 @@ class PDBfile:
         self.bfactor_per_factor.clear()
         self.charge_per_factor.clear()
         self.Atomtype_per_atom.clear()
-        f = open(filename, "r")                                             # f 的内容为打开filename，操作为读取
-        for line in f:                                                      # 创建循环，line = filename中每一行                     
+        f = open(filename, "r")                                                     # "filename" = $PATH/crankpep_docking_results/PLDAYL_corrected_top_1.pdb
+        for line in f:                                                              # iterate each line in file "f"                     
                 
-                if(line.split()[0] == "ATOM" or line.split()[0] == "HETATM"):   # 判断句，用于将每一行split然后判断该行第一列是否==ATOM或HETATM
-                    self.atomic_index.append(float(line.split()[1]))            # 第2列为原子序数
-                    self.atomic_name.append(line.split()[2])                    # 第3列为原子名称C CA CD1 CD2等等
-                    self.residue_name.append(line.split()[3])                   # 第4列为残基名称TYR ALA 等等
-                    self.chain_name.append(line.split()[4])                     # 第5列为所在链的名称
-                    self.residue_index.append(float(line.split()[5]))           # 第6列为残基序数
-                    self.X_peratom.append(float(line.split()[6]))               # 第7列为原子的X轴坐标
-                    self.Y_peratom.append(float(line.split()[7]))               # 第8列为原子的Y轴坐标
-                    self.Z_peratom.append(float(line.split()[8]))               # 第9列为原子的Z轴坐标
-                    self.bfactor_per_factor.append(float(line.split()[9]))      # 第10列为该原子的B因子，用于判断活跃程度
-                    self.charge_per_factor.append(float(line.split()[10]))      # 第11列为该残基的电荷
-                    self.Atomtype_per_atom.append(line.split()[11])             # 第12列为该原子的原子类型C，H，O，N，S，CL，等等
+                if(line.split()[0] == "ATOM" or line.split()[0] == "HETATM"):       # Judgment Sentence，Used to split each row and then determine whether the first column of the row == ATOM or HETATM
+                    self.atomic_index.append(float(line.split()[1]))                # The second column is the atomic number
+                    self.atomic_name.append(line.split()[2])                        # The 3rd column is the atom name C CA CD1 CD2 and so on
+                    self.residue_name.append(line.split()[3])                       # Column 4 is the residue name TYR ALA etc.
+                    self.chain_name.append(line.split()[4])                         # The 5th column is the name of the chain it is on
+                    self.residue_index.append(float(line.split()[5]))               # The sixth column is the residue number
+                    self.X_peratom.append(float(line.split()[6]))                   # Column 7 is the x-coordinate of the atom
+                    self.Y_peratom.append(float(line.split()[7]))                   # The 8th column is the Y-coordinate of the atom
+                    self.Z_peratom.append(float(line.split()[8]))                   # The ninth column is the Z-coordinate of the atom
+                    self.bfactor_per_factor.append(float(line.split()[9]))          # The 10th column is the B-factor of the atom, which is used to judge the activity level
+                    self.charge_per_factor.append(float(line.split()[10]))          # Column 11 is the charge of the residue
+                    self.Atomtype_per_atom.append(line.split()[11])                 # Column 12 is the atomic type of the atom C, H, O, N, S, CL, etc.
                     #print(line)
 
     
     def PDBwriter(self,filename):
-        f = open(filename, "w")                                                             # f的内容为打开filename，操作为将print的写入原文件
-        for i in range (0 ,len(self.atomic_index)):                                         # 创建循环，i 为从0开始的数列，原子数量相同  
-            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     # 格式化输出,%4s,右对齐,输出共占4列,若长度小于4列，则左端以空格补齐，若大于4列，则输出实际长度,字符串
-                                             self.atomic_index[i],                          # %7d,右对齐,输出共占7列，若长度小于7列，则左端以空格补齐,有符号的十进制证整数
-                                             self.atomic_name[i],                           # %-4s,左对齐,输出共占4列,若长度小于4列，则右端以空格补齐，若大于4列，则输出实际长度,字符串
-                                             self.residue_name[i],                          # %1s,右对齐，输出共占1列，若小于1列，则从左端以空格补齐，若大于1列，则输出实际长度,字符串
-                                             self.chain_name[i],                            # %2s,右对齐，输出共占2列，若小于2列，则从左端以空格补齐，若大于2列，则输出实际长度,字符串
-                                             self.residue_index[i],                         # %4d,右对齐，输出共占4列，若长度小于4列，则左端以空格补齐，有符号的十进制证整数
-                                             self.X_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.Y_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.Z_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.bfactor_per_factor[i],                    # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
-                                             self.charge_per_factor[i],                     # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
-                                             self.Atomtype_per_atom[i]), file = f )         # %12s,右对齐，输出共占12列，若小于12列，则从左端以空格补齐
+        f = open(filename, "w")                                                             # e.g: f = linesplit[0]+"_PO3.pdb"
+        for i in range (0 ,len(self.atomic_index)):                                         # Create a loop, i is a sequence starting from 0, and the number of atoms is the length  
+            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     # Formatted output, %4s, right-aligned, the output occupies 4 columns in total. If the length is less than 4 columns, the left end will be filled with spaces. If it is greater than 4 columns, the actual length will be output as a string
+                                             self.atomic_index[i],                          # %7d, right-aligned, the output occupies a total of 7 columns, if the length is less than 7 columns, the left end is filled with spaces, signed decimal certificate integer
+                                             self.atomic_name[i],                           # %-4s, left-aligned, the output occupies a total of 4 columns, if the length is less than 4 columns, the right end is filled with spaces, if it is greater than 4 columns, the actual length is output as a string
+                                             self.residue_name[i],                          # %1s, right-aligned, the output occupies a total of 1 column. If it is less than 1 column, it will be filled with spaces from the left end. If it is greater than 1 column, the actual length will be output as a string
+                                             self.chain_name[i],                            # %2s, right-aligned, the output occupies 2 columns in total. If it is less than 2 columns, it will be filled with spaces from the left end. If it is greater than 2 columns, the actual length will be output as a string
+                                             self.residue_index[i],                         # %4d, right-aligned, the output occupies a total of 4 columns, if the length is less than 4 columns, the left end is filled with spaces, a signed decimal certificate integer
+                                             self.X_peratom[i],                             # %8.3f, right-aligned, the output occupies a total of 8 columns, including 3 decimal places, if the width of the value is less than 8, fill in a space at the left end, decimal
+                                             self.Y_peratom[i],                             # %8.3f, right-aligned, the output occupies a total of 8 columns, including 3 decimal places, if the width of the value is less than 8, fill in a space at the left end, decimal
+                                             self.Z_peratom[i],                             # %8.3f, right-aligned, the output occupies a total of 8 columns, including 3 decimal places, if the width of the value is less than 8, fill in a space at the left end, decimal
+                                             self.bfactor_per_factor[i],                    # %6.2f, right-aligned, the output occupies a total of 6 columns, including 2 decimal places, if the width of the value is less than 6, fill in a space at the left end, decimal
+                                             self.charge_per_factor[i],                     # %6.2f, right-aligned, the output occupies a total of 6 columns, including 2 decimal places, if the width of the value is less than 6, fill in a space at the left end, decimal
+                                             self.Atomtype_per_atom[i]), file = f )         # %12s, right-aligned, the output occupies a total of 12 columns, if it is less than 12 columns, it will be filled with spaces from the left end
         print("END", file = f)
         f.close()
             
 
     def n_c_Cyclic_PDBwriter(self,filename,tyrtomod):
-        find_c_atom_index = []
-        find_n_atom_index = []
-        find_ca_tom_index = []
+        find_c_atom_index = []                                                              # create the list for saving c-terminal atom for each residues
+        find_n_atom_index = []                                                              # create the list for saving n-terminal atom for each residues
+        find_ca_tom_index = []                                                              # create the list for saving "CA" atom for each residues
         for i in range(0,len(self.atomic_index)):
             if(self.atomic_name[i] == "C"):
                 find_c_atom_index.append(self.atomic_index[i])
@@ -646,43 +621,42 @@ class PDBfile:
                 find_n_atom_index.append(self.atomic_index[i])
             if(self.atomic_name[i] == "CA"):
                 find_ca_tom_index.append(self.atomic_index[i])
-            if(self.residue_name[i]== "PRO" and self.residue_index[i]==1 and self.atomic_name[i] == "CD"):      # 用于第一个残基是PRO的时候用的
+            if(self.residue_name[i]== "PRO" and self.residue_index[i]==1 and self.atomic_name[i] == "CD"):      # if the 1st residue is "PRO" then we need to add its special bond CONECT information individually.   
                 cd_terminal_atomIndex = self.atomic_index[i]
-        c_terminal_atomIndex = max(find_c_atom_index)
-        n_terminal_atomIndex = min(find_n_atom_index)
-        ca_terminal_atomIndex= min(find_ca_tom_index)
+        c_terminal_atomIndex = max(find_c_atom_index)                                       # max() to find the last residue's C-termial atom
+        n_terminal_atomIndex = min(find_n_atom_index)                                       # min() to find the first residue's N-termial atom    
+        ca_terminal_atomIndex= min(find_ca_tom_index)                                       # min() to find the first residues's CA atom
         # return n_terminal_atomIndex, c_terminal_atomIndex
-        f = open(filename, "w")                                                             # f的内容为打开filename，操作为将print的写入原文件
-        for i in range (0 ,len(self.atomic_index)):                                         # 创建循环，i 为从0开始的数列，原子数量相同  
-            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     # 格式化输出,%4s,右对齐,输出共占4列,若长度小于4列，则左端以空格补齐，若大于4列，则输出实际长度,字符串
-                                             self.atomic_index[i],                          # %7d,右对齐,输出共占7列，若长度小于7列，则左端以空格补齐,有符号的十进制证整数
-                                             self.atomic_name[i],                           # %-4s,左对齐,输出共占4列,若长度小于4列，则右端以空格补齐，若大于4列，则输出实际长度,字符串
-                                             self.residue_name[i],                          # %1s,右对齐，输出共占1列，若小于1列，则从左端以空格补齐，若大于1列，则输出实际长度,字符串
-                                             self.chain_name[i],                            # %2s,右对齐，输出共占2列，若小于2列，则从左端以空格补齐，若大于2列，则输出实际长度,字符串
-                                             self.residue_index[i],                         # %4d,右对齐，输出共占4列，若长度小于4列，则左端以空格补齐，有符号的十进制证整数
-                                             self.X_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.Y_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.Z_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.bfactor_per_factor[i],                    # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
-                                             self.charge_per_factor[i],                     # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
-                                             self.Atomtype_per_atom[i]), file = f )         # %12s,右对齐，输出共占12列，若小于12列，则从左端以空格补齐
-        if(self.residue_name[1]=="PRO"):                                                    # If the first residue is PRO, then the 'N' in n-terminal should like this: N-C; N-CA; N-CD他
+        f = open(filename, "w")                                                             
+        for i in range (0 ,len(self.atomic_index)):                                           
+            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     
+                                             self.atomic_index[i],                          
+                                             self.atomic_name[i],                           
+                                             self.residue_name[i],                          
+                                             self.chain_name[i],                            
+                                             self.residue_index[i],                         
+                                             self.X_peratom[i],                             
+                                             self.Y_peratom[i],                             
+                                             self.Z_peratom[i],                             
+                                             self.bfactor_per_factor[i],                    
+                                             self.charge_per_factor[i],                     
+                                             self.Atomtype_per_atom[i]), file = f )         
+        if(self.residue_name[1]=="PRO"):                                                    # If the first residue is PRO, then the 'N' in n-terminal should like this: N-C; N-CA; N-CD
             print("%-6s%5d%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(c_terminal_atomIndex), int(ca_terminal_atomIndex), int(cd_terminal_atomIndex)), file = f)
         else:                                                                               # If the first residue is not PRO, then the 'N' in n-terminal
             print("%-6s%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(c_terminal_atomIndex), int(ca_terminal_atomIndex)), file = f)
             print("%-6s%5d%5d%5d%5d" % ("CONECT", int(c_terminal_atomIndex), int(n_terminal_atomIndex), int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)+1), file = f)
             print("%-6s%5d%5d" % ("CONECT", int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)), file = f)
-        try:
-            ptm_index = self.find_p_s_atom_index(tyrtomod)                                  # 新加！为PTM添加连接，以便于生成pep.mol2时保留PTM的连接
-            if ptm_index:                                                                   # 新加！如果是有PTM的残基，则输出一下内容
+        try:                                                                                # if it's PTM added peptide we still need to add PTM sidechain atom CONECT information to guide obabel generate mol2 file
+            ptm_index = self.find_p_s_atom_index(tyrtomod)                                  
+            if ptm_index:                                                                   # if ptm_index is not null then we can add the CONECT informatioins below
                 print("%-6s%5d%5d%5d%5d%5d" % ("CONECT", int(ptm_index), int(ptm_index)-2, int(ptm_index)+1, int(ptm_index)+2, int(ptm_index)+3), file = f)     # S OH O1 O2 O3 
                 print("%-6s%5d%5d" % ("CONECT", int(ptm_index)-2, int(ptm_index)), file = f)                                                                    # OH S
             # print("END", file = f)
         except:
             pass
         f.close()
-        # self.structure_correct(filename)                                                    # 试图为pdb格式添加正确的bond，也可尝试先纠正，再加PTM的键
-        self.pdb_residues_side_chain_conect(filename)
+        self.pdb_residues_side_chain_conect(filename)                                       # call "pdb_residues_side_chain_conect" method to add sidechain CONECT record for each residue in the sequence
     
     def n_cysteine_Cyclic_PDBwriter(self,filename):
         find_s_atom_index = []
@@ -696,20 +670,20 @@ class PDBfile:
         s_terminal_atomIndex = max(find_s_atom_index)
         n_terminal_atomIndex = min(find_n_atom_index)
         # return n_terminal_atomIndex, s_terminal_atomIndex
-        f = open(filename, "w")                                                             # f的内容为打开filename，操作为将print的写入原文件
-        for i in range (0 ,len(self.atomic_index)):                                         # 创建循环，i 为从0开始的数列，原子数量相同  
-            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     # 格式化输出,%4s,右对齐,输出共占4列,若长度小于4列，则左端以空格补齐，若大于4列，则输出实际长度,字符串
-                                             self.atomic_index[i],                          # %7d,右对齐,输出共占7列，若长度小于7列，则左端以空格补齐,有符号的十进制证整数
-                                             self.atomic_name[i],                           # %-4s,左对齐,输出共占4列,若长度小于4列，则右端以空格补齐，若大于4列，则输出实际长度,字符串
-                                             self.residue_name[i],                          # %1s,右对齐，输出共占1列，若小于1列，则从左端以空格补齐，若大于1列，则输出实际长度,字符串
-                                             self.chain_name[i],                            # %2s,右对齐，输出共占2列，若小于2列，则从左端以空格补齐，若大于2列，则输出实际长度,字符串
-                                             self.residue_index[i],                         # %4d,右对齐，输出共占4列，若长度小于4列，则左端以空格补齐，有符号的十进制证整数
-                                             self.X_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.Y_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.Z_peratom[i],                             # %8.3f,右对齐，输出共占8列，其中有3位小数，若数值宽度小于8左端补空格,小数
-                                             self.bfactor_per_factor[i],                    # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
-                                             self.charge_per_factor[i],                     # %6.2f,右对齐，输出共占6列，其中有2位小数，若数值宽度小于6左端补空格,小数
-                                             self.Atomtype_per_atom[i]), file = f )         # %12s,右对齐，输出共占12列，若小于12列，则从左端以空格补齐
+        f = open(filename, "w")                                                             
+        for i in range (0 ,len(self.atomic_index)):                                           
+            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     
+                                             self.atomic_index[i],                          
+                                             self.atomic_name[i],                           
+                                             self.residue_name[i],                          
+                                             self.chain_name[i],                            
+                                             self.residue_index[i],                         
+                                             self.X_peratom[i],                             
+                                             self.Y_peratom[i],                             
+                                             self.Z_peratom[i],                             
+                                             self.bfactor_per_factor[i],                    
+                                             self.charge_per_factor[i],                     
+                                             self.Atomtype_per_atom[i]), file = f )         
         # n, s = self.n_cysteine_Cyclic()
         print("%-6s%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(s_terminal_atomIndex)), file = f)
         print("END", file = f)
@@ -718,25 +692,18 @@ class PDBfile:
     
 
         
-    def pdb_residues_side_chain_conect(self, filename):                                     # 新加！用于再*cyclic.pdb文件中添加全部残基side chain CONECT信息
-        # for i in range (0, len(self.X_peratom)):
-        #     if(self.atomic_name[i] == "N" and self.residue_index[i] == restomod):
-        #         pre_residue_index = self.residue_index(i-1)
-        #     elif(self.residue_index[i] == restomod and self.residue_index[i] != self.residue_index[i+1] ):
-        #         post_residue_index = self.residue_index(i+1)
-        # ALA sidechain CONECT
+    def pdb_residues_side_chain_conect(self, filename):                                     # this method used in "n_c_Cyclic_PDBwriter" mainly for add all residues sidechain "CONECT" information to PDB files
         aa = ["ALA","CYS","ASP","GLU","PHE","GLY","HIS","ILE","LYS","LEU","MET","ASN","PRO","GLN","ARG","SER","THR","VAL","TRP","TYR"]
-        n_index = []
-        pep_seq = []
-        # for i in range(1, max(self.residue_index)+1):
+        n_index = []                                                                        # creat the list of the n terminal atom for each residues
+        pep_seq = []                                                                        # creat the list of the residues of this sequence    
         for i in range(len(self.atomic_index)):
             if(self.atomic_name[i] == "N"):
                 n_index.append(self.atomic_index[i])
                 pep_seq.append(self.residue_name[i])
         self.side_chain_conect(pep_seq,n_index,filename)
                 
-    def side_chain_conect(self,pepseq,nindex,filename):                                    # 新加！不知道需不需要*pepseq
-        f = open(filename, "a")                                                            # 'a'代表追加写入，'w'是覆盖写入
+    def side_chain_conect(self,pepseq,nindex,filename):                                    # this method used in "pdb_residues_side_chain_conect"; pepseq is the sequence of peptide
+        f = open(filename, "a")                                                            # 'a' means append new content from the bottom of the file
         for i in range(len(pepseq)):
             if(pepseq[i] == "ALA"):
                 print("%-6s%5d%5d" % ("CONECT", int(nindex[i])+1, int(nindex[i])+4), file = f) # CA-CB
