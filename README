@@ -14,6 +14,7 @@ For test
  rm -rf *
  cp ../Peppr_Stage2/test/test.trg .
  python ../Peppr_Stage1/Peppr_main.py -c 2 -i TLXDYL -t test.trg -p 50 -N 2 -n 800
+or python ../Peppr_Stage1/Peppr_main.py -c 2 -i XLSDYC -t test.trg -p 50 -N 2 -n 800
 # Before running the script in stage-2, please set the correct index number for the residues you want to modify.
 # e.g, if we tested sequence XLSDYC in stage-1, then we can set:
 #	tyrosynetobemod = 5

@@ -1,0 +1,23 @@
+Peppr 
+	Tests and score different mutations for peptides. Generates docked positions and output the top complex per peptide
+# matts push test
+Dependencies
+	Biopython
+	Matplotlib
+
+To run 
+	python ../Peppr/Peppr_main.py -c 3 -i PLDXPAL -t done.trg -p 50 -N 4 -n 500000
+
+For test
+# Please modify the Peppr_Stage2/__main__.py file "tyrtobemod = " to the residue index which you want to add PTMs.
+ cd ./test
+ rm -rf *
+ cp ../Peppr_Stage2/test/test.trg .
+ python ../Peppr_Stage1/Peppr_main.py -c 2 -i TLXDYL -t test.trg -p 50 -N 2 -n 800
+# Before running the script in stage-2, please set the correct index number for the residues you want to modify.
+# e.g, if we tested sequence XLSDYC in stage-1, then we can set:
+#	tyrosynetobemod = 5
+#	serinetobemod = 3
+#	threoninetobemod = 0
+#	cystocyc = 6
+ python ../Peppr_Stage2/__main__sulphotyrosine_2.py
