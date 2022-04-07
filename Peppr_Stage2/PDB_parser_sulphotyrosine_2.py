@@ -4,6 +4,7 @@ from scipy.optimize import fsolve
 import numpy
 import math
 import os
+import traceback
 from sympy import *
 from Bio.PDB import PDBParser, PDBIO, Chain, Residue
 
@@ -50,36 +51,43 @@ class PDBfile:
     
 
     
-    def obabel_mol2_em(self, filename,outputname,tyrtomod,ptm):                     # For dealing with non_cyclic.pdb
+    def obabel_mol2_em(self, filename,outputname,tyrtomod,sertomod,thrtomod,cystocyc,ptm):                     # For dealing with non_cyclic.pdb
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')                       # call obabel to convert PLDYL_PO3.pdb fille to pep.mol2
         if(ptm == "PTM"):                                                           # if this is for PTM residues then we still need to correct the wrong bonds between sidechains
-           self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod)                  # mainly used for delete mis connected sidechain atoms and replace them with empty line, finally save the edited file as modified_PLDYL_PO3.mol2
+           self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod,sertomod,thrtomod,cystocyc)                  # mainly used for delete mis connected sidechain atoms and replace them with empty line, finally save the edited file as modified_PLDYL_PO3.mol2
            os.system('obabel modified_'+filename+'.mol2 -O '+outputname)            # re-arrange the modified mol2 file and output as PLDYL_PO3.mol2 or PLDYL_SO3.mol2
         else:
             os.system('obabel pep.mol2 -O '+outputname)                             # if the pdb file is not added ptms then save as PLDYL.mol2 directly
 
         os.system('rm pep.mol2 modified_'+filename+'.mol2')
 
-    def obabel_mol2_cyc(self, filename,outputname,tyrtomod,ptm):                    # For dealing with cyclic.pdp
+    def obabel_mol2_cyc(self, filename,outputname,tyrtomod,sertomod,thrtomod,cystocyc,ptm):                    # For dealing with cyclic.pdp
         os.system('obabel -ipdb '+filename+' -O pep.mol2 -d')                       # call obabel to convert PLDYL_PO3.pdb fille to pep.mol2
         # print(ptm)
         if(ptm == "PTM"):                                                           # if this is for PTM residues then we still need to correct the wrong bonds between sidechains
             # print(ptm)
-            self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod)                 # mainly used for delete mis connected sidechain atoms and replace them with empty line, finally save the edited file as modified_PLDYL_PO3.mol2
+            self.ptm_MOL2readerwriter("pep.mol2",filename,tyrtomod,sertomod,thrtomod,cystocyc)                 # mainly used for delete mis connected sidechain atoms and replace them with empty line, finally save the edited file as modified_PLDYL_PO3.mol2
             os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')   # call obabel to minimize the modified cyclic structure, mainly to build cyclic structure based on bond information
         else:
-            self.not_ptm_MOL2readerwriter("pep.mol2", filename)                     # the difference between "not_ptm_MOL2readerwriter" and "ptm_MOL2readerwriter" is this one not to need to find PTM atoms
+            self.not_ptm_MOL2readerwriter("pep.mol2", filename,cystocyc)                     # the difference between "not_ptm_MOL2readerwriter" and "ptm_MOL2readerwriter" is this one not to need to find PTM atoms
             os.system('obabel modified_'+filename+'.mol2 -O '+outputname+' --minimize --steps 1500 --sd')
 
         os.system('rm pep.mol2 modified_'+filename+".mol2")
         
 
      
-    def find_p_s_atom_index(self,tyrtomod):                                         # this is used in "ptm_MOL2readerwriter" and "n_c_Cyclic_PDBwriter" methods, to find the "s" atom in SO3 and "p" atom in PO3 
+    def find_p_s_atom_index(self,tyrtomod,sertomod,thrtomod):                                         # this is used in "ptm_MOL2readerwriter" and "n_c_Cyclic_PDBwriter" methods, to find the "s" atom in SO3 and "p" atom in PO3 
+        p_s_atom_index = []
         for i in range(0,len(self.atomic_index)):
-            if(self.atomic_name[i] == "P" or self.atomic_name[i] == "S" and self.residue_name[i] == "TYR" and self.residue_index[i] == tyrtomod):
-                p_s_atom_index = self.atomic_index[i]
-        return int(p_s_atom_index)
+            if(self.atomic_name[i] in ["P","S"] and self.residue_name[i] in ["TYR","SER","THR"] and self.residue_index[i] in [tyrtomod,sertomod,thrtomod]):
+                p_s_atom_index.append(self.atomic_index[i])
+        return p_s_atom_index
+
+    def find_s_in_cys_index(self,cystocyc):                                         # this method is for finding the SG atom in indicated Cys
+        for i in range(0,len(self.atomic_index)):    
+            if(self.atomic_name[i] == "SG" and self.residue_index[i] == cystocyc):
+                s_in_cys = self.atomic_index[i]
+        return s_in_cys
 
     def find_n_c_atom_index(self):                                                  # this is used in "ptm_MOL2readerwriter" and "not_ptm_MOL2readerwriter" methods, to find every "N" atom and "C" atom
         n_c_indexs = []
@@ -87,15 +95,21 @@ class PDBfile:
             if(self.atomic_name[i] == "N" or self.atomic_name[i] == "C"):
                 n_c_indexs.append(self.atomic_index[i])
         return n_c_indexs
-            
-    def ptm_MOL2readerwriter(self,filename,outputname,tyrtomod):                    # For deleting wrongly linked bond, "filename" = pep.mol2 ; outputname = TLDYRL_SO3.pdb
+    
+    def find_acetyl_index(self):                                                     # to find the C1 atom in the additional acetyl group
+        for i in range(0,len(self.atomic_index)):
+            if(self.residue_index[i] == 2 and self.atomic_name[i] == "N"):
+                acetyl_c1 = self.atomic_index[i] - 3                                 # while we insert the acetyl group we insert them as C1-O1-C2
+        return acetyl_c1
+    
+    def ptm_MOL2readerwriter(self,filename,outputname,tyrtomod,sertomod,thrtomod,cystocyc):                    # For deleting wrongly linked bond, "filename" = pep.mol2 ; outputname = TLDYRL_SO3.pdb
         bond_index = []                                                             # list for collecting bond indexs
         bond_a1 = []                                                                # list for collecting the first atom in the bond line
         bond_a2 = []                                                                # list for collecting the second atom in the bond line
         bond_type = []                                                              # list for collecting the bond type information
         not_bond_lines = []
         bond_lines = []
-        p_s = self.find_p_s_atom_index(tyrtomod)                                    # call find_p_s_atom_index method to grep the atom index of p in PO3 or s in SO3
+        p_s = self.find_p_s_atom_index(tyrtomod,sertomod,thrtomod)                                    # call find_p_s_atom_index method to grep the atom index of p in PO3 or s in SO3
         f = open(filename, "r")                                                     # f is the content wiithin filename(pep.mol2), operator is reading
         count_line=0                                                                # count_line is used for count the iteration times
         count_sign=0                                                                # count_sign is used for counting the times while "@" showed in pep.mol2
@@ -118,25 +132,62 @@ class PDBfile:
                 bond_a1.append(int(line.split()[1]))                                # append the second column which is the first atom in the bond to bond_a1
                 bond_a2.append(int(line.split()[2]))                                # append the third column which is the second atom in the bond to bond_a2
                 bond_type.append(line.split()[3])                                   # append the fourth column which is the bond type in the bond to bond_type 
-        list_a1 = [p_s + 1, p_s + 2, p_s + 3, p_s]                                  # creat the list for PTM sidechains, O1 = p_s + 1; O2 = p_s + 2; O3 = p_s + 3
-        list_a2 = [p_s + 1, p_s + 2, p_s + 3, p_s, p_s - 2]                         # OH = p_s - 2
+        # list_a1 = [p_s + 1, p_s + 2, p_s + 3, p_s]                                  # creat the list for PTM sidechains, O1 = p_s + 1; O2 = p_s + 2; O3 = p_s + 3
+        # list_a2 = [p_s + 1, p_s + 2, p_s + 3, p_s, p_s - 2]                         # OH = p_s - 2
+        list_a1 = []                                                                # includes p o1 o2 o3
+        list_a2 = []                                                                # includes p OH(TYR) o1 o2 o3 OG(SER THR)
+        list_a3 = []                                                                # include O1 O2 O3, pretend their inter conecting
+        for i in range(len(p_s)):                                                   
+            list_a1.append(int(p_s[i]) + 1)
+            list_a1.append(int(p_s[i]) + 2)
+            list_a1.append(int(p_s[i]) + 3)
+            list_a1.append(int(p_s[i]))
+            list_a2.append(int(p_s[i]) + 1)
+            list_a2.append(int(p_s[i]) + 2)
+            list_a2.append(int(p_s[i]) + 3)
+            list_a2.append(int(p_s[i]))
+            list_a2.append(int(p_s[i]) - 2)
+            list_a3.append(int(p_s[i]) + 1)
+            list_a3.append(int(p_s[i]) + 2)
+            list_a3.append(int(p_s[i]) + 3)
         n_c_index = self.find_n_c_atom_index()                                      # call method "find_n_c_atom_index" to grep all start atom "n" and tail atom "c" for each residue
-        
+
+        # print(list_a1, list_a2, list_a3)
         del_line_index = []                                                         # creat the list for wrongly generated bond information while conver pdb to mol2.
         for i in range(0,len(bond_lines)):                                          # iterat the list of bond lines
             if(bond_a1[i] in list_a1 and bond_a2[i] not in list_a2):                # if first atom in bond is P, S, O1, O2 or O3; in the mean time the 2nd atom in the bond is not P, S, O1, O2 or O3 or OH  then add this line number to list
                 del_line_index.append(bond_start + i - 1)                           # 'bond_start' = number of the 1st line of bond lines，i started from 0，so bond_start + i = current line number;  current line number - 1 = current line index
-            elif(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):    # As long as the 1st atom of bond isn't c or n terminal for each residue，the absolute value between bond_a1 and bond_a2 > 6(because in TRP-W CB-CG=6，which is the biggest difference in natural residues)
+            elif(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 and bond_a2[i] != self.find_s_in_cys_index(cystocyc)):    # New! As long as the 1st atom of bond isn't c or n terminal for each residue，the absolute value between bond_a1 and bond_a2 > 6(because in TRP-W CB-CG=6，which is the biggest difference in natural residues)
                 del_line_index.append(bond_start + i - 1)                           # 'bond_start' = number of the 1st line of bond lines，i started from 0，so bond_start + i = current line number;  current line number - 1 = current line index
-
-
+            elif(bond_a1[i] in list_a3 and bond_a2[i] in list_a3):                  # prevend PO3 group intral conect
+                del_line_index.append(bond_start + i - 1)
+            elif(bond_a1[i] not in p_s and bond_a2[i] in list_a3):                  # prevent other any other atoms(except P or S) link to O1 O2 O3
+                del_line_index.append(bond_start + i -1)
+        try:                                                                        # this try segment mainly for delete the error bond related to the additional chloroacetyl group on N terminus
+            acetyl_c1 = self.find_acetyl_index()
+            acetyl_o1 = acetyl_c1 + 1
+            acetyl_c2 = acetyl_c1 + 2
+            for i in range(0,len(self.atomic_index)):
+                if(self.residue_index[i] == cystocyc and self.atomic_name[i] == "SG"):
+                    # print(self.residue_index[i]+"we find it!")
+                    s_index = self.atomic_index[i]
+            print(s_index)
+            for i in range(0,len(bond_lines)):
+                if(bond_a1[i] == acetyl_c1 and bond_a2[i] not in [1, acetyl_o1, acetyl_c2]):   # for delete the ac
+                    del_line_index.append(bond_start + i -1)
+                elif(bond_a1[i] in [acetyl_o1, acetyl_c2] and bond_a2[i] not in [acetyl_c1, s_index]):
+                    del_line_index.append(bond_start + i -1)
+                elif(bond_a1[i] not in [acetyl_c1, s_index] and bond_a2[i] in [acetyl_o1, acetyl_c2]):
+                    del_line_index.append(bond_start + i -1)                    
+        except:
+            pass
         with open(filename) as fp_in:                                               # this time started to edit pep.mol2, firstly we open pep.mol2 as fp_in
             with open("modified_"+outputname+".mol2", 'w') as fp_out:               # create the output file as fp_out
                 fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  # while the line index in pep.mol2 = the error bond line's index, we skip this line
         for del_line_indexes in del_line_index:                                     # in the previous step, we skipped the wrong bond line, but we still need to add empty line to replace their position, otherwise obabel won't work for us
             os.system('sed -i '+"'" +str(del_line_indexes)+"G' modified_"+outputname+".mol2")  # replace the skipped lines with empty line, in order to let obabel work sucessfully
 
-    def not_ptm_MOL2readerwriter(self,filename,outputname):                         # basicly the same as previous method "ptm_MOL2_readerwriter", except this one don't need to concern PTM sidechain atoms
+    def not_ptm_MOL2readerwriter(self,filename,outputname,cystocyc):                         # basicly the same as previous method "ptm_MOL2_readerwriter", except this one don't need to concern PTM sidechain atoms. mainly for delete inter residues error CONECT
         bond_index = []
         bond_a1 = []
         bond_a2 = []
@@ -168,9 +219,24 @@ class PDBfile:
         n_c_index = self.find_n_c_atom_index()                               
         del_line_index = []                                                         
         for i in range(0,len(bond_lines)):
-            if(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6 ):
+            if(bond_a1[i] not in n_c_index and abs(bond_a1[i] - bond_a2[i]) > 6  and bond_a2[i] != self.find_s_in_cys_index(cystocyc)): # New!
                 del_line_index.append(bond_start + i - 1)                           
-
+        try:                                                                        # this try segment mainly for delete the error bond related to the additional chloroacetyl group on N terminus
+            acetyl_c1 = self.find_actyl_index()
+            acetyl_o1 = acetyl_c1 + 1
+            acetyl_c2 = acetyl_c1 + 2
+            for i in range(0,len(self.atomic_index)):
+                if(self.residue_index[i] == cystocyc and self.atomic_name[i] == "SG"):
+                    s_index = self.atomic_index[i]
+            for i in range(0,len(bond_lines)):
+                if(bond_a1[i] == acetyl_c1 and bond_a2[i] not in [1, acetyl_o1, acetyl_c2]):   # for delete the ac
+                    del_line_index.append(bond_start + i -1)
+                elif(bond_a1[i] in [acetyl_o1, acetyl_c2] and bond_a2[i] not in [acetyl_c1, s_index]):
+                    del_line_index.append(bond_start + i -1)
+                elif(bond_a1[i] not in [acetyl_c1, s_index] and bond_a2[i] in [acetyl_o1, acetyl_c2]):
+                    del_line_index.append(bond_start + i -1)                    
+        except:
+            pass
         with open(filename) as fp_in:
             with open("modified_"+outputname+".mol2", 'w') as fp_out:
                 fp_out.writelines(line for i, line in enumerate(fp_in) if i not in del_line_index)  
@@ -231,7 +297,7 @@ class PDBfile:
         CE2=[]
         N=[]
         C=[]
-        b=[0.001,0.002,0.003,0.004]                                                 # To adjust the addition value
+        b=[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]                                                 # To adjust the addition value
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 CZ.append(self.X_peratom[i]+b[addition])
@@ -396,7 +462,7 @@ class PDBfile:
         OH=[]
         CE1=[]
         CE2=[]
-        b=[0.001,0.002,0.003,0.004]
+        b=[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]
         for i in range (0, len(self.X_peratom)):
             if(self.residue_name[i] == "TYR" and self.atomic_name[i] == "CZ" and self.residue_index[i] == tyrtobemod):
                 CZ.append(self.X_peratom[i]+b[addition])
@@ -516,8 +582,651 @@ class PDBfile:
                 self.Atomtype_per_atom.insert(i+4,"O") 
         for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
             self.atomic_index[i] = float(i+1)
+            
+    def addPO3_toSER(self,addition,serinetobemod):                                     # 'addition' used to adjust the addition value of coordinations
+        a = 3
+        refOG=[round(43.771,a), round(51.575,a), round(61.299,a)]                   # reference coordination from crystal structure:2AK7.B  
+        refCB=[round(44.768,a), round(52.007,a), round(60.382,a)]
+        refCA=[round(44.901,a), round(50.966,a), round(59.275,a)]
+        # refOG=[round(23.994,a), round(51.875,a), round(50.782,a)]                   # reference coordination from crystal structure:2AK7.A   
+        # refCB=[round(23.101,a), round(52.786,a), round(50.177,a)]
+        # refCA=[round(23.169,a), round(54.120,a), round(50.913,a)]
+        refC=[round(24.615,a), round(54.614,a), round(50.957,a)]
+        refN=[round(22.388,a), round(55.135,a), round(50.220,a)]
+        refP=[round(23.825,a), round(50.290,a), round(50.585,a)]
+        refO1=[round(22.478,a), round(50.080,a), round(51.223,a)]
+        refO2=[round(23.888,a), round(50.174,a), round(49.078,a)]
+        refO3=[round(25.020,a), round(49.784,a), round(51.354,a)]
+        refO=[round(25.224,a), round(54.852,a), round(49.914,a)]
+
+
+        
+
+        
+        distP_OG=self.DistanceCalculator(refP,refOG)                                 # reference distance between atom S and atom OH
+        distP_CB=self.DistanceCalculator(refP,refCB)                                 # reference distance between atom S and atom CZ
+        distP_CA=self.DistanceCalculator(refP,refCA)                               # reference distance between atom S and atom CE1
+        distP_C=self.DistanceCalculator(refP,refC) 
+        distP_N=self.DistanceCalculator(refP,refN) 
+        distP_O=self.DistanceCalculator(refP,refO)                           # reference distance between atom S and atom CE2        
+        
+        distO1_OG=self.DistanceCalculator(refO1,refOG)                                 # reference distance between atom S and atom OH
+        distO1_CB=self.DistanceCalculator(refO1,refCB)                                 # reference distance between atom S and atom CZ
+        distO1_CA=self.DistanceCalculator(refO1,refCA)                               # reference distance between atom S and atom CE1
+        distO1_C=self.DistanceCalculator(refO1,refC) 
+        distO1_N=self.DistanceCalculator(refO1,refN) 
+        distO1_O=self.DistanceCalculator(refO1,refO)  
+        distO1_P=self.DistanceCalculator(refO1,refP)
+        
+        distO2_OG=self.DistanceCalculator(refO2,refOG)                                 # reference distance between atom S and atom OH
+        distO2_CB=self.DistanceCalculator(refO2,refCB)                                 # reference distance between atom S and atom CZ
+        distO2_CA=self.DistanceCalculator(refO2,refCA)                               # reference distance between atom S and atom CE1
+        distO2_C=self.DistanceCalculator(refO2,refC) 
+        distO2_N=self.DistanceCalculator(refO2,refN) 
+        distO2_O=self.DistanceCalculator(refO2,refO)  
+        distO2_P=self.DistanceCalculator(refO2,refP)
+        
+        distO3_OG=self.DistanceCalculator(refO3,refOG)                                 # reference distance between atom S and atom OH
+        distO3_CB=self.DistanceCalculator(refO3,refCB)                                 # reference distance between atom S and atom CZ
+        distO3_CA=self.DistanceCalculator(refO3,refCA)                               # reference distance between atom S and atom CE1
+        distO3_C=self.DistanceCalculator(refO3,refC) 
+        distO3_N=self.DistanceCalculator(refO3,refN) 
+        distO3_O=self.DistanceCalculator(refO3,refO)  
+        distO3_P=self.DistanceCalculator(refO3,refP)      
+
+        N=[]
+        OG=[]
+        C=[]
+        CA=[]
+        CB=[]
+        O=[]
+        b=[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]
+        for i in range (0, len(self.X_peratom)):
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "C" and self.residue_index[i] == serinetobemod):
+                C.append(self.X_peratom[i]+b[addition])
+                C.append(self.Y_peratom[i]+b[addition])
+                C.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "OG" and self.residue_index[i] == serinetobemod):
+                OG.append(self.X_peratom[i]+b[addition])
+                OG.append(self.Y_peratom[i]+b[addition])
+                OG.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "N" and self.residue_index[i] == serinetobemod):
+                N.append(self.X_peratom[i]+b[addition])
+                N.append(self.Y_peratom[i]+b[addition])
+                N.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "CB" and self.residue_index[i] == serinetobemod):
+                CB.append(self.X_peratom[i]+b[addition])
+                CB.append(self.Y_peratom[i]+b[addition])
+                CB.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "CA" and self.residue_index[i] == serinetobemod):
+                CA.append(self.X_peratom[i])
+                CA.append(self.Y_peratom[i])
+                CA.append(self.Z_peratom[i])
+       
+
+         
+        # Calculate the coordination for atom "P"        
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedP=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distP_CB**2,
+                        (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distP_CA**2,
+                        (x-OG[0])**2+(y-OG[1])**2+(z-OG[2])**2-distP_OG**2],
+                             # (x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distP_C**2,
+                             # (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distP_N**2],
+                            [x,y,z],[OG[0],OG[1],OG[2]])
+        print(solvedP)
+        for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "OG" and self.residue_index[i] == serinetobemod):
+                self.atomic_index.insert(i+1, 1+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+1, "P")
+                self.residue_name.insert(i+1,"SER")
+                self.chain_name.insert(i+1,"A")
+                self.residue_index.insert(i+1,self.residue_index[i])
+                self.X_peratom.insert(i+1,float(solvedP[0]))
+                self.Y_peratom.insert(i+1,float(solvedP[1]))
+                self.Z_peratom.insert(i+1,float(solvedP[2]))
+                self.bfactor_per_factor.insert(i+1,float(1))
+                self.charge_per_factor.insert(i+1,float(1))
+                self.Atomtype_per_atom.insert(i+1,"P")
+
+        
+
+        # Calculate the coordination for atom "O1"     
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedO1=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO1_CB**2,
+                        (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distO1_CA**2,
+                        (x-OG[0])**2+(y-OG[1])**2+(z-OG[2])**2-distO1_OG**2],
+                             # (x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distO1_C**2,
+                             # (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distO1_N**2],
+                            [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
+        print(solvedO1)
+        for i in range (0, len(self.X_peratom)):                                    # add O1 to the end of TYR
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "OG" and self.residue_index[i] == serinetobemod):
+                self.atomic_index.insert(i+2, 2+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+2, "O1")
+                self.residue_name.insert(i+2,"SER")
+                self.chain_name.insert(i+2,"A")
+                self.residue_index.insert(i+2,self.residue_index[i])
+                self.X_peratom.insert(i+2,float(solvedO1[0]))
+                self.Y_peratom.insert(i+2,float(solvedO1[1]))
+                self.Z_peratom.insert(i+2,float(solvedO1[2]))
+                self.bfactor_per_factor.insert(i+2,float(1))
+                self.charge_per_factor.insert(i+2,float(1))
+                self.Atomtype_per_atom.insert(i+2,"O")
+
+        
+        # c=[0,0.001,0.002,0.003,0.004,-0.001,-0.002,-0.003,-0.004]
+        # Calculate the coordination for atom "O2"     
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedO2=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO2_CB**2,
+                        (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distO2_CA**2,
+                        (x-OG[0])**2+(y-OG[1])**2+(z-OG[2])**2-distO2_OG**2],
+                             # (x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distO2_C**2,
+                             # (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distO2_N**2],
+                            [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
+        print(solvedO2)
+        for i in range (0, len(self.X_peratom)):                                    # add O2 to the end of TYR
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "OG" and self.residue_index[i] == serinetobemod):
+                self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+3, "O2")
+                self.residue_name.insert(i+3,"SER")
+                self.chain_name.insert(i+3,"A")
+                self.residue_index.insert(i+3,self.residue_index[i])
+                self.X_peratom.insert(i+3,float(solvedO2[0]))
+                self.Y_peratom.insert(i+3,float(solvedO2[1]))
+                self.Z_peratom.insert(i+3,float(solvedO2[2]))
+                self.bfactor_per_factor.insert(i+3,float(1))
+                self.charge_per_factor.insert(i+3,float(1))
+                self.Atomtype_per_atom.insert(i+3,"O") 
+
+        
+
+        # Calculate the coordination for atom "O3"     
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedO3=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO3_CB**2,
+                        (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distO3_CA**2,
+                        (x-OG[0])**2+(y-OG[1])**2+(z-OG[2])**2-distO3_OG**2],
+                             # (x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distO3_C**2,
+                             # (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distO3_N**2],
+                            [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
+        print(solvedO3)
+        for i in range (0, len(self.X_peratom)):                                    # add O3 to the end of TYR
+            if(self.residue_name[i] == "SER" and self.atomic_name[i] == "OG" and self.residue_index[i] == serinetobemod):
+                self.atomic_index.insert(i+4, 4+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+4, "O3")
+                self.residue_name.insert(i+4,"SER")
+                self.chain_name.insert(i+4,"A")
+                self.residue_index.insert(i+4,self.residue_index[i])
+                self.X_peratom.insert(i+4,float(solvedO3[0]))
+                self.Y_peratom.insert(i+4,float(solvedO3[1]))
+                self.Z_peratom.insert(i+4,float(solvedO3[2]))
+                self.bfactor_per_factor.insert(i+4,float(1))
+                self.charge_per_factor.insert(i+4,float(1))
+                self.Atomtype_per_atom.insert(i+4,"O") 
+        for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
+            self.atomic_index[i] = float(i+1)
+
+    def addPO3_toTHR(self,addition,threoninetobemod):                                     # 'addition' used to adjust the addition value of coordinations
+        a = 3
+        refOG1=[round(40.703,a), round(6.115,a), round(12.644,a)]                   # reference coordination from crystal structure:3E5A  
+        refCG2=[round(40.101,a), round(7.146,a), round(14.722,a)]
+        refCB=[round(39.735,a), round(6.091,a), round(13.698,a)]
+        refCA=[round(39.706,a), round(4.718,a), round(14.362,a)]
+        refC=[round(38.572,a), round(4.632,a), round(15.334,a)]
+        refN=[round(39.436,a), round(3.675,a), round(13.362,a)]
+        refP=[round(40.252,a), round(6.667,a), round(11.168,a)]
+        refO1=[round(39.951,a), round(8.140,a), round(11.320,a)]
+        refO2=[round(39.036,a), round(5.789,a), round(10.993,a)]
+        refO3=[round(41.419,a), round(6.372,a), round(10.282,a)]
+        refO=[round(37.395,a), round(4.559,a), round(14.956,a)]
+        
+
+        
+
+        
+        distP_OG1=self.DistanceCalculator(refP,refOG1)                                 # reference distance between atom S and atom OH
+        distP_CG2=self.DistanceCalculator(refP,refCG2)
+        distP_CB=self.DistanceCalculator(refP,refCB)                                 # reference distance between atom S and atom CZ
+        distP_CA=self.DistanceCalculator(refP,refCA)                               # reference distance between atom S and atom CE1
+        distP_C=self.DistanceCalculator(refP,refC) 
+        distP_N=self.DistanceCalculator(refP,refN) 
+        distP_O=self.DistanceCalculator(refP,refO)                           # reference distance between atom S and atom CE2        
+        
+        distO1_OG1=self.DistanceCalculator(refO1,refOG1)                                 # reference distance between atom S and atom OH
+        distO1_CG2=self.DistanceCalculator(refO1,refCG2)
+        distO1_CB=self.DistanceCalculator(refO1,refCB)                                 # reference distance between atom S and atom CZ
+        distO1_CA=self.DistanceCalculator(refO1,refCA)                               # reference distance between atom S and atom CE1
+        distO1_C=self.DistanceCalculator(refO1,refC) 
+        distO1_N=self.DistanceCalculator(refO1,refN) 
+        distO1_O=self.DistanceCalculator(refO1,refO)  
+        distO1_P=self.DistanceCalculator(refO1,refP)
+        
+        distO2_OG1=self.DistanceCalculator(refO2,refOG1)                                 # reference distance between atom S and atom OH
+        distO2_CG2=self.DistanceCalculator(refO2,refCG2)
+        distO2_CB=self.DistanceCalculator(refO2,refCB)                                 # reference distance between atom S and atom CZ
+        distO2_CA=self.DistanceCalculator(refO2,refCA)                               # reference distance between atom S and atom CE1
+        distO2_C=self.DistanceCalculator(refO2,refC) 
+        distO2_N=self.DistanceCalculator(refO2,refN) 
+        distO2_O=self.DistanceCalculator(refO2,refO)  
+        distO2_P=self.DistanceCalculator(refO2,refP)
+        
+        distO3_OG1=self.DistanceCalculator(refO3,refOG1)                                 # reference distance between atom S and atom OH
+        distO3_CG2=self.DistanceCalculator(refO3,refCG2)
+        distO3_CB=self.DistanceCalculator(refO3,refCB)                                 # reference distance between atom S and atom CZ
+        distO3_CA=self.DistanceCalculator(refO3,refCA)                               # reference distance between atom S and atom CE1
+        distO3_C=self.DistanceCalculator(refO3,refC) 
+        distO3_N=self.DistanceCalculator(refO3,refN) 
+        distO3_O=self.DistanceCalculator(refO3,refO)  
+        distO3_P=self.DistanceCalculator(refO3,refP)      
+
+        N=[]
+        OG1=[]
+        CG2=[]
+        C=[]
+        CA=[]
+        CB=[]
+        O=[]
+        b=[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]
+        a=3
+        for i in range (0, len(self.X_peratom)):
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "CB" and self.residue_index[i] == threoninetobemod):
+                CB.append(self.X_peratom[i]+b[addition])
+                CB.append(self.Y_peratom[i]+b[addition])
+                CB.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "OG1" and self.residue_index[i] == threoninetobemod):
+                OG1.append(self.X_peratom[i]+b[addition])
+                OG1.append(self.Y_peratom[i]+b[addition])
+                OG1.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "N" and self.residue_index[i] == threoninetobemod):
+                N.append(self.X_peratom[i]+b[addition])
+                N.append(self.Y_peratom[i]+b[addition])
+                N.append(self.Z_peratom[i]+b[addition])
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "CG2" and self.residue_index[i] == threoninetobemod):
+                CG2.append(self.X_peratom[i]+b[addition])
+                CG2.append(self.Y_peratom[i]+b[addition])
+                CG2.append(self.Z_peratom[i]+b[addition])
+       
+        print(CB,OG1,CG2)
+         
+        # Calculate the coordination for atom "P"        
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedP=nsolve([(x-OG1[0])**2+(y-OG1[1])**2+(z-OG1[2])**2-distP_OG1**2,
+                             (x-CG2[0])**2+(y-CG2[1])**2+(z-CG2[2])**2-distP_CG2**2,
+                             (x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distP_CB**2],
+                            [x,y,z],[OG1[0],OG1[1],OG1[2]])
+        #print(solvedP)
+        for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "OG1" and self.residue_index[i] == threoninetobemod):
+                self.atomic_index.insert(i+1, 1+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+1, "P")
+                self.residue_name.insert(i+1,"THR")
+                self.chain_name.insert(i+1,"A")
+                self.residue_index.insert(i+1,self.residue_index[i])
+                self.X_peratom.insert(i+1,float(solvedP[0]))
+                self.Y_peratom.insert(i+1,float(solvedP[1]))
+                self.Z_peratom.insert(i+1,float(solvedP[2]))
+                self.bfactor_per_factor.insert(i+1,float(1))
+                self.charge_per_factor.insert(i+1,float(1))
+                self.Atomtype_per_atom.insert(i+1,"P")
+
+        
+
+        # Calculate the coordination for atom "O1"     
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedO1=nsolve([(x-OG1[0])**2+(y-OG1[1])**2+(z-OG1[2])**2-distO1_OG1**2,
+                             (x-CG2[0])**2+(y-CG2[1])**2+(z-CG2[2])**2-distO1_CG2**2,
+                             (x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO1_CB**2],
+                            [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
+        #print(solvedO1)
+        for i in range (0, len(self.X_peratom)):                                    # add O1 to the end of TYR
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "OG1" and self.residue_index[i] == threoninetobemod):
+                self.atomic_index.insert(i+2, 2+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+2, "O1")
+                self.residue_name.insert(i+2,"THR")
+                self.chain_name.insert(i+2,"A")
+                self.residue_index.insert(i+2,self.residue_index[i])
+                self.X_peratom.insert(i+2,float(solvedO1[0]))
+                self.Y_peratom.insert(i+2,float(solvedO1[1]))
+                self.Z_peratom.insert(i+2,float(solvedO1[2]))
+                self.bfactor_per_factor.insert(i+2,float(1))
+                self.charge_per_factor.insert(i+2,float(1))
+                self.Atomtype_per_atom.insert(i+2,"O")
+
+        
+
+        # Calculate the coordination for atom "O2"     
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedO2=nsolve([(x-OG1[0])**2+(y-OG1[1])**2+(z-OG1[2])**2-distO2_OG1**2,
+                             (x-CG2[0])**2+(y-CG2[1])**2+(z-CG2[2])**2-distO2_CG2**2,
+                             (x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO2_CB**2],
+                            [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
+        #print(solvedO2)
+        for i in range (0, len(self.X_peratom)):                                    # add O2 to the end of TYR
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "OG1" and self.residue_index[i] == threoninetobemod):
+                self.atomic_index.insert(i+3, 3+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+3, "O2")
+                self.residue_name.insert(i+3,"THR")
+                self.chain_name.insert(i+3,"A")
+                self.residue_index.insert(i+3,self.residue_index[i])
+                self.X_peratom.insert(i+3,float(solvedO2[0]))
+                self.Y_peratom.insert(i+3,float(solvedO2[1]))
+                self.Z_peratom.insert(i+3,float(solvedO2[2]))
+                self.bfactor_per_factor.insert(i+3,float(1))
+                self.charge_per_factor.insert(i+3,float(1))
+                self.Atomtype_per_atom.insert(i+3,"O") 
+
+        
+
+        # Calculate the coordination for atom "O3"     
+        x = Symbol('x')
+        y = Symbol('y')
+        z = Symbol('z')
+        solvedO3=nsolve([(x-OG1[0])**2+(y-OG1[1])**2+(z-OG1[2])**2-distO3_OG1**2,
+                             (x-CG2[0])**2+(y-CG2[1])**2+(z-CG2[2])**2-distO3_CG2**2,
+                             (x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO3_CB**2],
+                            [x,y,z],[solvedP[0],solvedP[1],solvedP[2]])
+        #print(solvedO3)
+        for i in range (0, len(self.X_peratom)):                                    # add O3 to the end of TYR
+            if(self.residue_name[i] == "THR" and self.atomic_name[i] == "OG1" and self.residue_index[i] == threoninetobemod):
+                self.atomic_index.insert(i+4, 4+float(len(self.X_peratom)))
+                self.atomic_name.insert(i+4, "O3")
+                self.residue_name.insert(i+4,"THR")
+                self.chain_name.insert(i+4,"A")
+                self.residue_index.insert(i+4,self.residue_index[i])
+                self.X_peratom.insert(i+4,float(solvedO3[0]))
+                self.Y_peratom.insert(i+4,float(solvedO3[1]))
+                self.Z_peratom.insert(i+4,float(solvedO3[2]))
+                self.bfactor_per_factor.insert(i+4,float(1))
+                self.charge_per_factor.insert(i+4,float(1))
+                self.Atomtype_per_atom.insert(i+4,"O") 
+        for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
+            self.atomic_index[i] = float(i+1)
+    
+    def addchloroacetyl_toNt(self,addition):                                     # 'addition' used to adjust the addition value of coordinations
+        if(self.residue_name[1] != "GLY"):
+            a = 3
+            refC1=[round(3.547,a), round(105.509,a), round(18.144,a)]                   # reference coordination from crystal structure: 1EAU-modified  
+            refC2=[round(2.311,a), round(105.024,a), round(18.892,a)]
+            refO1=[round(4.233,a), round(106.547,a), round(18.292,a)]
+            refC=[round(2.773,a), round(102.464,a), round(17.251,a)]
+            refN=[round(3.881,a), round(104.639,a), round(17.183,a)]
+            refCA=[round(2.835,a), round(103.830,a), round(16.563,a)]
+            refCB=[round(3.076,a), round(103.776,a), round(15.058,a)]
+    
+            
+            distC1_N=self.DistanceCalculator(refC1,refN)                                 # reference distance between atom S and atom OH
+            distC1_CA=self.DistanceCalculator(refC1,refCA)                                 # reference distance between atom S and atom OH
+            distC1_CB=self.DistanceCalculator(refC1,refCB)                                 # reference distance between atom S and atom OH
+            distC1_C=self.DistanceCalculator(refC1,refC)                                 # reference distance between atom S and atom OH
+    
+            distC2_N=self.DistanceCalculator(refC2,refN)                                 # reference distance between atom S and atom OH
+            distC2_CA=self.DistanceCalculator(refC2,refCA)                                 # reference distance between atom S and atom OH
+            distC2_CB=self.DistanceCalculator(refC2,refCB)                                 # reference distance between atom S and atom OH
+            distC2_C=self.DistanceCalculator(refC2,refC)     
+    
+            distO1_N=self.DistanceCalculator(refO1,refN)                                 # reference distance between atom S and atom OH
+            distO1_CA=self.DistanceCalculator(refO1,refCA)                                 # reference distance between atom S and atom OH
+            distO1_CB=self.DistanceCalculator(refO1,refCB)                                 # reference distance between atom S and atom OH
+            distO1_C=self.DistanceCalculator(refO1,refC) 
+    
+            # distCL_N=self.DistanceCalculator(refCL,refN)                                 # reference distance between atom S and atom OH
+            # distCL_CA=self.DistanceCalculator(refCL,refCA)                                 # reference distance between atom S and atom OH
+            # distCL_CB=self.DistanceCalculator(refCL,refCB)                                 # reference distance between atom S and atom OH
+            # distCL_C=self.DistanceCalculator(refCL,refC) 
+    
+            N=[]
+            OG=[]
+            C=[]
+            CA=[]
+            CB=[]
+            b=[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]
+            find_n_atom_index = []                                                              # create the list for saving n-terminal atom for each residues
+            for i in range(0,len(self.atomic_index)):
+                if(self.atomic_name[i] == "N"):
+                    find_n_atom_index.append(self.atomic_index[i])
+                if(self.atomic_name[i] == "CA" and self.residue_index[i] == 1):
+                    CA.append(self.X_peratom[i]+b[addition])
+                    CA.append(self.Y_peratom[i]+b[addition])
+                    CA.append(self.Z_peratom[i]+b[addition])
+                if(self.atomic_name[i] == "CB" and self.residue_index[i] == 1):
+                    CB.append(self.X_peratom[i]+b[addition])
+                    CB.append(self.Y_peratom[i]+b[addition])
+                    CB.append(self.Z_peratom[i]+b[addition])
+                if(self.atomic_name[i] == "N" and self.residue_index[i] == 1):
+                    N.append(self.X_peratom[i]+b[addition])
+                    N.append(self.Y_peratom[i]+b[addition])
+                    N.append(self.Z_peratom[i]+b[addition])
+                
+            second_n_atomIndex = find_n_atom_index[1]                                           # [1] means the second residue's N atom, then the newly added chloroacetylated group can be located by this atom_index - 1;2;3
+    
+    
+             
+            # Calculate the coordination for atom "C1"        
+            x = Symbol('x')
+            y = Symbol('y')
+            z = Symbol('z')
+            solvedC1=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distC1_CB**2,
+                            (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distC1_CA**2,
+                            (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distC1_N**2],
+                                [x,y,z],[N[0],N[1],N[2]])
+            print(solvedC1)
+            tag = "FALSE"
+            for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+                while(self.atomic_name[i] == "N" and self.residue_index[i] == 2 and tag == "FALSE"):          # locate at the 2nd residues's N atome
+                    self.atomic_index.insert(i, 1+float(len(self.X_peratom)))           # Insert newatom information infront of the 2nd residues's N atome
+                    self.atomic_name.insert(i, "C1")
+                    self.residue_name.insert(i,self.residue_name[1])
+                    self.chain_name.insert(i,"A")
+                    self.residue_index.insert(i, 1)                                     # 是否需要"1" ?
+                    self.X_peratom.insert(i,float(solvedC1[0]))
+                    self.Y_peratom.insert(i,float(solvedC1[1]))
+                    self.Z_peratom.insert(i,float(solvedC1[2]))
+                    self.bfactor_per_factor.insert(i,float(1))
+                    self.charge_per_factor.insert(i,float(1))
+                    self.Atomtype_per_atom.insert(i,"C")
+                    tag = "TRUE"
+                
+    
+            
+    
+            # Calculate the coordination for atom "O1"     
+            x = Symbol('x')
+            y = Symbol('y')
+            z = Symbol('z')
+            solvedO1=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distO1_CB**2,
+                            (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distO1_CA**2,
+                            (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distO1_N**2],
+                                [x,y,z],[N[0],N[1],N[2]])
+            print(solvedO1)
+            tag = "FALSE"
+            for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+                while(self.atomic_name[i] == "N" and self.residue_index[i] == 2 and tag == "FALSE"):          # locate at the 2nd residues's N atome
+                    self.atomic_index.insert(i, 2+float(len(self.X_peratom)))           # Insert newatom information infront of the 2nd residues's N atome
+                    self.atomic_name.insert(i, "O1")
+                    self.residue_name.insert(i,self.residue_name[1])
+                    self.chain_name.insert(i,"A")
+                    self.residue_index.insert(i, 1)                                     # 是否需要"1" ?
+                    self.X_peratom.insert(i,float(solvedO1[0]))
+                    self.Y_peratom.insert(i,float(solvedO1[1]))
+                    self.Z_peratom.insert(i,float(solvedO1[2]))
+                    self.bfactor_per_factor.insert(i,float(1))
+                    self.charge_per_factor.insert(i,float(1))
+                    self.Atomtype_per_atom.insert(i,"O")
+                    tag = "TRUE"
+    
+            
+        
+            # Calculate the coordination for atom "C2"        
+            x = Symbol('x')
+            y = Symbol('y')
+            z = Symbol('z')
+            solvedC2=nsolve([(x-CB[0])**2+(y-CB[1])**2+(z-CB[2])**2-distC2_CB**2,
+                            (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distC2_CA**2,
+                            (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distC2_N**2],
+                                [x,y,z],[solvedC1[0],solvedC1[1],solvedC1[2]])
+            print(solvedC2)
+            tag = "FALSE"
+            for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+                while(self.atomic_name[i] == "N" and self.residue_index[i] == 2 and tag == "FALSE"):          # locate at the 2nd residues's N atome
+                    self.atomic_index.insert(i, 3+float(len(self.X_peratom)))           # Insert newatom information infront of the 2nd residues's N atome
+                    self.atomic_name.insert(i, "C2")
+                    self.residue_name.insert(i,self.residue_name[1])
+                    self.chain_name.insert(i,"A")
+                    self.residue_index.insert(i, 1)                                     # 是否需要"1" ?
+                    self.X_peratom.insert(i,float(solvedC2[0]))
+                    self.Y_peratom.insert(i,float(solvedC2[1]))
+                    self.Z_peratom.insert(i,float(solvedC2[2]))
+                    self.bfactor_per_factor.insert(i,float(1))
+                    self.charge_per_factor.insert(i,float(1))
+                    self.Atomtype_per_atom.insert(i,"C")
+                    tag = "TRUE"
+            for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
+                self.atomic_index[i] = float(i+1)
+        else:                                                                           # while the 1st residue is Glysine, it doesn't have CB atom, so we need different reference atoms
+            a=3
+      
+            refC1=[round(4.322,a), round(106.152,a), round(22.268,a)]                   # reference coordination from crystal structure: 1EAU-modified  
+            refC2=[round(5.316,a), round(106.922,a), round(21.407,a)]
+            refO1=[round(3.772,a), round(106.707,a), round(23.228,a)]
+            refC=[round(1.623,a), round(103.846,a), round(22.354,a)]
+            refN=[round(4.020,a), round(104.769,a), round(21.962,a)]
+            refCA=[round(3.075,a), round(104.037,a), round(22.779,a)]
 
     
+            
+            distC1_N=self.DistanceCalculator(refC1,refN)                                 # reference distance between atom S and atom OH
+            distC1_CA=self.DistanceCalculator(refC1,refCA)                                 # reference distance between atom S and atom OH
+            distC1_C=self.DistanceCalculator(refC1,refC)                                 # reference distance between atom S and atom OH
+    
+            distC2_N=self.DistanceCalculator(refC2,refN)                                 # reference distance between atom S and atom OH
+            distC2_CA=self.DistanceCalculator(refC2,refCA)                                 # reference distance between atom S and atom OH
+            distC2_C=self.DistanceCalculator(refC2,refC)     
+    
+            distO1_N=self.DistanceCalculator(refO1,refN)                                 # reference distance between atom S and atom OH
+            distO1_CA=self.DistanceCalculator(refO1,refCA)                                 # reference distance between atom S and atom OH
+            distO1_C=self.DistanceCalculator(refO1,refC) 
+            N=[]
+            C=[]
+            CA=[]
+            b=[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009]
+            find_n_atom_index = []                                                              # create the list for saving n-terminal atom for each residues
+            for i in range(0,len(self.atomic_index)):
+                if(self.atomic_name[i] == "N"):
+                    find_n_atom_index.append(self.atomic_index[i])
+                if(self.atomic_name[i] == "CA" and self.residue_index[i] == 1):
+                    CA.append(self.X_peratom[i]+b[addition])
+                    CA.append(self.Y_peratom[i]+b[addition])
+                    CA.append(self.Z_peratom[i]+b[addition])
+                if(self.atomic_name[i] == "C" and self.residue_index[i] == 1):
+                    C.append(self.X_peratom[i]+b[addition])
+                    C.append(self.Y_peratom[i]+b[addition])
+                    C.append(self.Z_peratom[i]+b[addition])
+                if(self.atomic_name[i] == "N" and self.residue_index[i] == 1):
+                    N.append(self.X_peratom[i]+b[addition])
+                    N.append(self.Y_peratom[i]+b[addition])
+                    N.append(self.Z_peratom[i]+b[addition])
+                
+            second_n_atomIndex = find_n_atom_index[1]                                           # [1] means the second residue's N atom, then the newly added chloroacetylated group can be located by this atom_index - 1;2;3
+    
+    
+             
+            # Calculate the coordination for atom "C1"        
+            x = Symbol('x')
+            y = Symbol('y')
+            z = Symbol('z')
+            solvedC1=nsolve([(x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distC1_C**2,
+                            (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distC1_CA**2,
+                            (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distC1_N**2],
+                                [x,y,z],[N[0],N[1],N[2]])
+            print(solvedC1)
+            tag = "FALSE"
+            for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+                while(self.atomic_name[i] == "N" and self.residue_index[i] == 2 and tag == "FALSE"):          # locate at the 2nd residues's N atome
+                    self.atomic_index.insert(i, 1+float(len(self.X_peratom)))           # Insert newatom information infront of the 2nd residues's N atome
+                    self.atomic_name.insert(i, "C1")
+                    self.residue_name.insert(i,self.residue_name[1])
+                    self.chain_name.insert(i,"A")
+                    self.residue_index.insert(i, 1)                                     # 是否需要"1" ?
+                    self.X_peratom.insert(i,float(solvedC1[0]))
+                    self.Y_peratom.insert(i,float(solvedC1[1]))
+                    self.Z_peratom.insert(i,float(solvedC1[2]))
+                    self.bfactor_per_factor.insert(i,float(1))
+                    self.charge_per_factor.insert(i,float(1))
+                    self.Atomtype_per_atom.insert(i,"C")
+                    tag = "TRUE"
+                
+    
+            
+    
+            # Calculate the coordination for atom "O1"     
+            x = Symbol('x')
+            y = Symbol('y')
+            z = Symbol('z')
+            solvedO1=nsolve([(x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distO1_C**2,
+                            (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distO1_CA**2,
+                            (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distO1_N**2],
+                                [x,y,z],[N[0],N[1],N[2]])
+            print(solvedO1)
+            tag = "FALSE"
+            for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+                while(self.atomic_name[i] == "N" and self.residue_index[i] == 2 and tag == "FALSE"):          # locate at the 2nd residues's N atome
+                    self.atomic_index.insert(i, 2+float(len(self.X_peratom)))           # Insert newatom information infront of the 2nd residues's N atome
+                    self.atomic_name.insert(i, "O1")
+                    self.residue_name.insert(i,self.residue_name[1])
+                    self.chain_name.insert(i,"A")
+                    self.residue_index.insert(i, 1)                                     # 是否需要"1" ?
+                    self.X_peratom.insert(i,float(solvedO1[0]))
+                    self.Y_peratom.insert(i,float(solvedO1[1]))
+                    self.Z_peratom.insert(i,float(solvedO1[2]))
+                    self.bfactor_per_factor.insert(i,float(1))
+                    self.charge_per_factor.insert(i,float(1))
+                    self.Atomtype_per_atom.insert(i,"O")
+                    tag = "TRUE"
+    
+            
+        
+            # Calculate the coordination for atom "C2"        
+            x = Symbol('x')
+            y = Symbol('y')
+            z = Symbol('z')
+            solvedC2=nsolve([(x-C[0])**2+(y-C[1])**2+(z-C[2])**2-distC2_C**2,
+                            (x-CA[0])**2+(y-CA[1])**2+(z-CA[2])**2-distC2_CA**2,
+                            (x-N[0])**2+(y-N[1])**2+(z-N[2])**2-distC2_N**2],
+                                [x,y,z],[solvedC1[0],solvedC1[1],solvedC1[2]])
+            print(solvedC2)
+            tag = "FALSE"
+            for i in range (0, len(self.X_peratom)):                                    # add S to the end of TYR
+                while(self.atomic_name[i] == "N" and self.residue_index[i] == 2 and tag == "FALSE"):          # locate at the 2nd residues's N atome
+                    self.atomic_index.insert(i, 3+float(len(self.X_peratom)))           # Insert newatom information infront of the 2nd residues's N atome
+                    self.atomic_name.insert(i, "C2")
+                    self.residue_name.insert(i,self.residue_name[1])
+                    self.chain_name.insert(i,"A")
+                    self.residue_index.insert(i, 1)                                     # 是否需要"1" ?
+                    self.X_peratom.insert(i,float(solvedC2[0]))
+                    self.Y_peratom.insert(i,float(solvedC2[1]))
+                    self.Z_peratom.insert(i,float(solvedC2[2]))
+                    self.bfactor_per_factor.insert(i,float(1))
+                    self.charge_per_factor.insert(i,float(1))
+                    self.Atomtype_per_atom.insert(i,"C")
+                    tag = "TRUE"
+            for i in range(0,len(self.X_peratom)):                                      # rearrange the atomic index numbers
+                self.atomic_index[i] = float(i+1)
+
+
+
     
     def addO_toCYS(self):
         CB_SG_dist = 2
@@ -610,7 +1319,7 @@ class PDBfile:
         f.close()
             
 
-    def n_c_Cyclic_PDBwriter(self,filename,tyrtomod):
+    def n_c_Cyclic_PDBwriter(self,filename,tyrtomod,sertomod,thrtomod):
         find_c_atom_index = []                                                              # create the list for saving c-terminal atom for each residues
         find_n_atom_index = []                                                              # create the list for saving n-terminal atom for each residues
         find_ca_tom_index = []                                                              # create the list for saving "CA" atom for each residues
@@ -648,10 +1357,15 @@ class PDBfile:
             print("%-6s%5d%5d%5d%5d" % ("CONECT", int(c_terminal_atomIndex), int(n_terminal_atomIndex), int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)+1), file = f)
             print("%-6s%5d%5d" % ("CONECT", int(c_terminal_atomIndex)-1, int(c_terminal_atomIndex)), file = f)
         try:                                                                                # if it's PTM added peptide we still need to add PTM sidechain atom CONECT information to guide obabel generate mol2 file
-            ptm_index = self.find_p_s_atom_index(tyrtomod)                                  
-            if ptm_index:                                                                   # if ptm_index is not null then we can add the CONECT informatioins below
-                print("%-6s%5d%5d%5d%5d%5d" % ("CONECT", int(ptm_index), int(ptm_index)-2, int(ptm_index)+1, int(ptm_index)+2, int(ptm_index)+3), file = f)     # S OH O1 O2 O3 
-                print("%-6s%5d%5d" % ("CONECT", int(ptm_index)-2, int(ptm_index)), file = f)                                                                    # OH S
+            ptm_index = self.find_p_s_atom_index(tyrtomod,sertomod,thrtomod)                #                               
+            print(ptm_index)
+            # if ptm_index:                                                                   # if ptm_index is not null then we can add the CONECT informatioins below
+            for i in range(len(ptm_index)):
+                print("%-6s%5d%5d%5d%5d" % ("CONECT", ptm_index[i], ptm_index[i]+1, ptm_index[i]+2, ptm_index[i]+3), file = f)     # S OH O1 O2 O3 
+                if(self.residue_name[int(ptm_index[i])] == "TYR"):
+                    print("%-6s%5d%5d" % ("CONECT", ptm_index[i]-2, ptm_index[i]), file = f)      # OH S
+                else:
+                    print("%-6s%5d%5d" % ("CONECT", ptm_index[i]-1, ptm_index[i]), file = f)      # OG-P
             # print("END", file = f)
         except:
             pass
@@ -689,11 +1403,66 @@ class PDBfile:
         print("END", file = f)
         f.close()
         
-    
+    def chloroacetylate_n_cys_Cyclic_PDBwriter(self,filename,tyrtomod,sertomod,thrtomod,cystocyc):  # 记得加入cystocyc的值, filename is the output name for edited pdb file
+        find_c_atom_index = []                                                              # create the list for saving c-terminal atom for each residues
+        find_n_atom_index = []                                                              # create the list for saving n-terminal atom for each residues
+        find_ca_tom_index = []                                                              # create the list for saving "CA" atom for each residues
+        # find_s_atom_index = []                                                              # create the list for saving "S" atom for each Cysteine
+        for i in range(0,len(self.atomic_index)):
+            if(self.atomic_name[i] == "C"):
+                find_c_atom_index.append(self.atomic_index[i])
+            if(self.atomic_name[i] == "N"):
+                find_n_atom_index.append(self.atomic_index[i])
+            if(self.atomic_name[i] == "CA"):
+                find_ca_tom_index.append(self.atomic_index[i])
+            if(self.residue_name[i]== "PRO" and self.residue_index[i]==1 and self.atomic_name[i] == "CD"):      # if the 1st residue is "PRO" then we need to add its special bond CONECT information individually.   
+                cd_terminal_atomIndex = self.atomic_index[i]
+            if(self.residue_name[i] == "CYS" and self.atomic_name[i] == "SG" and self.residue_index[i] == cystocyc):
+                s_terminal_atomIndex = self.atomic_index[i]
+        # c_terminal_atomIndex = max(find_c_atom_index)                                       # max() to find the last residue's C-termial atom
+        n_terminal_atomIndex = min(find_n_atom_index)                                       # min() to find the first residue's N-termial atom
+        second_n_atomIndex = find_n_atom_index[1]                                           # [1] means the second residue's N atom, then the newly added chloroacetylated group can be located by this atom_index - 1;2;3
+        ca_terminal_atomIndex= min(find_ca_tom_index)                                       # min() to find the first residues's CA atom
+        # s_terminal_atomIndex = find_s_atom_index[]                                          # 
+        # return n_terminal_atomIndex, c_terminal_atomIndex
+        f = open(filename, "w")                                                             
+        for i in range (0 ,len(self.atomic_index)):                                           
+            print("%4s%7d  %-4s%1s%2s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f%12s" %  ("ATOM" ,     
+                                             self.atomic_index[i],                          
+                                             self.atomic_name[i],                           
+                                             self.residue_name[i],                          
+                                             self.chain_name[i],                            
+                                             self.residue_index[i],                         
+                                             self.X_peratom[i],                             
+                                             self.Y_peratom[i],                             
+                                             self.Z_peratom[i],                             
+                                             self.bfactor_per_factor[i],                    
+                                             self.charge_per_factor[i],                     
+                                             self.Atomtype_per_atom[i]), file = f )         
+        if(self.residue_name[1]=="PRO"):                                                    # If the first residue is PRO, then the 'N' in n-terminal should like this: N-CA; N-CD
+            print("%-6s%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(ca_terminal_atomIndex), int(cd_terminal_atomIndex)), file = f)
+        # else:                                                                               # If the first residue is not PRO, then the 'N' in n-terminal
+        print("%-6s%5d%5d%5d" % ("CONECT", int(n_terminal_atomIndex), int(n_terminal_atomIndex)+1, int(second_n_atomIndex)-3), file = f) # N-CA，N-C1
+        print("%-6s%5d%5d%5d" % ("CONECT", int(second_n_atomIndex)-3, int(second_n_atomIndex)-2, int(second_n_atomIndex)-1), file = f) # build the acetyl group! C1-O1; C1-C2
+        print("%-6s%5d%5d" % ("CONECT", int(second_n_atomIndex)-1, int(s_terminal_atomIndex)), file = f) # Cyclic! Nt_C2-Cys_S的序数
+        try:                                                                                # if it's PTM added peptide we still need to add PTM sidechain atom CONECT information to guide obabel generate mol2 file
+            ptm_index = self.find_p_s_atom_index(tyrtomod,sertomod,thrtomod)                #                               
+            print(ptm_index)                                                                  # if ptm_index is not null then we can add the CONECT informatioins below
+            for i in range(len(ptm_index)):
+                print("%-6s%5d%5d%5d%5d" % ("CONECT", ptm_index[i], ptm_index[i]+1, ptm_index[i]+2, ptm_index[i]+3), file = f)     # S OH O1 O2 O3 
+                if(self.residue_name[int(ptm_index[i])] == "TYR"):
+                    print("%-6s%5d%5d" % ("CONECT", ptm_index[i]-2, ptm_index[i]), file = f)      # OH S
+                else:
+                    print("%-6s%5d%5d" % ("CONECT", ptm_index[i]-1, ptm_index[i]), file = f)      # OG-P
+        except:
+            pass
+        f.close()
+        self.pdb_residues_side_chain_conect(filename)                                       # call "pdb_residues_side_chain_conect" method to add sidechain CONECT record for each residue in the sequence
+  
 
         
     def pdb_residues_side_chain_conect(self, filename):                                     # this method used in "n_c_Cyclic_PDBwriter" mainly for add all residues sidechain "CONECT" information to PDB files
-        aa = ["ALA","CYS","ASP","GLU","PHE","GLY","HIS","ILE","LYS","LEU","MET","ASN","PRO","GLN","ARG","SER","THR","VAL","TRP","TYR"]
+        # aa = ["ALA","CYS","ASP","GLU","PHE","GLY","HIS","ILE","LYS","LEU","MET","ASN","PRO","GLN","ARG","SER","THR","VAL","TRP","TYR"]
         n_index = []                                                                        # creat the list of the n terminal atom for each residues
         pep_seq = []                                                                        # creat the list of the residues of this sequence    
         for i in range(len(self.atomic_index)):
