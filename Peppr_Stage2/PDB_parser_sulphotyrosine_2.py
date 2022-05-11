@@ -84,6 +84,7 @@ class PDBfile:
         return p_s_atom_index
 
     def find_s_in_cys_index(self,cystocyc):                                         # this method is for finding the SG atom in indicated Cys
+        s_in_cys = 0                                                                # in case ther is no cystein assigned(new)
         for i in range(0,len(self.atomic_index)):    
             if(self.atomic_name[i] == "SG" and self.residue_index[i] == cystocyc):
                 s_in_cys = self.atomic_index[i]
