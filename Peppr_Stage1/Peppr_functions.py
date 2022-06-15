@@ -21,15 +21,19 @@ percentage = ''
 cores = ''
 input_ntrys = ''
 input_Replicas = ''
+cyclization = ''
+reference = ''
 
 #optarg for the input example-c 2 -i PLDXPAL -t done.trg -p 50 -N 6 -n 80000
 try:
-   opts, args = getopt.getopt(args,"h:i:t:p:N:n:c:",["help","input_seq =",          # getopot.getopt(sys.arg, short_option‘-h,-i,-t,-p,etc’, long_option'--help,--input_seq,--receptor)
+   opts, args = getopt.getopt(args,"h:i:t:p:N:n:c:l:r:",["help","input_seq =",          # getopot.getopt(sys.arg, short_option‘-h,-i,-t,-p,etc’, long_option'--help,--input_seq,--receptor)
                                     "receptor =",                                   # with usr's input e.g -i PLDXPAL -c2, the 'getopt' function can grab them and save them seprately into 'opts' and 'args'
                                     "percentage ="
                                     "replicas =",
                                     "steps =",
-                                    "cores ="])
+                                    "cores =",
+                                    "cyclization =",
+                                    "reference ="])
 except getopt.GetoptError:
    print ('test.py -i <inputfile> -o <outputfile>')
    sys.exit(2)                                                                      # Exiting the program raises a SystemExit exception, 0 means normal exit, and others are abnormal exits.
@@ -50,6 +54,10 @@ for opt, arg in opts:                                                           
       input_ntrys = arg
    elif opt in ("-c", "--cores"):
       cores = arg
+   elif opt in ("-l", "--cyclization"):
+      cyclization = arg
+   elif opt in ("-r", "--reference"):
+       reference = arg
       
 adcphome = os.environ['ADCPHOME']+"/bin/adcp"                                       # call the system enviroment variable'ADCPHOME' which is pre-defined by usr, then add /bin/adcp to point out the excutable file.
 res = 0                                                                             # Prepare this variable for a global using purpose
@@ -129,20 +137,74 @@ def adcp_run():
         path_to_output_file =outputname_ADCP+".txt"                                 # used in 'extract_score' e.g: PLADY/PLADY.txt
         myoutput = open(path_to_output_file,'w+') # equal to open seq.txt then write down
         # the path to adcp should be fixed and sorted with a enviromental variable such as ADCPHOME
-        p = subprocess.Popen([adcphome,
-                              "-t",input_receptor,"-s",
-                              seq,  # Question: is this "new" = to the previous function's "new"?
-                              "-N",
-                              input_Replicas,
-                              "-n",
-                              input_ntrys,
-                              "-p",
-                              percentage,
-                              "-o",
-                              outputname_ADCP,
-                              "-c",
-                              cores,
-                              "-O"],stdout=myoutput).communicate()
+        if reference == '':
+            if cyclization in ("cyc", "cys"):
+                p = subprocess.Popen([adcphome,
+                                      "-t",input_receptor,"-s",
+                                      seq,  # Question: is this "new" = to the previous function's "new"?
+                                      "-N",
+                                      input_Replicas,
+                                      "-n",
+                                      input_ntrys,
+                                      "-p",
+                                      percentage,
+                                      "-o",
+                                      outputname_ADCP,
+                                      "-c",
+                                      cores,
+                                      "-"+ cyclization,
+                                      "-O"],stdout=myoutput).communicate()
+            else:
+                p = subprocess.Popen([adcphome,
+                                      "-t",input_receptor,"-s",
+                                      seq,  # Question: is this "new" = to the previous function's "new"?
+                                      "-N",
+                                      input_Replicas,
+                                      "-n",
+                                      input_ntrys,
+                                      "-p",
+                                      percentage,
+                                      "-o",
+                                      outputname_ADCP,
+                                      "-c",
+                                      cores,
+                                      "-O"],stdout=myoutput).communicate()
+        else:
+            if cyclization in ("cyc", "cys"):
+                p = subprocess.Popen([adcphome,
+                                      "-t",input_receptor,"-s",
+                                      seq,  # Question: is this "new" = to the previous function's "new"?
+                                      "-N",
+                                      input_Replicas,
+                                      "-n",
+                                      input_ntrys,
+                                      "-p",
+                                      percentage,
+                                      "-o",
+                                      outputname_ADCP,
+                                      "-c",
+                                      cores,
+                                      "-"+ cyclization,
+                                      "-ref",
+                                      reference,
+                                      "-O"],stdout=myoutput).communicate()
+            else:
+                p = subprocess.Popen([adcphome,
+                                      "-t",input_receptor,"-s",
+                                      seq,  # Question: is this "new" = to the previous function's "new"?
+                                      "-N",
+                                      input_Replicas,
+                                      "-n",
+                                      input_ntrys,
+                                      "-p",
+                                      percentage,
+                                      "-o",
+                                      outputname_ADCP,
+                                      "-c",
+                                      cores,
+                                      "-ref",
+                                      reference,
+                                      "-O"],stdout=myoutput).communicate()
        
         topmols.append(structure_correct(outputname_ADCP))                          # get the PATH for each $sequence_rank_1_corrected.pdb
         topmols_seq.append(seq)                                                     # get the sequence for each $sequence_rank_1_corrected.pdb

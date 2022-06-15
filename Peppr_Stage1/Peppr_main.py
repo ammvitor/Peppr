@@ -21,15 +21,19 @@ percentage = ''
 cores = ''
 input_ntrys = ''
 input_Replicas = ''
+cyclization = ''
+reference = ''
 
 #optarg for the input example-c 2 -i PLDXPAL -t done.trg -p 50 -N 6 -n 80000
 try:
-   opts, args = getopt.getopt(args,"h:i:t:p:N:n:c:",["help","input_seq =",
+   opts, args = getopt.getopt(args,"h:i:t:p:N:n:c:l:r:",["help","input_seq =",
                                     "receptor =",
                                     "percentage ="
                                     "replicas =",
                                     "steps =",
-                                    "cores ="])
+                                    "cores =",
+                                    "cyclization =",
+                                    "reference ="])
 except getopt.GetoptError:
    print ('test.py -i <inputfile> -o <outputfile>')
    sys.exit(2)
@@ -50,6 +54,10 @@ for opt, arg in opts:
       input_ntrys = arg
    elif opt in ("-c", "--cores"):
       cores = arg
+   elif opt in ("-l", "--cyclization"):
+      cyclization = arg
+   elif opt in ("-r", "--reference"):
+      reference = arg
       
 adcphome = os.environ['ADCPHOME']+"/bin/adcp"
 res = 0                                # Prepare this variable for a global using purpose
