@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# Install ADCP package
+cd ~ && mkdir workspace && cd workspace
+wget https://ccsb.scripps.edu/adfr/download/1038/
+tar zxvf ADFRsuite_x86_64Linux_1.0.tar.gz 
+cd ADFRsuite_x86_64Linux_1.0
+./install.sh -d $PWD 
+echo "export PATH=/home/b8048283/workspace/ADFRsuite1.0/bin:/$PATH" >> ~/.bashrc 
+sourse ~/.bashrc
+
+# Install python 3.9
+wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
+chmod +x Anaconda3-2022.05-Linux-x86_64.sh
+./Anaconda3-2022.05-Linux-x86.64.sh
+conda install -c conda-forge biopython
+echo "export ADCPHOME=~/workspace/home/b8048283/workspace/ADFRsuite1.0" >> ~/.bashrc
+sourse ~/.bashrc
+
+# Install SMINA
+https://sourceforge.net/projects/smina/files/
+
+# Prepare receptor files, reduce Hydrogen in both protein and peptides
+reduce 3Q47_rec.pdb > 3Q47_recH.pdb 
+reduce 3Q47_pep.pdb > 3Q47_pepH.pdb 
+# convert pdb file format to pdbqt file format
+prepare_receptor -r 3Q47_recH.pdb
+prepare_ligand -l 3Q47_pepH.pdb
+# Generating the binding pocket. This will put the docking box around the specified peptide file with a padding of 4 Angstrom
+agfr -r 3Q47_recH.pdbqt -l 3Q47_pepH.pdbqt -asv 1.1 -o 3Q47
+### arguments:
+### -r : specifies the receptor file
+### -l : specifies the ligand file
+### -asv: specifies AutoSite version number (1.0 or 1.1).   Default AutoSite version is 1.0 (if -asv option is not used)
+### -o : specifies the name for the target files
+### –b/–boxMode : specified the box position and size 
+### –P/–padding : specifie the value of padding on each side.
+
+# Docking peptide from sequence using the generated target file
+# adcp -t 3Q47.trg -s npisdvd -N 20 -n 1000000 -o 3Q47_redocking -ref 3Q47_pepH.pdb
+# adcp -t 5GRD.trg -s sscsscplsk -N 20 -n 500000 -cys -o 5GRD_redocking -ref 5GRD_pepH.pdbqt -nc 0.8
+# By default adcp performs 50 searches, each allotted 2.5 million evaluations
+# -N or --nbRuns 20        # 20 independent searches
+# -n, –numSteps 2500000    # each searches using 2500000 evaluations of the scoring function
+# -cys                     # enables the potential for disulfide bond.
+# -nc 0.8                  # use native contacts as clustering criteria. We recommend using native contacts for larger peptides.
+
+
+# Download Peppr
+git clone git@github.com:ammvitor/Peppr ./ammvitor-Peppr
+unzip Peppr-main.zip 
+# Peppr-stage-1 for generating 3D conformation of Peptides and docking them to Proteins
+mkdir peppr-3Q47 && cd peppr-3Q47
+cp ../3Q47.trg .
+cp ../3Q47_pepH.pdbqt .
+python $PEPPRHOME/Peppr_Stage1/Peppr_main.py -c 2 -i TLXDYL -t 3Q47.trg -p 50 -N 20 -n 2500000 -l cyc -r 3Q47_pepH.pdbqt # -l cys
+# -c <the number of cores>
+# -i <Sequence to test>
+# -t <receptor.trg which is generated from the preparation steps>
+# -p <percentage>
+# -N <number of independent replicas>
+# -n <number of searchings for each replica>
+# -l <type of cyclization: cys or cyc>
+# -r <reference peptide_structure.pdbqt>
+
+# python Peppr_Stage1/Peppr_main.py -c 2 -i XDIYVAC -t AF-WIP1_3MG_SOL_modified.trg -p 50 -N 20 -n 2500000 -l cyc
+# Peppr-stage-2 for adding Post-translational modification and re-docking them via SMINA
+# before running the stage-2 we need to set which residue we want to add PTMs to e.g:
+#	tyrosynetobemod = 5
+#	serinetobemod = 3
+#	threoninetobemod = 0
+#	cystocyc = 6
+python $PEPPRHOME/Peppr_Stage2/__main__sulphotyrosine_2.py
+# I modifide the 90th line in PDB_parser_sulphotyrosine_2.py, "else: -> s_in_cys  = 0"
+
+
+
+
+
+
