@@ -40,7 +40,7 @@ except getopt.GetoptError:
  
 for opt, arg in opts:
    if opt == '-h':
-      print ('args.py -i <inputfile> -o <outputfile>')
+      print ('python ./Peppr_Stage1/Peppr_main.py -c <number_of_cores> -i <Sequences> -t <receptor.trg> -p <percentatge> -N <independent_replicas> -n <searchings_for_each_replica> -l <cyc or cys> -r <reference_peptide.pdbqt>')
       sys.exit()
    elif opt in ("-i", "--input_seq"):
       input_seq = arg
