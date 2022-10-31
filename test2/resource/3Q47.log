@@ -1,0 +1,33 @@
+loading receptor: 3q47_recH.pdbqt
+loading ligand: 3q47_pepH.pdbqt
+
+set box using ligand
+    Box center:    16.052     9.415     5.617
+    Box length:    20.250    21.000    21.000
+    Box size  :        54        56        56
+    padding   :     4.000
+    spacing   :     0.375
+
+identifying pockets using AutoSite ....
+    found 3 pocket(s)
+
+    pocket|  energy | # of |Rad. of | energy |   bns    | score  
+    number|         |points|gyration|per vol.|buriedness|v*b^2/rg
+    ------+---------+------+--------+--------+----------+---------
+        1   -100.51   251    4.08     -0.40      0.82      41.49
+        2    -84.03   236    4.02     -0.36      0.77      34.84
+        3    -92.62   265    4.92     -0.35      0.78      32.82
+    merging clusters ...
+done. got 106 fill Points, in 2.07 (sec)
+
+setting map types using: all to ['HS', 'Mg', 'HD', 'NA', 'Fe', 'Br', 'NS', 'A', 'C', 'Mn', 'G', 'F', 'I', 'H', 'J', 'N', 'Q', 'P', 'S', 'GA', 'Z', 'Zn', 'Cl', 'Ca', 'OA', 'SA', 'OS']
+
+computing maps for center=(16.052 9.415 5.617) size=(20.250 21.000 21.000) dims=(54 56 56) ...
+    104 points inside the box
+
+    maps computed in 7.12 (sec)
+Adding gradient to maps ...
+done adding gradient to maps 32.68 (sec)
+making target file 3Q47.trg ...done.
+    done. 41.09 (sec)
+

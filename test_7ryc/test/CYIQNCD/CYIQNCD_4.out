@@ -1,0 +1,109 @@
+found external potential parameters 1 
+found external potential parameters 4 
+setting constrained list file constrains
+Building protein from sequence: ABCDEFGHIGKLMNGPQRSTGVWGYZ.
+Building protein from sequence: ABCDEFGHIGKLMNGPQRSTGVWGYZ (26 amino acids, 1 chains).
+ABCDEFGHIGKLMNGPQRSTGVWGYZ 26
+Building protein from sequence: cyiqncd.
+Building protein from sequence: cyiqncd (7 amino acids, 1 chains).
+cyiqncd 7
+AD Grid maps initialisation finished 
+1marking constrained amino acids from file constrains
+Constraining amino acids: 1
+WARNING! Contact map file 'NULL' given, so no bias interactions will be calculated.
+0 0 0 0 0 0 0  aaa 1 99999 
+ aaa 2 99999 
+ aaa 3 99999 
+ aaa 4 99999 
+ aaa 5 99999 
+ aaa 6 99999 
+ aaa 7 99999 
+SS Energy diag offdiag 699993 99999 99999 99999 99999 99999 99999 99999 
+699993 
+0 125.518 
+0 0.0229412 1.74684 
+0 -0.632507 -0.221354 2.37683 
+0 -0.00134536 -0.0402585 -0.213516 1.75217 
+0 0 0 0.101169 -0.193079 1.78956 
+0 0 0 -0.000120035 -0.0638669 -0.221116 31.764 
+0 0 0 0 0 -0.0423879 -0.229574 0.806907 
+initial transmutate ACYIQNCD 
+transmutate!!! 141.634 124.432 105.566
+transmutate!!! 141.634 124.432 105.566
+begin run with pace 1 stretch 2500 
+699993 99999 99999 99999 99999 99999 99999 99999 
+699993 
+0 125.518 
+0 0.0229412 1.74684 
+0 -0.632507 -0.221354 2.37683 
+0 -0.00134536 -0.0402585 -0.213516 1.75217 
+0 0 0 0.101169 -0.193079 1.78956 
+0 0 0 -0.000120035 -0.0638669 -0.221116 31.764 
+0 0 0 0 0 -0.0423879 -0.229574 0.806907 
+creating MC move lookup table.
+Sequence:    CYIQNCD
+Fixed:              
+Constrained: x      
+Chain:       1111111
+len 1 bonds, Nchains 1:*0 x1 x2 x3 x4 x5 x6 x7 8+0 != (8-1+(1-0)*1
+
+len 2 bonds, Nchains 1:*0 x1 x2 x3 x4 x5 x6 7+0 != (8-1+(1-1)*1
+-1 
+len 3 bonds, Nchains 1:*0 x1 x2 x3 x4 x5 6+0 != (8-1+(1-2)*1
+-1 -1 
+len 4 bonds, Nchains 1:*0 x1 x2 x3 x4 5+0 != (8-1+(1-3)*1
+-1 -1 -1 
+swap in best curr 134.764 swap 9999 best 99999
+swap in best curr 127.134 swap 9999 best 134.764
+swap between best curr 93.509 swap 134.764 best 93.509
+swap between best curr 90.9119 swap 93.509 best 90.9119
+swap between best curr 90.6142 swap 90.9119 best 90.6142
+swap between best curr 88.7184 swap 90.6142 best 88.7184
+swap between best curr 87.8467 swap 88.7184 best 87.8467
+swap between best curr 87.8406 swap 87.8467 best 87.8406
+swap between best curr 75.9982 swap 87.8406 best 75.9982
+swap between best curr 74.8919 swap 75.9982 best 74.8919
+swap between best curr 69.7087 swap 74.8919 best 69.7087
+swap between best curr 68.0982 swap 69.7087 best 68.0982
+swap between best curr 55.4287 swap 68.0982 best 55.4287
+swap between best curr 51.6214 swap 55.4287 best 51.6214
+swap between best curr 51.4435 swap 51.6214 best 51.4435
+swap between best curr 50.7652 swap 51.4435 best 50.7652
+swap between best curr 50.6221 swap 50.7652 best 50.6221
+swap between best curr 49.9335 swap 50.6221 best 49.9335
+swap between best curr 34.3746 swap 49.9335 best 34.3746
+swap between best curr 32.4441 swap 34.3746 best 32.4441
+swap between best curr 32.3753 swap 32.4441 best 32.3753
+swap between best curr 32.137 swap 32.3753 best 32.137
+swap between best curr 31.8977 swap 32.137 best 31.8977
+swap between best curr 31.8026 swap 31.8977 best 31.8026
+swap between best curr 31.5746 swap 31.8026 best 31.5746
+swap between best curr 31.2782 swap 31.5746 best 31.2782
+swap between best curr 31.1758 swap 31.2782 best 31.1758
+swap between best curr 30.4552 swap 31.1758 best 30.4552
+swap between best curr 28.2089 swap 30.4552 best 28.2089
+swap between best curr 27.4008 swap 28.2089 best 27.4008
+swap between best curr 27.0531 swap 27.4008 best 27.0531
+swap between best curr 26.6598 swap 27.0531 best 26.6598
+swap between best curr 25.9824 swap 26.6598 best 25.9824
+swap between best curr 25.1037 swap 25.9824 best 25.1037
+swap between best curr 21.565 swap 25.1037 best 21.565
+swap between best curr 20.9341 swap 21.565 best 20.9341
+swap between best curr 20.1945 swap 20.9341 best 20.1945
+swap between best curr 20.1489 swap 20.1945 best 20.1489
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 700157.019785 extE 699993.000000 
+totalE 80.779434 extE -0.061340 
+totalE 80.779434 extE -0.061340 
+best target energy 20.1489
+The program has successfully finished in 0 seconds. :)  Bye-bye!
+ramaprob initialise success 
+transpoints initialise success with 236 transpoints 
+grid box initialise succuss 75 51 65 

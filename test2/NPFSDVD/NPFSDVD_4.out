@@ -1,0 +1,310 @@
+found external potential parameters 1 
+found external potential parameters 4 
+setting constrained list file constrains
+Building protein from sequence: ABCDEFGHIGKLMNGPQRSTGVWGYZ.
+Building protein from sequence: ABCDEFGHIGKLMNGPQRSTGVWGYZ (26 amino acids, 1 chains).
+ABCDEFGHIGKLMNGPQRSTGVWGYZ 26
+Building protein from sequence: npfsdvd.
+Building protein from sequence: npfsdvd (7 amino acids, 1 chains).
+npfsdvd 7
+AD Grid maps initialisation finished 
+1marking constrained amino acids from file constrains
+Constraining amino acids: 1
+WARNING! Contact map file 'NULL' given, so no bias interactions will be calculated.
+0 0 0 0 0 0 0  aaa 1 48.0803 
+ aaa 2 11.2007 
+ aaa 3 43.4135 
+ aaa 4 46.2811 
+ aaa 5 108.95 
+ aaa 6 167.906 
+ aaa 7 262.178 
+SS Energy diag offdiag 688.009 48.0803 11.2007 43.4135 46.2811 108.95 167.906 262.178 
+688.009 
+0 124.164 
+0 98.7634 1.75401 
+0 0.357317 -0.177072 1.75269 
+0 0 -0.051359 -0.197841 1.75145 
+0 0 0 0.0783204 -0.197931 1.83491 
+0 0 0 0 0.180489 -0.254134 1.95534 
+0 0 0 0 0 -0.0433935 -0.225775 0.806907 
+initial transmutate ANPFSDVD 
+transmutate!!! 22.052 10.415 4.617
+transmutate!!! 22.052 10.415 4.617
+begin run with pace 1 stretch 2500 
+688.009 48.0803 11.2007 43.4135 46.2811 108.95 167.906 262.178 
+688.009 
+0 124.164 
+0 98.7634 1.75401 
+0 0.357317 -0.177072 1.75269 
+0 0 -0.051359 -0.197841 1.75145 
+0 0 0 0.0783204 -0.197931 1.83491 
+0 0 0 0 0.180489 -0.254134 1.95534 
+0 0 0 0 0 -0.0433935 -0.225775 0.806907 
+creating MC move lookup table.
+Sequence:    NPFSDVD
+Fixed:              
+Constrained: x      
+Chain:       1111111
+len 1 bonds, Nchains 1:*0 x1 x2 x3 x4 x5 x6 x7 8+0 != (8-1+(1-0)*1
+
+len 2 bonds, Nchains 1:*0 x1 x2 x3 x4 x5 x6 7+0 != (8-1+(1-1)*1
+-1 
+len 3 bonds, Nchains 1:*0 x1 x2 x3 x4 x5 6+0 != (8-1+(1-2)*1
+-1 -1 
+len 4 bonds, Nchains 1:*0 x1 x2 x3 x4 5+0 != (8-1+(1-3)*1
+-1 -1 -1 
+swap in best curr 295.781 swap 9999 best 99999
+swap in best curr 292.874 swap 9999 best 295.781
+swap between best curr 292.486 swap 295.781 best 292.486
+swap between best curr 282.034 swap 292.486 best 282.034
+swap between best curr 267.061 swap 282.034 best 267.061
+swap between best curr 259.105 swap 267.061 best 259.105
+swap between best curr 250.288 swap 259.105 best 250.288
+swap between best curr 250.267 swap 250.288 best 250.267
+swap between best curr 244.645 swap 250.267 best 244.645
+swap between best curr 228.866 swap 244.645 best 228.866
+swap between best curr 219.533 swap 228.866 best 219.533
+swap between best curr 216.755 swap 219.533 best 216.755
+swap between best curr 216.711 swap 216.755 best 216.711
+swap between best curr 187.131 swap 216.711 best 187.131
+swap between best curr 177.12 swap 187.131 best 177.12
+swap between best curr 176.254 swap 177.12 best 176.254
+swap between best curr 153.975 swap 176.254 best 153.975
+swap between best curr 142.668 swap 153.975 best 142.668
+swap between best curr 135.127 swap 142.668 best 135.127
+swap between best curr 129.033 swap 135.127 best 129.033
+swap between best curr 124.263 swap 129.033 best 124.263
+swap between best curr 120.292 swap 124.263 best 120.292
+swap between best curr 112.661 swap 120.292 best 112.661
+swap between best curr 97.759 swap 112.661 best 97.759
+swap between best curr 96.4052 swap 97.759 best 96.4052
+swap between best curr 86.8538 swap 96.4052 best 86.8538
+swap between best curr 80.9248 swap 86.8538 best 80.9248
+swap between best curr 78.0162 swap 80.9248 best 78.0162
+swap between best curr 73.941 swap 78.0162 best 73.941
+swap between best curr 65.3897 swap 73.941 best 65.3897
+swap between best curr 59.9933 swap 65.3897 best 59.9933
+swap between best curr 56.8679 swap 59.9933 best 56.8679
+swap between best curr 56.5426 swap 56.8679 best 56.5426
+swap between best curr 53.6316 swap 56.5426 best 53.6316
+swap between best curr 51.9948 swap 53.6316 best 51.9948
+swap between best curr 49.0608 swap 51.9948 best 49.0608
+swap between best curr 47.5366 swap 49.0608 best 47.5366
+swap between best curr 45.6834 swap 47.5366 best 45.6834
+swap between best curr 43.652 swap 45.6834 best 43.652
+swap between best curr 43.3452 swap 43.652 best 43.3452
+swap between best curr 42.9417 swap 43.3452 best 42.9417
+swap between best curr 42.8371 swap 42.9417 best 42.8371
+swap between best curr 42.0162 swap 42.8371 best 42.0162
+swap between best curr 40.9898 swap 42.0162 best 40.9898
+swap between best curr 40.9476 swap 40.9898 best 40.9476
+swap between best curr 40.8778 swap 40.9476 best 40.8778
+swap between best curr 40.7817 swap 40.8778 best 40.7817
+swap between best curr 40.3306 swap 40.7817 best 40.3306
+swap between best curr 40.2694 swap 40.3306 best 40.2694
+swap between best curr 39.9854 swap 40.2694 best 39.9854
+swap between best curr 39.3755 swap 39.9854 best 39.3755
+swap between best curr 39.0222 swap 39.3755 best 39.0222
+swap between best curr 37.7152 swap 39.0222 best 37.7152
+swap between best curr 36.1207 swap 37.7152 best 36.1207
+swap between best curr 35.2336 swap 36.1207 best 35.2336
+swap between best curr 34.9773 swap 35.2336 best 34.9773
+swap between best curr 34.971 swap 34.9773 best 34.971
+swap between best curr 34.9537 swap 34.971 best 34.9537
+swap between best curr 34.712 swap 34.9537 best 34.712
+swap between best curr 33.1789 swap 34.712 best 33.1789
+swap between best curr 32.8341 swap 33.1789 best 32.8341
+swap between best curr 32.082 swap 32.8341 best 32.082
+swap between best curr 30.6549 swap 32.082 best 30.6549
+swap between best curr 29.6044 swap 30.6549 best 29.6044
+swap between best curr 29.5577 swap 29.6044 best 29.5577
+swap between best curr 29.2268 swap 29.5577 best 29.2268
+swap between best curr 28.8642 swap 29.2268 best 28.8642
+swap between best curr 28.4833 swap 28.8642 best 28.4833
+swap between best curr 28.3545 swap 28.4833 best 28.3545
+swap between best curr 28.2057 swap 28.3545 best 28.2057
+swap between best curr 28.158 swap 28.2057 best 28.158
+swap between best curr 28.1154 swap 28.158 best 28.1154
+swap between best curr 27.7066 swap 28.1154 best 27.7066
+swap between best curr 27.6596 swap 27.7066 best 27.6596
+swap between best curr 27.6372 swap 27.6596 best 27.6372
+swap between best curr 27.5484 swap 27.6372 best 27.5484
+swap between best curr 27.1343 swap 27.5484 best 27.1343
+swap between best curr 27.0544 swap 27.1343 best 27.0544
+swap between best curr 26.8526 swap 27.0544 best 26.8526
+swap between best curr 26.3136 swap 26.8526 best 26.3136
+swap between best curr 26.1286 swap 26.3136 best 26.1286
+swap between best curr 26.072 swap 26.1286 best 26.072
+swap between best curr 24.6434 swap 26.072 best 24.6434
+swap between best curr 24.0134 swap 24.6434 best 24.0134
+swap between best curr 22.5435 swap 24.0134 best 22.5435
+swap between best curr 22.3514 swap 22.5435 best 22.3514
+swap between best curr 16.7693 swap 22.3514 best 16.7693
+swap between best curr 13.4312 swap 16.7693 best 13.4312
+swap between best curr 13.0803 swap 13.4312 best 13.0803
+swap between best curr 10.1204 swap 13.0803 best 10.1204
+swap between best curr 8.35972 swap 10.1204 best 8.35972
+swap between best curr 7.34132 swap 8.35972 best 7.34132
+swap between best curr 6.50335 swap 7.34132 best 6.50335
+swap between best curr 6.38308 swap 6.50335 best 6.38308
+swap between best curr 5.72669 swap 6.38308 best 5.72669
+swap between best curr 5.45293 swap 5.72669 best 5.45293
+swap between best curr 5.07157 swap 5.45293 best 5.07157
+swap between best curr 4.45422 swap 5.07157 best 4.45422
+swap between best curr 4.33325 swap 4.45422 best 4.33325
+swap between best curr 3.78982 swap 4.33325 best 3.78982
+swap between best curr 3.35238 swap 3.78982 best 3.35238
+swap between best curr 3.3399 swap 3.35238 best 3.3399
+swap between best curr 2.81717 swap 3.3399 best 2.81717
+swap between best curr 2.63967 swap 2.81717 best 2.63967
+swap between best curr 2.4619 swap 2.63967 best 2.4619
+swap between best curr 2.29583 swap 2.4619 best 2.29583
+swap between best curr 2.12934 swap 2.29583 best 2.12934
+swap between best curr 1.89939 swap 2.12934 best 1.89939
+swap between best curr 1.84721 swap 1.89939 best 1.84721
+swap between best curr 1.57959 swap 1.84721 best 1.57959
+swap between best curr 1.50987 swap 1.57959 best 1.50987
+swap between best curr 1.33145 swap 1.50987 best 1.33145
+swap between best curr 1.22781 swap 1.33145 best 1.22781
+swap between best curr 0.908263 swap 1.22781 best 0.908263
+swap between best curr 0.759892 swap 0.908263 best 0.759892
+swap between best curr 0.557523 swap 0.759892 best 0.557523
+swap between best curr 0.226095 swap 0.557523 best 0.226095
+swap between best curr 0.19385 swap 0.226095 best 0.19385
+swap between best curr 0.184204 swap 0.19385 best 0.184204
+swap between best curr 0.17143 swap 0.184204 best 0.17143
+swap between best curr 0.0393811 swap 0.17143 best 0.0393811
+swap between best curr -0.0715445 swap 0.0393811 best -0.0715445
+totalE 17.844060 extE -6.043413 
+swap between best curr -0.630156 swap -0.0715445 best -0.630156
+totalE 16.424869 extE -6.315165 
+swap between best curr -0.653139 swap -0.630156 best -0.653139
+totalE 15.441598 extE -6.018051 
+swap between best curr -1.09029 swap -0.653139 best -1.09029
+totalE 14.112486 extE -6.157883 
+swap between best curr -1.239 swap -1.09029 best -1.239
+totalE 13.919042 extE -6.291674 
+swap between best curr -1.28248 swap -1.239 best -1.28248
+totalE 12.957268 extE -6.029060 
+swap between best curr -1.48339 swap -1.28248 best -1.48339
+totalE 12.756358 extE -6.229970 
+swap between best curr -1.61692 swap -1.48339 best -1.61692
+totalE 13.895784 extE -6.787820 
+swap between best curr -2.12929 swap -1.61692 best -2.12929
+totalE 11.854956 extE -6.790707 
+swap between best curr -2.20405 swap -2.12929 best -2.20405
+totalE 12.107729 extE -6.974647 
+swap between best curr -2.36213 swap -2.20405 best -2.36213
+totalE 11.791789 extE -7.080097 
+swap between best curr -2.39072 swap -2.36213 best -2.39072
+totalE 11.718278 extE -7.093716 
+swap between best curr -2.48741 swap -2.39072 best -2.48741
+totalE 12.111315 extE -7.353656 
+swap between best curr -2.50086 swap -2.48741 best -2.50086
+totalE 13.229173 extE -7.744206 
+swap between best curr -3.08481 swap -2.50086 best -3.08481
+totalE 12.574243 extE -8.304498 
+swap between best curr -3.12467 swap -3.08481 best -3.12467
+totalE 12.669802 extE -8.389493 
+swap between best curr -3.13454 swap -3.12467 best -3.13454
+totalE 12.777047 extE -8.438399 
+swap between best curr -3.27802 swap -3.13454 best -3.27802
+totalE 12.466569 extE -8.526221 
+swap between best curr -3.44536 swap -3.27802 best -3.44536
+totalE 11.561372 extE -8.447606 
+swap in good curr -0.239804 swap 9999 best -3.44536
+swap between good curr -0.299611 swap -0.239804 best -3.44536
+swap between good curr -0.427677 swap -0.299611 best -3.44536
+swap between good curr -0.444006 swap -0.427677 best -3.44536
+swap between good curr -0.876245 swap -0.444006 best -3.44536
+swap between good curr -0.961277 swap -0.876245 best -3.44536
+swap between good curr -1.16648 swap -0.961277 best -3.44536
+swap between good curr -1.18816 swap -1.16648 best -3.44536
+swap between good curr -1.26097 swap -1.18816 best -3.44536
+swap between good curr -1.26292 swap -1.26097 best -3.44536
+swap between good curr -1.57061 swap -1.26292 best -3.44536
+swap between good curr -1.61655 swap -1.57061 best -3.44536
+swap between good curr -1.6945 swap -1.61655 best -3.44536
+swap between good curr -1.72443 swap -1.6945 best -3.44536
+swap between good curr -1.84348 swap -1.72443 best -3.44536
+swap between good curr -1.9265 swap -1.84348 best -3.44536
+swap between good curr -1.96267 swap -1.9265 best -3.44536
+swap between good curr -2.06511 swap -1.96267 best -3.44536
+swap between good curr -2.59063 swap -2.06511 best -3.44536
+swap between good curr -2.6486 swap -2.59063 best -3.44536
+swap between good curr -2.75511 swap -2.6486 best -3.44536
+swap between good curr -2.81865 swap -2.75511 best -3.44536
+swap between good curr -2.94814 swap -2.81865 best -3.44536
+swap between good curr -3.16086 swap -2.94814 best -3.44536
+swap between good curr -3.32348 swap -3.16086 best -3.44536
+swap between good curr -3.3649 swap -3.32348 best -3.44536
+swap between good curr -3.38264 swap -3.3649 best -3.44536
+swap between best curr -3.53425 swap -3.38264 best -3.53425
+totalE 8.070658 extE -7.402558 
+swap between best curr -3.54225 swap -3.53425 best -3.54225
+totalE 7.455578 extE -7.208196 
+swap between best curr -3.86167 swap -3.54225 best -3.86167
+totalE 8.311695 extE -7.919452 
+swap between best curr -3.88092 swap -3.86167 best -3.88092
+totalE 8.243182 extE -7.922290 
+swap between best curr -4.11381 swap -3.88092 best -4.11381
+totalE 6.881758 extE -7.779002 
+swap between best curr -4.12405 swap -4.11381 best -4.12405
+totalE 6.875059 extE -7.790421 
+swap between best curr -4.20851 swap -4.12405 best -4.20851
+totalE 6.840860 extE -7.891639 
+swap between best curr -4.31509 swap -4.20851 best -4.31509
+totalE 7.171339 extE -8.143894 
+swap in good curr -0.467947 swap 9999 best -4.31509
+swap between good curr -0.481062 swap -0.467947 best -4.31509
+swap between good curr -0.546896 swap -0.481062 best -4.31509
+swap between good curr -0.754501 swap -0.546896 best -4.31509
+swap between good curr -0.75683 swap -0.754501 best -4.31509
+swap between good curr -1.08067 swap -0.75683 best -4.31509
+swap between good curr -1.46543 swap -1.08067 best -4.31509
+swap between good curr -1.51531 swap -1.46543 best -4.31509
+swap between good curr -1.72032 swap -1.51531 best -4.31509
+swap between good curr -2.03121 swap -1.72032 best -4.31509
+swap between good curr -2.60284 swap -2.03121 best -4.31509
+swap between good curr -2.61221 swap -2.60284 best -4.31509
+swap between good curr -2.74035 swap -2.61221 best -4.31509
+swap between good curr -3.19285 swap -2.74035 best -4.31509
+swap between good curr -3.31796 swap -3.19285 best -4.31509
+swap between good curr -3.61213 swap -3.31796 best -4.31509
+swap between good curr -3.96282 swap -3.61213 best -4.31509
+swap between best curr -4.50805 swap -3.96282 best -4.50805
+totalE 10.145556 extE -9.392591 
+swap between best curr -4.62647 swap -4.50805 best -4.62647
+totalE 9.680119 extE -9.395336 
+swap between best curr -4.64675 swap -4.62647 best -4.64675
+totalE 9.604832 extE -9.397278 
+swap between best curr -4.67354 swap -4.64675 best -4.67354
+totalE 8.445976 extE -9.046717 
+swap between best curr -4.90998 swap -4.67354 best -4.90998
+totalE 7.647393 extE -9.095774 
+swap between best curr -4.94806 swap -4.90998 best -4.94806
+totalE 7.610608 extE -9.134278 
+swap between best curr -4.97154 swap -4.94806 best -4.97154
+totalE 6.537930 extE -8.808035 
+swap between best curr -4.99568 swap -4.97154 best -4.99568
+totalE 7.292958 extE -9.091894 
+swap between best curr -5.01483 swap -4.99568 best -5.01483
+totalE 7.007241 extE -9.022191 
+swap between best curr -5.03428 swap -5.01483 best -5.03428
+totalE 6.318011 extE -8.818375 
+totalE 920.260153 extE 688.009192 
+totalE 920.260153 extE 688.009192 
+totalE 920.260153 extE 688.009192 
+totalE 920.260153 extE 688.009192 
+totalE 920.260153 extE 688.009192 
+totalE 920.260153 extE 688.009192 
+totalE 920.260153 extE 688.009192 
+totalE 6.318011 extE -8.818375 
+totalE 7.171339 extE -8.143894 
+totalE 11.561372 extE -8.447606 
+totalE 6.318011 extE -8.818375 
+best target energy -5.03428
+The program has successfully finished in 1 seconds. :)  Bye-bye!
+ramaprob initialise success 
+transpoints initialise success with 104 transpoints 
+grid box initialise succuss 55 57 57 

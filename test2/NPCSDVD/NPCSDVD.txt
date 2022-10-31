@@ -1,0 +1,21 @@
+Detected 2 cores, request 2 cores, using 2 cores
+using ramaprob.data in current folder
+Warning: overwriting output file NPCSDVD/NPCSDVD_1.pdb
+Warning: overwriting output file NPCSDVD/NPCSDVD_2.pdb
+Warning: overwriting output file NPCSDVD/NPCSDVD_3.pdb
+Warning: overwriting output file NPCSDVD/NPCSDVD_4.pdb
+Performing search (4 ADCP runs with 2500 steps each) ...
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+0 ENDED WITH ERROR
+0 err
+************1 ENDED WITH ERROR
+1 err
+****************************************************************************************************************Docking performed in 3.01 seconds, i.e. 0 hours 00 minutes 03.013710 seconds 
+mode |  affinity  | clust. | ref. | clust. | rmsd | best | energy | best |
+     | (kcal/mol) | rmsd   | rmsd |  size  | avg. | rmsd |  avg.  | run  |
+-----+------------+--------+------+--------+------+------+--------+------+
+   1         -4.7     0.0   999.0      26   999.0 999.0    -3.3    045 
+   2          2.0    11.8   999.0       2   999.0 999.0     2.0    010 
+   3          4.6    12.5   999.0       1      NA      NA    008 
+clean up unzipped map files

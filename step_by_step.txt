@@ -34,7 +34,7 @@ agfr -r 3Q47_recH.pdbqt -l 3Q47_pepH.pdbqt -asv 1.1 -o 3Q47
 ### -asv: specifies AutoSite version number (1.0 or 1.1).   Default AutoSite version is 1.0 (if -asv option is not used)
 ### -o : specifies the name for the target files
 ### –b/–boxMode : specified the box position and size 
-### –P/–padding : specifie the value of padding on each side.
+### –P/–padding : specifie the value of padding on each side.l
 
 # Docking peptide from sequence using the generated target file
 # adcp -t 3Q47.trg -s npisdvd -N 20 -n 1000000 -o 3Q47_redocking -ref 3Q47_pepH.pdb
@@ -63,6 +63,8 @@ python $PEPPRHOME/Peppr_Stage1/Peppr_main.py -c 2 -i TLXDYL -t 3Q47.trg -p 50 -N
 # -l <type of cyclization: cys or cyc>
 # -r <reference peptide_structure.pdbqt>
 
+# before running Peppr, please change the python to python3
+# export PATH=$HOME/anaconda3/bin:$PATH
 # python Peppr_Stage1/Peppr_main.py -c 2 -i XDIYVAC -t AF-WIP1_3MG_SOL_modified.trg -p 50 -N 20 -n 2500000 -l cyc
 # Peppr-stage-2 for adding Post-translational modification and re-docking them via SMINA
 # before running the stage-2 we need to set which residue we want to add PTMs to e.g:

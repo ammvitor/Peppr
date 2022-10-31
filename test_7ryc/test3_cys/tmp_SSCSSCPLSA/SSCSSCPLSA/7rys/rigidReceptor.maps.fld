@@ -1,0 +1,84 @@
+# AVS field file
+#
+# AutoDock Atomic Affinity and Electrostatic Grids
+#
+# Created by /home/dozeduck/workspace/ADCP/bin/autogrid4 4.2.7.x.2019-07-11.
+#
+#SPACING 0.375
+#NELEMENTS 74 50 64
+#CENTER 142.634 120.432 101.566
+#MACROMOLECULE rigidReceptor.pdbqt
+#GRID_PARAMETER_FILE rigidReceptor.gpf
+#
+ndim=3			# number of dimensions in the field
+dim1=75			# number of x-elements
+dim2=51			# number of y-elements
+dim3=65			# number of z-elements
+nspace=3		# number of physical coordinates per point
+veclen=29		# number of affinity values at each point
+data=float		# data type (byte, integer, float, double)
+field=uniform		# field type (uniform, rectilinear, irregular)
+coord 1 file=rigidReceptor.maps.xyz filetype=ascii offset=0
+coord 2 file=rigidReceptor.maps.xyz filetype=ascii offset=2
+coord 3 file=rigidReceptor.maps.xyz filetype=ascii offset=4
+label=HS-affinity	# component label for variable 1
+label=Mg-affinity	# component label for variable 2
+label=HD-affinity	# component label for variable 3
+label=NA-affinity	# component label for variable 4
+label=Fe-affinity	# component label for variable 5
+label=Br-affinity	# component label for variable 6
+label=NS-affinity	# component label for variable 7
+label=A-affinity	# component label for variable 8
+label=C-affinity	# component label for variable 9
+label=Mn-affinity	# component label for variable 10
+label=G-affinity	# component label for variable 11
+label=F-affinity	# component label for variable 12
+label=I-affinity	# component label for variable 13
+label=H-affinity	# component label for variable 14
+label=J-affinity	# component label for variable 15
+label=N-affinity	# component label for variable 16
+label=Q-affinity	# component label for variable 17
+label=P-affinity	# component label for variable 18
+label=S-affinity	# component label for variable 19
+label=GA-affinity	# component label for variable 20
+label=Z-affinity	# component label for variable 21
+label=Zn-affinity	# component label for variable 22
+label=Cl-affinity	# component label for variable 23
+label=Ca-affinity	# component label for variable 24
+label=OA-affinity	# component label for variable 25
+label=SA-affinity	# component label for variable 26
+label=OS-affinity	# component label for variable 27
+label=Electrostatics	# component label for variable 28
+label=Desolvation	# component label for variable 29
+#
+# location of affinity grid files and how to read them
+#
+variable 1 file=rigidReceptor.HS.map filetype=ascii skip=6
+variable 2 file=rigidReceptor.Mg.map filetype=ascii skip=6
+variable 3 file=rigidReceptor.HD.map filetype=ascii skip=6
+variable 4 file=rigidReceptor.NA.map filetype=ascii skip=6
+variable 5 file=rigidReceptor.Fe.map filetype=ascii skip=6
+variable 6 file=rigidReceptor.Br.map filetype=ascii skip=6
+variable 7 file=rigidReceptor.NS.map filetype=ascii skip=6
+variable 8 file=rigidReceptor.A.map filetype=ascii skip=6
+variable 9 file=rigidReceptor.C.map filetype=ascii skip=6
+variable 10 file=rigidReceptor.Mn.map filetype=ascii skip=6
+variable 11 file=rigidReceptor.G.map filetype=ascii skip=6
+variable 12 file=rigidReceptor.F.map filetype=ascii skip=6
+variable 13 file=rigidReceptor.I.map filetype=ascii skip=6
+variable 14 file=rigidReceptor.H.map filetype=ascii skip=6
+variable 15 file=rigidReceptor.J.map filetype=ascii skip=6
+variable 16 file=rigidReceptor.N.map filetype=ascii skip=6
+variable 17 file=rigidReceptor.Q.map filetype=ascii skip=6
+variable 18 file=rigidReceptor.P.map filetype=ascii skip=6
+variable 19 file=rigidReceptor.S.map filetype=ascii skip=6
+variable 20 file=rigidReceptor.GA.map filetype=ascii skip=6
+variable 21 file=rigidReceptor.Z.map filetype=ascii skip=6
+variable 22 file=rigidReceptor.Zn.map filetype=ascii skip=6
+variable 23 file=rigidReceptor.Cl.map filetype=ascii skip=6
+variable 24 file=rigidReceptor.Ca.map filetype=ascii skip=6
+variable 25 file=rigidReceptor.OA.map filetype=ascii skip=6
+variable 26 file=rigidReceptor.SA.map filetype=ascii skip=6
+variable 27 file=rigidReceptor.OS.map filetype=ascii skip=6
+variable 28 file=rigidReceptor.e.map filetype=ascii skip=6
+variable 29 file=rigidReceptor.d.map filetype=ascii skip=6
